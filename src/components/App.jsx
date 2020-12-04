@@ -1,9 +1,9 @@
 import {Route, Switch} from 'react-router-dom'
 
-import HomePage from './components/HomePage'
-import TopicModellingPage from './components/TopicModellingPage'
+import HomePage from './HomePage'
+import TopicModellingPage from './TopicModellingPage'
 
-import './App.css'
+import './App.scss'
 
 function App() {
     return (
