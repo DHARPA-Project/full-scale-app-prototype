@@ -1,21 +1,50 @@
-import React, {useRef, useState} from 'react'
+import React, {useContext, useState, useRef} from 'react'
 
 import {Button, Divider, Grid, Header, Icon, Label, Segment} from 'semantic-ui-react'
 
+import {Context} from '../context'
 import HelpIcon from './common/HelpIcon'
+
+import './FileUpload.scss'
 
 const FileUpload = () => {
     const fileInputRef = useRef(null)
 
-    const [dropAreaHovered, setDropAreaHovered] = useState(false)
+    const {fileUploadInProgress, setFileUploadInProgress, setUploadedFiles} = useContext(Context)
 
-    const handleFileSelect = () => {}
+    const [dropAreaHovered, setDropAreaHovered] = useState(false)
 
     const handleHover = event => {
         event.preventDefault()
         if (event.type === 'dragover') setDropAreaHovered(true)
         if (event.type === 'dragleave') setDropAreaHovered(false)
         if (event.type === 'mouseleave') setDropAreaHovered(false)
+    }
+
+    const handleFileSelect = event => {
+        console.log('handling file select')
+        console.log(event)
+        event.preventDefault()
+        setFileUploadInProgress(true)
+        setDropAreaHovered(false)
+        let inputFiles
+
+        try {
+            // if file submitted via input
+            if (event.target.files) {
+                inputFiles = event.target.files
+                // if file submitted via drag-and-drop
+            } else if (event.dataTransfer) {
+                inputFiles = event.dataTransfer.files
+            }
+
+            console.log(inputFiles)
+            setUploadedFiles(inputFiles)
+        } catch (error) {
+            console.error('ERROR: file upload failed: ', error)
+        } finally {
+            setFileUploadInProgress(false)
+        }
     }
 
     return (
@@ -46,7 +75,14 @@ const FileUpload = () => {
                                     <Icon name="folder open" />
                                     Find files by browsing
                                 </Header>
-                                <Button>Browse</Button>
+                                <Button
+                                    onClick={event => {
+                                        event.preventDefault()
+                                        fileInputRef.current.click()
+                                    }}
+                                >
+                                    Browse
+                                </Button>
                             </Grid.Column>
 
                             <Grid.Column>
