@@ -4,13 +4,19 @@ import {Button, Divider, Grid, Header, Icon, Label, Segment} from 'semantic-ui-r
 
 import {Context} from '../context'
 import HelpIcon from './common/HelpIcon'
+import {generateId} from '../utils/helpers'
 
 import './FileUpload.scss'
 
 const FileUpload = () => {
     const fileInputRef = useRef(null)
 
-    const {fileUploadInProgress, setFileUploadInProgress, setUploadedFiles} = useContext(Context)
+    const {
+        fileUploadInProgress,
+        setFileUploadInProgress,
+        uploadedFiles,
+        setUploadedFiles,
+    } = useContext(Context)
 
     const [dropAreaHovered, setDropAreaHovered] = useState(false)
 
@@ -27,19 +33,43 @@ const FileUpload = () => {
         event.preventDefault()
         setFileUploadInProgress(true)
         setDropAreaHovered(false)
-        let inputFiles
+        let inputFileObject = null
+        const inputFileList = []
 
         try {
             // if file submitted via input
             if (event.target.files) {
-                inputFiles = event.target.files
+                inputFileObject = event.target.files
                 // if file submitted via drag-and-drop
             } else if (event.dataTransfer) {
-                inputFiles = event.dataTransfer.files
+                inputFileObject = event.dataTransfer.files
             }
 
-            console.log(inputFiles)
-            setUploadedFiles(inputFiles)
+            for (let i = 0; i < inputFileObject.length; i++) {
+                inputFileList.push({
+                    fileObj: inputFileObject[i],
+                    id: generateId(),
+                })
+            }
+
+            if (uploadedFiles && uploadedFiles?.length) {
+                const newUploadedFiles = [...uploadedFiles]
+                inputFileList.forEach(newFile => {
+                    // add only the newly uploaded files that have not been previously uploaded
+                    if (
+                        uploadedFiles.every(
+                            existingFile =>
+                                existingFile.fileObj.name !== newFile.fileObj.name &&
+                                existingFile.fileObj.size !== newFile.fileObj.size &&
+                                existingFile.fileObj.lastModified !== newFile.fileObj.lastModified
+                        )
+                    )
+                        newUploadedFiles.push(newFile)
+                })
+                setUploadedFiles(newUploadedFiles)
+            } else {
+                setUploadedFiles(inputFileList)
+            }
         } catch (error) {
             console.error('ERROR: file upload failed: ', error)
         } finally {
@@ -50,11 +80,11 @@ const FileUpload = () => {
     return (
         <React.Fragment>
             <Header size="huge" attached="top" textAlign="center" style={{position: 'relative'}}>
-                <span>Upload your text files for topic modelling</span>
+                <span>Upload text files for topic modelling</span>
                 <Label color="grey" floating>
                     ?
                 </Label>
-                <HelpIcon size={'small'} />
+                {/* <HelpIcon size={'small'} /> */}
             </Header>
             <Segment placeholder attached>
                 <form action="#" method="get" className="file-upload" id="upload">
