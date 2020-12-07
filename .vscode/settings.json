@@ -1,0 +1,5 @@
+{
+    "prettier.trailingComma": "none",
+    "javascript.format.insertSpaceAfterCommaDelimiter": false,
+    "typescript.format.insertSpaceAfterCommaDelimiter": false
+}
