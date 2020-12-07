@@ -1,27 +1,25 @@
-import React, {useContext, useState, useRef} from 'react'
+import React, {useContext, useState, useEffect} from 'react'
 
 import {Button, Checkbox, Header, Icon, Segment, Table} from 'semantic-ui-react'
 
 import {Context} from '../context'
-
+import FileListPlaceholder from './FileListPlaceholder'
 import {fileTypes} from '../constants/const'
 
 import './FileList.scss'
 
 const FileList = () => {
-    const {fileUploadInProgress, uploadedFiles} = useContext(Context)
+    const {uploadedFiles, setUploadedFiles, removeUploadedFileById} = useContext(Context)
 
-    if (!uploadedFiles || !uploadedFiles.length) {
-        return (
-            <Segment placeholder>
-                <Header icon>
-                    <Icon name="pdf file outline" />
-                    No documents have been uploaded.
-                </Header>
-                <Button primary>Add Document</Button>
-            </Segment>
+    const [filesReadyForSubmission, setFilesReadyForSubmission] = useState(false)
+
+    useEffect(() => {
+        setFilesReadyForSubmission(
+            uploadedFiles.every(file => file.fileObj.type === fileTypes.text) ? true : false
         )
-    }
+    }, [uploadedFiles])
+
+    if (!uploadedFiles || !uploadedFiles.length) return <FileListPlaceholder />
 
     return (
         <Table celled compact definition>
@@ -51,7 +49,10 @@ const FileList = () => {
                             <Table.Cell negative>{file.fileObj.type}</Table.Cell>
                         )}
                         <Table.Cell collapsing>
-                            <Button animated="vertical">
+                            <Button
+                                animated="vertical"
+                                onClick={() => removeUploadedFileById(file.id)}
+                            >
                                 <Button.Content hidden>Remove</Button.Content>
                                 <Button.Content visible>
                                     <Icon name="trash alternate" />
@@ -66,25 +67,26 @@ const FileList = () => {
                 <Table.Row>
                     <Table.HeaderCell />
                     <Table.HeaderCell colSpan="5">
-                        <Button icon labelPosition="left" negative size="small" floated="right">
+                        <Button
+                            icon
+                            labelPosition="left"
+                            negative
+                            size="small"
+                            floated="right"
+                            onClick={() => setUploadedFiles([])}
+                        >
                             <Icon name="trash alternate" /> Remove all files
                         </Button>
-                        {uploadedFiles.every(file => file.fileObj.type === fileTypes.text) ? (
-                            <Button icon labelPosition="left" positive size="small" floated="right">
-                                <Icon name="check" /> Submit all files
-                            </Button>
-                        ) : (
-                            <Button
-                                icon
-                                disabled
-                                labelPosition="left"
-                                positive
-                                size="small"
-                                floated="right"
-                            >
-                                <Icon name="check" /> Submit all files
-                            </Button>
-                        )}
+                        <Button
+                            icon
+                            labelPosition="left"
+                            positive={filesReadyForSubmission ? true : false}
+                            size="small"
+                            floated="right"
+                            disabled={filesReadyForSubmission ? false : true}
+                        >
+                            <Icon name="check" /> Submit all files
+                        </Button>
                     </Table.HeaderCell>
                 </Table.Row>
             </Table.Footer>
