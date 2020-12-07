@@ -3,7 +3,6 @@ import React, {useContext, useState, useRef} from 'react'
 import {Button, Divider, Grid, Header, Icon, Label, Segment} from 'semantic-ui-react'
 
 import {Context} from '../context'
-import HelpIcon from './common/HelpIcon'
 import {generateId} from '../utils/helpers'
 
 import './FileUpload.scss'
@@ -11,14 +10,12 @@ import './FileUpload.scss'
 const FileUpload = () => {
     const fileInputRef = useRef(null)
 
-    const {
-        fileUploadInProgress,
-        setFileUploadInProgress,
-        uploadedFiles,
-        setUploadedFiles,
-    } = useContext(Context)
+    const {setFileUploadInProgress, uploadedFiles, setUploadedFiles} = useContext(Context)
 
+    const [fileUploadAreaCollapsed, setFileUploadAreaCollapsed] = useState(false)
     const [dropAreaHovered, setDropAreaHovered] = useState(false)
+
+    const toggleFileUploadCollapse = () => setFileUploadAreaCollapsed(!fileUploadAreaCollapsed)
 
     const handleHover = event => {
         event.preventDefault()
@@ -28,8 +25,6 @@ const FileUpload = () => {
     }
 
     const handleFileSelect = event => {
-        console.log('handling file select')
-        console.log(event)
         event.preventDefault()
         setFileUploadInProgress(true)
         setDropAreaHovered(false)
@@ -48,7 +43,7 @@ const FileUpload = () => {
             for (let i = 0; i < inputFileObject.length; i++) {
                 inputFileList.push({
                     fileObj: inputFileObject[i],
-                    id: generateId(),
+                    id: generateId()
                 })
             }
 
@@ -80,12 +75,20 @@ const FileUpload = () => {
     return (
         <React.Fragment>
             <Header size="huge" attached="top" textAlign="center" style={{position: 'relative'}}>
-                <span>Upload text files for topic modelling</span>
+                <div>
+                    <Icon
+                        name={`caret ${fileUploadAreaCollapsed ? 'right' : 'down'}`}
+                        size="large"
+                        onClick={toggleFileUploadCollapse}
+                        className="collapse-icon"
+                    />
+                    <Header.Content>Upload text files for topic modelling</Header.Content>
+                </div>
                 <Label color="grey" floating className="help-tag">
                     ?
                 </Label>
             </Header>
-            <Segment placeholder attached>
+            <Segment placeholder attached className={fileUploadAreaCollapsed ? 'collapsed' : ''}>
                 <form action="#" method="get" className="file-upload" id="upload">
                     <input
                         ref={fileInputRef}
