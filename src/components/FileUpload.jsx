@@ -81,10 +81,9 @@ const FileUpload = () => {
         <React.Fragment>
             <Header size="huge" attached="top" textAlign="center" style={{position: 'relative'}}>
                 <span>Upload text files for topic modelling</span>
-                <Label color="grey" floating>
+                <Label color="grey" floating className="help-tag">
                     ?
                 </Label>
-                {/* <HelpIcon size={'small'} /> */}
             </Header>
             <Segment placeholder attached>
                 <form action="#" method="get" className="file-upload" id="upload">
@@ -93,14 +92,13 @@ const FileUpload = () => {
                         className="file-upload-input"
                         type="file"
                         onChange={handleFileSelect}
-                        style={{display: 'none'}}
                     />
 
                     <Grid columns={2} stackable textAlign="center">
                         <Divider vertical>Or</Divider>
 
                         <Grid.Row verticalAlign="middle">
-                            <Grid.Column>
+                            <Grid.Column className="file-upload-browse-area">
                                 <Header icon color="grey">
                                     <Icon name="folder open" />
                                     Find files by browsing
