@@ -1,6 +1,7 @@
 import React, {useContext, useState, useEffect} from 'react'
+import {useHistory} from 'react-router-dom'
 
-import {Button, Checkbox, Header, Icon, Segment, Table} from 'semantic-ui-react'
+import {Button, Checkbox, Icon, Table} from 'semantic-ui-react'
 
 import {Context} from '../context'
 import FileListPlaceholder from './FileListPlaceholder'
@@ -9,6 +10,8 @@ import {fileTypes} from '../constants/const'
 import './FileList.scss'
 
 const FileList = () => {
+    const history = useHistory()
+
     const {uploadedFiles, setUploadedFiles, removeUploadedFileById} = useContext(Context)
 
     const [filesReadyForSubmission, setFilesReadyForSubmission] = useState(false)
@@ -84,6 +87,7 @@ const FileList = () => {
                             size="small"
                             floated="right"
                             disabled={filesReadyForSubmission ? false : true}
+                            onClick={() => history.push('/topic-modelling/parameters')}
                         >
                             <Icon name="check" /> Submit all files
                         </Button>
