@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Divider, Grid, Image, Segment, Header, Card, Container} from 'semantic-ui-react'
+import {Divider, Grid, Segment, Card, Container} from 'semantic-ui-react'
 
 const HomePage = () => {
     return (
