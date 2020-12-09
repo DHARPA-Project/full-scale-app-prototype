@@ -2,14 +2,14 @@
 export const topicModellingSteps = [
     {
         icon: 'upload',
-        title: 'Data Input',
-        description: 'Upload your textual data',
+        title: 'Source Upload',
+        description: 'Upload your text for analysis',
         href: '/topic-modelling/data-input'
     },
     {
         icon: 'dashboard',
-        title: 'Parameters',
-        description: 'Data analysis parameter preview',
+        title: 'Data Preparation',
+        description: 'Customize your pre-processing pipeline',
         href: '/topic-modelling/parameters'
     },
     {
