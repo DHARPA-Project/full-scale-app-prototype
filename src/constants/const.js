@@ -3,6 +3,25 @@ export const fileTypes = {
     text: 'text/plain'
 }
 
+export const topicModellingAnalysisOptions = [
+    {
+        title: 'Gensim',
+        description: ''
+    },
+    {
+        title: 'Bigrams',
+        description: ''
+    },
+    {
+        title: 'Mallet',
+        description: ''
+    },
+    {
+        title: 'TFIDF',
+        description: ''
+    }
+]
+
 // operations that can be performed on text in the topic modelling module
 export const topicModellingOperations = [
     {

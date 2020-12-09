@@ -1,7 +1,7 @@
 import React from 'react'
 import {useHistory} from 'react-router-dom'
 
-import {Button, Checkbox, Container, Form, Grid, Header, Table, TextArea} from 'semantic-ui-react'
+import {Button, Checkbox, Container, Grid, Header, Table} from 'semantic-ui-react'
 
 import TopicModellingSteps from './TopicModellingSteps'
 
