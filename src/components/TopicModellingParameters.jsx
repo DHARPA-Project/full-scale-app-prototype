@@ -1,12 +1,16 @@
 import React from 'react'
 import {useHistory} from 'react-router-dom'
 
-import {Header, Table, Checkbox, Button, Container} from 'semantic-ui-react'
+import {Button, Checkbox, Container, Form, Grid, Header, Table, TextArea} from 'semantic-ui-react'
 
 import TopicModellingSteps from './TopicModellingSteps'
 
+import {topicModellingOperations, textPreviewPlaceholder} from '../constants/const'
+
 const TopicModellingParameters = () => {
     const history = useHistory()
+
+    const handlePreviewClick = () => {}
 
     return (
         <Container>
@@ -15,87 +19,69 @@ const TopicModellingParameters = () => {
                 Topic modelling
             </Header>
 
-            <Table celled compact definition>
-                <Table.Header fullWidth>
-                    <Table.Row>
-                        <Table.HeaderCell />
-                        <Table.HeaderCell>Process</Table.HeaderCell>
-                        <Table.HeaderCell>Description</Table.HeaderCell>
-                    </Table.Row>
-                </Table.Header>
+            <Grid columns={2} stackable textAlign="center">
+                <Grid.Row verticalAlign="middle">
+                    <Grid.Column className="file-upload-browse-area">
+                        <Table celled compact definition collapsing>
+                            <Table.Header fullWidth>
+                                <Table.Row>
+                                    <Table.HeaderCell />
+                                    <Table.HeaderCell>Text Pre-processing</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
 
-                <Table.Body>
-                    <Table.Row>
-                        <Table.Cell collapsing>
-                            <Checkbox toggle defaultChecked />
-                        </Table.Cell>
-                        <Table.Cell>Pre-processing</Table.Cell>
-                        <Table.Cell>
-                            Tokenization, lowercasing, stemming, removing stop words and words less
-                            than a number of characters, noise removal.
-                        </Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.Cell collapsing>
-                            <Checkbox toggle />
-                        </Table.Cell>
-                        <Table.Cell>Display LDA options</Table.Cell>
-                        <Table.Cell>
-                            Add TFIDF and bigrams functionalities to compare outputs. If this option
-                            is not activated, the model will be computed with Gensim LDA.
-                        </Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.Cell collapsing>
-                            <Checkbox toggle defaultChecked />
-                        </Table.Cell>
-                        <Table.Cell>Selecting the number of topics</Table.Cell>
-                        <Table.Cell>
-                            See how the model differs depending on the number of topics and decide
-                            the number of topics you wish to run the model on. Optional coherence
-                            metrics provided.
-                        </Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.Cell collapsing>
-                            <Checkbox toggle defaultChecked />
-                        </Table.Cell>
-                        <Table.Cell>Topics naming</Table.Cell>
-                        <Table.Cell>
-                            Perform an in-depth analysis of the topics through an exploratory
-                            visualization displaying saliency and relevance metrics to help you
-                            naming the topics.
-                        </Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.Cell collapsing>
-                            <Checkbox toggle />
-                        </Table.Cell>
-                        <Table.Cell>Statistics</Table.Cell>
-                        <Table.Cell>
-                            Display statistics related to topic distribution and historicization.
-                        </Table.Cell>
-                    </Table.Row>
-                </Table.Body>
+                            <Table.Body>
+                                {topicModellingOperations.map((operation, index) => (
+                                    <Table.Row key={index}>
+                                        <Table.Cell collapsing>
+                                            <Checkbox
+                                                toggle
+                                                defaultChecked={operation.enabled}
+                                                disabled={operation.mandatory}
+                                            />
+                                        </Table.Cell>
+                                        <Table.Cell>{operation.name}</Table.Cell>
+                                    </Table.Row>
+                                ))}
+                            </Table.Body>
 
-                <Table.Footer fullWidth>
-                    <Table.Row>
-                        <Table.HeaderCell />
-                        <Table.HeaderCell colSpan="2">
-                            <Button
-                                floated="right"
-                                icon
-                                labelPosition="left"
-                                primary
-                                size="small"
-                                onClick={() => history.push('/topic-modelling/analysis')}
-                            >
-                                Submit
-                            </Button>
-                        </Table.HeaderCell>
-                    </Table.Row>
-                </Table.Footer>
-            </Table>
+                            <Table.Footer fullWidth>
+                                <Table.Row>
+                                    <Table.HeaderCell />
+                                    <Table.HeaderCell colSpan="2" textAlign="center">
+                                        <Button
+                                            icon
+                                            primary
+                                            size="small"
+                                            onClick={handlePreviewClick}
+                                        >
+                                            Preview
+                                        </Button>
+                                        <Button
+                                            icon
+                                            positive
+                                            size="small"
+                                            onClick={() =>
+                                                history.push('/topic-modelling/analysis')
+                                            }
+                                        >
+                                            Submit
+                                        </Button>
+                                    </Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Footer>
+                        </Table>
+                    </Grid.Column>
+
+                    <Grid.Column style={{height: '100%'}}>
+                        <textarea
+                            placeholder={textPreviewPlaceholder}
+                            rows="32"
+                            style={{display: 'block', heigth: 'auto', width: '100%'}}
+                        />
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
         </Container>
     )
 }
