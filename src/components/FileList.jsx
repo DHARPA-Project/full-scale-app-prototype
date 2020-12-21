@@ -14,12 +14,13 @@ const FileList = () => {
 
     const {uploadedFiles, setUploadedFiles, removeUploadedFileById} = useContext(Context)
 
+    const [numValidFiles, setNumValidFiles] = useState(0)
     const [filesReadyForSubmission, setFilesReadyForSubmission] = useState(false)
 
     useEffect(() => {
-        setFilesReadyForSubmission(
-            uploadedFiles.every(file => file.fileObj.type === fileTypes.text) ? true : false
-        )
+        const validFiles = uploadedFiles.filter(file => file.fileObj.type === fileTypes.text).length
+        setNumValidFiles(validFiles)
+        setFilesReadyForSubmission(validFiles === uploadedFiles.length)
     }, [uploadedFiles])
 
     if (!uploadedFiles || !uploadedFiles.length) return <FileListPlaceholder />
@@ -70,6 +71,11 @@ const FileList = () => {
                 <Table.Row>
                     <Table.HeaderCell />
                     <Table.HeaderCell colSpan="5">
+                        <span className="stats">
+                            <span>files: </span>
+                            <span>{numValidFiles} valid</span>
+                            <span> / {uploadedFiles.length} total</span>
+                        </span>
                         <Button
                             icon
                             labelPosition="left"
