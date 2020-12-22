@@ -5,6 +5,7 @@ export const Context = createContext()
 const ContextProvider = props => {
     const [fileUploadInProgress, setFileUploadInProgress] = useState(false)
     const [uploadedFiles, setUploadedFiles] = useState([])
+    const [showModal, setShowModal] = useState(false)
 
     const removeUploadedFileById = id2remove => {
         const newFileList = uploadedFiles.filter(uploadedFile => uploadedFile.id !== id2remove)
@@ -18,7 +19,9 @@ const ContextProvider = props => {
                 setFileUploadInProgress,
                 uploadedFiles,
                 setUploadedFiles,
-                removeUploadedFileById
+                removeUploadedFileById,
+                showModal,
+                setShowModal
             }}
         >
             {props.children}
