@@ -1,11 +1,12 @@
 import React from 'react'
+import {createPortal} from 'react-dom'
 import PropTypes from 'prop-types'
 import {AnimatePresence, motion} from 'framer-motion'
 
 import './Modal.scss'
 
 const Modal = ({showCross, message, children, isVisible, setIsVisible}) => {
-    return (
+    return createPortal(
         <AnimatePresence>
             {isVisible && (
                 <motion.div
@@ -39,7 +40,8 @@ const Modal = ({showCross, message, children, isVisible, setIsVisible}) => {
                     </motion.div>
                 </motion.div>
             )}
-        </AnimatePresence>
+        </AnimatePresence>,
+        document.getElementById('modal')
     )
 }
 
@@ -54,7 +56,7 @@ Modal.propTypes = {
 Modal.defaultProps = {
     showCross: true,
     message: '',
-    className: 'Modal',
+    className: 'modal',
     isVisible: false,
     setIsVisible: () => console.error('setIsVisible() function argument missing!')
 }
