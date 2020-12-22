@@ -1,19 +1,19 @@
 .modal-backdrop {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    z-index: 100;
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 100;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: rgba(0, 0, 0, 0.85);
     opacity: 0;
     visibility: hidden;
 }
 
-.modal-content {
+.modal-container {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -30,7 +30,7 @@
 }
 
 .modal-backdrop,
-.modal-content {
+.modal-container {
     opacity: 1;
     visibility: visible;
 }
@@ -41,6 +41,13 @@
     right: 1rem;
     color: #363636;
     font-size: 2em;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .modal-title {
