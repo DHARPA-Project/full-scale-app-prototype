@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import './Modal.scss'
 
-const Modal = ({visible, showCross, message, children}) => {
+const Modal = ({showCross, message, children, closeModal}) => {
     return (
-        <div className="modal-backdrop">
+        <div className="modal-backdrop" onClick={() => closeModal()}>
             <div className="modal-content">
                 <span className="modal-close" style={{display: showCross ? 'block' : 'none'}}>
                     &times;
@@ -17,17 +17,17 @@ const Modal = ({visible, showCross, message, children}) => {
 }
 
 Modal.propTypes = {
-    // visible: PropTypes.bool.isRequired,
     showCross: PropTypes.bool,
     className: PropTypes.string,
-    style: PropTypes.object
+    style: PropTypes.object,
+    closeModal: PropTypes.func.isRequired
 }
 
 Modal.defaultProps = {
-    // visible: false,
     showCross: true,
     message: 'Are you sure?',
-    className: 'Modal'
+    className: 'Modal',
+    closeModal: () => console.error('closeModal() function argument missing!')
 }
 
 export default Modal

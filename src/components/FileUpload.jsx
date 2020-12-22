@@ -2,6 +2,8 @@ import React, {useContext, useState, useRef} from 'react'
 
 import {Button, Divider, Grid, Header, Icon, Label, Segment} from 'semantic-ui-react'
 
+import Modal from './common/Modal'
+
 import {Context} from '../context'
 import {generateId} from '../utils/helpers'
 
@@ -9,6 +11,8 @@ import './FileUpload.scss'
 
 const FileUpload = () => {
     const fileInputRef = useRef(null)
+
+    const [showModal, setShowModal] = useState(false)
 
     const {setFileUploadInProgress, uploadedFiles, setUploadedFiles} = useContext(Context)
 
@@ -84,7 +88,12 @@ const FileUpload = () => {
                     />
                     <Header.Content>Upload text files for topic modelling</Header.Content>
                 </div>
-                <Label color="grey" floating className="help-tag">
+                <Label
+                    color="grey"
+                    floating
+                    className="help-tag"
+                    onClick={() => setShowModal(true)}
+                >
                     ?
                 </Label>
             </Header>
@@ -135,6 +144,21 @@ const FileUpload = () => {
                     </Grid>
                 </form>
             </Segment>
+            {showModal && (
+                <Modal showCross={false} message={''} closeModal={() => setShowModal(false)}>
+                    <h1>File Upload Instructions</h1>
+                    <ul>
+                        <li>Only *.txt files can be submitted for topic modelling analysis</li>
+                        <li>
+                            The file names must contain a time stamp of the following format: *#%@*
+                        </li>
+                        <li>
+                            The file names or content may not include discrediting information about
+                            Italy or Italians (for your own sake)
+                        </li>
+                    </ul>
+                </Modal>
+            )}
         </React.Fragment>
     )
 }

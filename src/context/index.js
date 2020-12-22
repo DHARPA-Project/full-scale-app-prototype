@@ -18,7 +18,7 @@ const ContextProvider = props => {
                 setFileUploadInProgress,
                 uploadedFiles,
                 setUploadedFiles,
-                removeUploadedFileById,
+                removeUploadedFileById
             }}
         >
             {props.children}
