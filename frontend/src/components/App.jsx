@@ -11,7 +11,7 @@ import './App.scss'
 
 function App() {
     return (
-        <React.Fragment>
+        <div className="app">
             <TopHeader />
             <Switch>
                 <Redirect exact from="/topic-modelling" to="/topic-modelling/data-input" />
@@ -20,7 +20,7 @@ function App() {
                 <Route path="/topic-modelling/analysis" component={TopicModellingAnalysis} />
                 <Route exact path="/" component={HomePage} />
             </Switch>
-        </React.Fragment>
+        </div>
     )
 }
 
