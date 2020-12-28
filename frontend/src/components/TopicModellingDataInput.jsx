@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
+import {useHistory} from 'react-router-dom'
 
-import {Container} from 'semantic-ui-react'
+import {Button, Container, Icon} from 'semantic-ui-react'
 
 import TopicModellingSteps from './TopicModellingSteps'
 import FileUpload from './FileUpload'
@@ -10,13 +11,32 @@ import Modal from './common/Modal'
 import {Context} from '../context'
 
 const DataInput = () => {
-    const {showModal, setShowModal} = useContext(Context)
+    const {uploadedFiles, filesReadyForSubmission, showModal, setShowModal} = useContext(Context)
+
+    const history = useHistory()
+
+    const handleFileSubmit = () => history.push('/topic-modelling/parameters')
 
     return (
         <Container>
             <TopicModellingSteps />
             <FileUpload />
             <FileList />
+            {uploadedFiles.length > 0 && (
+                <div style={{display: 'flex', justifyContent: 'center', padding: '1rem'}}>
+                    <Button
+                        icon
+                        labelPosition="left"
+                        positive={filesReadyForSubmission ? true : false}
+                        size="small"
+                        floated="right"
+                        disabled={filesReadyForSubmission ? false : true}
+                        onClick={handleFileSubmit}
+                    >
+                        <Icon name="check" /> Submit all files
+                    </Button>
+                </div>
+            )}
             <Modal showCross={false} isVisible={showModal} setIsVisible={setShowModal}>
                 <h1>File Upload Instructions</h1>
                 <ul>
