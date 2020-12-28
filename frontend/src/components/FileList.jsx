@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 
-import {Button, Checkbox, Icon, Table} from 'semantic-ui-react'
+import {Button, Icon, Table} from 'semantic-ui-react'
 
 import {Context} from '../context'
 import FileListPlaceholder from './FileListPlaceholder'
@@ -29,47 +29,55 @@ const FileList = () => {
         <Table celled compact definition>
             <Table.Header fullWidth>
                 <Table.Row>
-                    <Table.HeaderCell />
-                    <Table.HeaderCell>Name</Table.HeaderCell>
-                    <Table.HeaderCell>Size</Table.HeaderCell>
-                    <Table.HeaderCell>Date</Table.HeaderCell>
-                    <Table.HeaderCell>Type</Table.HeaderCell>
+                    <Table.HeaderCell textAlign="center">Name</Table.HeaderCell>
+                    <Table.HeaderCell textAlign="center">Size</Table.HeaderCell>
+                    <Table.HeaderCell textAlign="center">Date</Table.HeaderCell>
+                    <Table.HeaderCell textAlign="center">Valid</Table.HeaderCell>
                     <Table.HeaderCell></Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
 
             <Table.Body>
-                {uploadedFiles.map(file => (
-                    <Table.Row key={file.id}>
-                        <Table.Cell collapsing>
-                            <Checkbox slider />
-                        </Table.Cell>
-                        <Table.Cell>{file.fileObj.name}</Table.Cell>
-                        <Table.Cell>{file.fileObj.size}</Table.Cell>
-                        <Table.Cell>{file.fileObj.lastModified}</Table.Cell>
-                        {file.fileObj.type === fileTypes.text ? (
-                            <Table.Cell positive>{file.fileObj.type}</Table.Cell>
-                        ) : (
-                            <Table.Cell negative>{file.fileObj.type}</Table.Cell>
-                        )}
-                        <Table.Cell collapsing>
-                            <Button
-                                animated="vertical"
-                                onClick={() => removeUploadedFileById(file.id)}
-                            >
-                                <Button.Content hidden>Remove</Button.Content>
-                                <Button.Content visible>
-                                    <Icon name="trash alternate" />
-                                </Button.Content>
-                            </Button>
-                        </Table.Cell>
-                    </Table.Row>
-                ))}
+                {uploadedFiles.map(file => {
+                    const isValidFile = file.fileObj.type === fileTypes.text
+                    return (
+                        <Table.Row key={file.id} negative={!isValidFile}>
+                            <Table.Cell style={{paddingLeft: '2rem'}}>
+                                {isValidFile ? (
+                                    <Icon name="file outline" />
+                                ) : (
+                                    <Icon name="question" color="red" />
+                                )}
+                                &nbsp;&nbsp;
+                                {file.fileObj.name}
+                            </Table.Cell>
+                            <Table.Cell textAlign="center">{file.fileObj.size}</Table.Cell>
+                            <Table.Cell textAlign="center">{file.fileObj.lastModified}</Table.Cell>
+                            <Table.Cell textAlign="center">
+                                {isValidFile ? (
+                                    <Icon color="green" name="checkmark" size="large" />
+                                ) : (
+                                    <Icon color="red" name="dont" size="large" />
+                                )}
+                            </Table.Cell>
+                            <Table.Cell collapsing>
+                                <Button
+                                    animated="vertical"
+                                    onClick={() => removeUploadedFileById(file.id)}
+                                >
+                                    <Button.Content hidden>Remove</Button.Content>
+                                    <Button.Content visible>
+                                        <Icon name="trash alternate" />
+                                    </Button.Content>
+                                </Button>
+                            </Table.Cell>
+                        </Table.Row>
+                    )
+                })}
             </Table.Body>
 
             <Table.Footer fullWidth>
                 <Table.Row>
-                    <Table.HeaderCell />
                     <Table.HeaderCell colSpan="5">
                         <span className="stats">
                             <span>files: </span>
