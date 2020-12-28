@@ -1,44 +1,32 @@
 {
     "name": "topic-modeling-prototype",
-    "version": "0.1.0",
-    "private": true,
-    "proxy": "http://localhost:5000",
-    "dependencies": {
-        "framer-motion": "^3.1.1",
-        "node-sass": "^4.13.0",
-        "react": "^16.14.0",
-        "react-dom": "^16.14.0",
-        "react-router-dom": "^5.2.0",
-        "react-scripts": "4.0.1",
-        "semantic-ui-css": "^2.4.1",
-        "semantic-ui-react": "^2.0.1",
-        "web-vitals": "^0.2.4"
-    },
+    "version": "1.0.0",
+    "description": "This is the prototype of the topic modelling workflow for the DHARPA project.",
+    "main": "server.js",
+    "type": "module",
     "scripts": {
-        "start": "react-scripts start",
-        "start-api": "cd api && venv/bin/flask run --no-debugger",
-        "build": "react-scripts build",
-        "eject": "react-scripts eject"
+        "start": "node backend/server",
+        "server": "nodemon backend/server",
+        "client": "npm start --prefix frontend",
+        "dev": "concurrently \"npm run server\" \"npm run client\""
     },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DHARPA-Project/topic-modelling-prototype.git"
     },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
+    "keywords": [],
+    "author": "Denis Dilion",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/DHARPA-Project/topic-modelling-prototype/issues"
     },
+    "homepage": "https://github.com/DHARPA-Project/topic-modelling-prototype#readme",
     "devDependencies": {
-        "prettier": "^2.2.1"
+        "concurrently": "^5.3.0",
+        "nodemon": "^2.0.6"
+    },
+    "dependencies": {
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1"
     }
 }
