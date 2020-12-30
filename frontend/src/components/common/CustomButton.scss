@@ -1,0 +1,68 @@
+.custom-button {
+    height: 2.5rem;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 7rem;
+    border: none;
+    margin: 1rem;
+    padding: 0 1rem;
+    background-color: var(--mainColor);
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 2.5rem;
+    letter-spacing: 0.1rem;
+    cursor: pointer;
+    @media (min-width: var(--breakMedium)) {
+        font-size: 1rem;
+        min-width: 13rem;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        background-color: var(--lightColor);
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: var(--accentColorOverlay-1);
+        // box-shadow: 0 0 0.5rem 0.5rem (--accentColorOverlay-3);
+        color: --lightColor;
+        font-weight: 400;
+        outline: none;
+    }
+
+    &:active {
+        box-shadow: 0 0 0.5rem 0.5rem var(--accentColorOverlay-3);
+        outline: none;
+    }
+
+    &.inverted {
+        border: 1px solid var(--darkColor);
+        background-color: var(--lightColor);
+        color: var(--darkColor);
+
+        &:hover,
+        &:focus {
+            border: none;
+            background-color: var(--accentColorOverlay-1);
+            // box-shadow: 0 0 0.5rem 0.5rem var(--accentColorOverlay-3);
+            color: var(--lightColor);
+            font-weight: 400;
+            outline: none;
+        }
+
+        &:active {
+            box-shadow: 0 0 0.5rem 0.5rem var(--accentColorOverlay-3);
+            outline: none;
+        }
+    }
+
+    span,
+    .icon {
+        margin: 0 0.25rem;
+    }
+}
