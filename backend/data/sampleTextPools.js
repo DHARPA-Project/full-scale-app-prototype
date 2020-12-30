@@ -11,14 +11,23 @@ const sample3 = ``
 export default [
     {
         id: '7659696971',
-        text: sample1
+        name: 'World War II',
+        text: sample1,
+        date: '2020.12.22',
+        notes: ''
     },
     {
         id: '6881546416',
-        text: sample2
+        name: 'History of NLP',
+        text: sample2,
+        date: '2020.12.23',
+        notes: ''
     },
     {
         id: '8838511996',
-        text: sample3
+        name: '',
+        text: sample3,
+        date: '',
+        notes: ''
     }
 ]

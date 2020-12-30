@@ -4,7 +4,26 @@ const router = express.Router()
 
 import {processText} from '../utils/textCleanup.js'
 
-import sampleText from '../data/sample.js'
+import sampleText from '../data/sampleTextPools.js'
+import {topicModellingOperations} from '../data/textProcessingOperations.js'
+
+router.route('/options').get((req, res) => {
+    try {
+        const textPools = sampleText
+        const availableOperations = topicModellingOperations
+        setTimeout(
+            () =>
+                res
+                    .status(200)
+                    .json({success: true, pools: textPools, operations: availableOperations}),
+            1000
+        )
+        return
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({success: false, error: 'Internal server error'})
+    }
+})
 
 router.route('/processing').get((req, res) => {
     try {
