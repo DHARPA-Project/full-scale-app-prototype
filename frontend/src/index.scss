@@ -32,6 +32,11 @@
     --semanticPositiveColor: rgb(33, 186, 69);
     --semanticPositiveHoveredColor: rgb(22, 171, 57);
     --semanticPositiveHoveredColor-03: rgba(22, 171, 57, 0.25);
+
+    --breakSmall: 360px;
+    --breakMedium: 760px;
+    --breakLarge: 1200px;
+    --breakHuge: 1800px;
 }
 
 body {
