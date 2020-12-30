@@ -1,0 +1,28 @@
+.text-processing-table {
+    width: 100%;
+    border: 1px solid var(--mainColorOverlay-3);
+    border-radius: 0.25rem;
+    border-collapse: collapse;
+
+    & thead tr th {
+        padding: 1rem;
+    }
+
+    & tr:not(:last-child),
+    th:not(:last-child) {
+        border: 1px solid var(--mainColorOverlay-3);
+    }
+
+    & tr:last-child {
+        border-bottom-left-radius: 0.25rem;
+        border-bottom-right-radius: 0.25rem;
+    }
+
+    & th {
+        background-color: var(--mainColorOverlay-4);
+    }
+
+    & td {
+        padding: 0 1rem;
+    }
+}
