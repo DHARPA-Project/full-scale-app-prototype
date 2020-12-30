@@ -5,7 +5,7 @@ import './TextPoolSelect.scss'
 
 import Spinner from './common/Spinner'
 
-const TextPoolSelect = ({textPools}) => {
+const TextPoolSelect = ({textPools, selectedTextPool, setSelectedTextPool}) => {
     if (!textPools.length) return <Spinner />
 
     return (
@@ -18,11 +18,14 @@ const TextPoolSelect = ({textPools}) => {
                 autoFocus
                 name="text-pools"
                 id="text-pools"
-                onChange={event => console.log(event.target)}
+                onChange={event => setSelectedTextPool(event.target.value)}
+                defaultValue={selectedTextPool}
             >
                 <option> -- select a previously uploaded text pool -- </option>
                 {textPools.map(pool => (
-                    <option key={pool.id} value={pool.id}>{`${pool.name} - ${pool.date}`}</option>
+                    <option key={pool.id} value={pool.id}>
+                        {`${pool.name} - ${pool.date}`}
+                    </option>
                 ))}
             </select>
         </div>

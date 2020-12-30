@@ -15,6 +15,7 @@ const TopicModellingParameters = () => {
     const [optionsLoading, setOptionsLoading] = useState(true)
     const [textPools, setTextPools] = useState([])
     const [processingOperations, setProcessingOperations] = useState([])
+    const [selectedTextPool, setSelectedTextPool] = useState(null)
     const [selectedProcessingOptions, setSelectedProcessingOptions] = useState([])
 
     useEffect(() => {
@@ -57,7 +58,11 @@ const TopicModellingParameters = () => {
                         <Spinner />
                     ) : (
                         <>
-                            <TextPoolSelect textPools={textPools} />
+                            <TextPoolSelect
+                                textPools={textPools}
+                                selectedTextPool={selectedTextPool}
+                                setSelectedTextPool={setSelectedTextPool}
+                            />
 
                             <TextProcessingTable
                                 operations={processingOperations}
@@ -71,7 +76,7 @@ const TopicModellingParameters = () => {
                             >
                                 {selectedProcessingOptions.length > 0
                                     ? `Let's see what we've got so far!`
-                                    : 'No processing operations selected'}
+                                    : 'Required options not selected'}
                             </CustomButton>
                         </>
                     )}
