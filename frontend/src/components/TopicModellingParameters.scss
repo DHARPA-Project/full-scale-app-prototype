@@ -1,0 +1,46 @@
+.text-processing-container {
+    display: grid;
+    column-gap: 5rem;
+    grid-template-areas:
+        'heading heading'
+        'subheading subheading'
+        'options content'
+        'footer footer';
+    grid-template-columns: 33% auto;
+}
+
+.text-processing-heading {
+    grid-area: heading;
+    margin: 0;
+    padding: 1rem 0 2rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.text-processing-subheading {
+    grid-area: subheading;
+    margin: 0;
+    padding: 1rem 0 2rem;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
+.text-processing-options {
+    min-height: 50vh;
+    grid-area: options;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    &.empty {
+        justify-content: center;
+    }
+}
+
+.text-processing-footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}

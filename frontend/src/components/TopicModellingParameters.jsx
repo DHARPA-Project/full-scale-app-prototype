@@ -1,87 +1,84 @@
-import React from 'react'
-import {useHistory} from 'react-router-dom'
+import React, {useEffect, useState} from 'react'
 
-import {Button, Checkbox, Container, Grid, Header, Table} from 'semantic-ui-react'
+import {Container} from 'semantic-ui-react'
+
+import './TopicModellingParameters.scss'
 
 import TopicModellingSteps from './TopicModellingSteps'
-
-import {topicModellingOperations, textPreviewPlaceholder} from '../constants/const'
+import Spinner from './common/Spinner'
+import CustomButton from './common/CustomButton'
+import TextPoolSelect from './TextPoolSelect'
+import TextProcessingTable from './TextProcessingTable'
+import TextProcessingOutput from './TextProcessingOutput'
 
 const TopicModellingParameters = () => {
-    const history = useHistory()
+    const [optionsLoading, setOptionsLoading] = useState(true)
+    const [textPools, setTextPools] = useState([])
+    const [processingOperations, setProcessingOperations] = useState([])
+    const [selectedProcessingOptions, setSelectedProcessingOptions] = useState([])
+
+    useEffect(() => {
+        const fetchTextPools = async () => {
+            const response = await fetch('/api/text/options')
+            const {pools, operations} = await response.json()
+            setTextPools(pools)
+            setProcessingOperations(operations)
+            setOptionsLoading(false)
+        }
+
+        fetchTextPools()
+    }, [])
+
+    const toggleProcessingOption = option => {
+        if (!selectedProcessingOptions.includes(option)) {
+            setSelectedProcessingOptions(previousOptions => [...previousOptions, option])
+        } else {
+            setSelectedProcessingOptions(previousOptions =>
+                previousOptions.filter(previousOption => previousOptions !== option)
+            )
+        }
+    }
 
     const handlePreviewClick = () => {}
 
     return (
         <Container>
             <TopicModellingSteps />
-            <Header size="large" textAlign="center">
-                Topic modelling
-            </Header>
 
-            <Grid columns={2} stackable textAlign="center">
-                <Grid.Row verticalAlign="middle">
-                    <Grid.Column className="file-upload-browse-area">
-                        <Table celled compact definition collapsing>
-                            <Table.Header fullWidth>
-                                <Table.Row>
-                                    <Table.HeaderCell />
-                                    <Table.HeaderCell>Text Pre-processing</Table.HeaderCell>
-                                </Table.Row>
-                            </Table.Header>
+            <div className="text-processing-container">
+                <h1 className="text-processing-heading">Prepare your text for topic modelling</h1>
+                {/*
+                <h2 className="text-processing-subheading">
+                    Prepare your text for topic modelling
+                </h2> */}
 
-                            <Table.Body>
-                                {topicModellingOperations.map((operation, index) => (
-                                    <Table.Row key={index}>
-                                        <Table.Cell collapsing>
-                                            <Checkbox
-                                                toggle
-                                                defaultChecked={operation.enabled}
-                                                disabled={operation.mandatory}
-                                            />
-                                        </Table.Cell>
-                                        <Table.Cell>{operation.name}</Table.Cell>
-                                    </Table.Row>
-                                ))}
-                            </Table.Body>
+                <form className={`text-processing-options${optionsLoading ? ' empty' : ''}`}>
+                    {optionsLoading ? (
+                        <Spinner />
+                    ) : (
+                        <>
+                            <TextPoolSelect textPools={textPools} />
 
-                            <Table.Footer fullWidth>
-                                <Table.Row>
-                                    <Table.HeaderCell />
-                                    <Table.HeaderCell colSpan="2" textAlign="center">
-                                        <Button
-                                            icon
-                                            primary
-                                            size="small"
-                                            onClick={handlePreviewClick}
-                                        >
-                                            Preview
-                                        </Button>
-                                        <Button
-                                            icon
-                                            positive
-                                            size="small"
-                                            onClick={() =>
-                                                history.push('/topic-modelling/analysis')
-                                            }
-                                        >
-                                            Submit
-                                        </Button>
-                                    </Table.HeaderCell>
-                                </Table.Row>
-                            </Table.Footer>
-                        </Table>
-                    </Grid.Column>
+                            <TextProcessingTable
+                                operations={processingOperations}
+                                toggleProcessingOption={toggleProcessingOption}
+                            />
 
-                    <Grid.Column style={{height: '100%'}}>
-                        <textarea
-                            placeholder={textPreviewPlaceholder}
-                            rows="32"
-                            style={{display: 'block', heigth: 'auto', width: '100%'}}
-                        />
-                    </Grid.Column>
-                </Grid.Row>
-            </Grid>
+                            <CustomButton
+                                onClick={handlePreviewClick}
+                                style={{margin: '2rem auto 1rem'}}
+                                disabled={selectedProcessingOptions.length > 0 ? false : true}
+                            >
+                                {selectedProcessingOptions.length > 0
+                                    ? `Let's see what we've got so far!`
+                                    : 'No processing operations selected'}
+                            </CustomButton>
+                        </>
+                    )}
+                </form>
+
+                <TextProcessingOutput />
+            </div>
         </Container>
     )
 }
