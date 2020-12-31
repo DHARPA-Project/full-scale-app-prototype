@@ -36,7 +36,9 @@ router.route('/processing').get((req, res) => {
         }
 
         const original = textPool.text
-        const textOperations = typeof operations === 'text' ? [operations] : operations
+        // operations will be a string if only one query param was passed...
+        // ... and an array of strings if multiple query params were passed
+        const textOperations = typeof operations === 'string' ? [operations] : operations
         const processed = processText(original, textOperations)
 
         return res.status(200).json({success: true, original, processed})

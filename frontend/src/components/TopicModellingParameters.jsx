@@ -17,22 +17,38 @@ const TopicModellingParameters = () => {
     const [processingOperations, setProcessingOperations] = useState([])
     const [selectedTextPool, setSelectedTextPool] = useState(null)
     const [selectedProcessingOptions, setSelectedProcessingOptions] = useState([])
+    const [previewLoading, setPreviewLoading] = useState(false)
+    const [originalText, setOriginalText] = useState('')
+    const [processedText, setProcessedText] = useState('')
 
     useEffect(() => {
         const fetchTextPools = async () => {
             const response = await fetch('/api/text/options')
-            const {pools, operations} = await response.json()
-            setTextPools(pools)
-            setProcessingOperations(operations)
-            setOptionsLoading(false)
+            const {success, error, pools, operations} = await response.json()
+            if (success) {
+                setTextPools(pools)
+                setProcessingOperations(operations)
+            } else {
+                throw new Error(error)
+            }
         }
 
-        fetchTextPools()
+        try {
+            fetchTextPools()
+        } catch (error) {
+            console.error('Failed to fetch text-pool & options data from the server:\n', error)
+        } finally {
+            setOptionsLoading(false)
+        }
     }, [])
 
-    const toggleProcessingOption = operationName => {
-        console.log('switch toggle event: ', operationName)
+    useEffect(() => {
+        if (originalText.length && processedText.length) {
+            // TO DO: generate preview
+        }
+    }, [originalText, processedText])
 
+    const toggleProcessingOption = operationName => {
         if (!selectedProcessingOptions.includes(operationName)) {
             setSelectedProcessingOptions(previousOptions => [...previousOptions, operationName])
         } else {
@@ -42,7 +58,28 @@ const TopicModellingParameters = () => {
         }
     }
 
-    const handlePreviewClick = () => {}
+    const handlePreviewRequest = async event => {
+        event.preventDefault()
+
+        setPreviewLoading(true)
+
+        const url = `/api/text/processing?id=${selectedTextPool}&operations=${selectedProcessingOptions.join('&operations=')}` //prettier-ignore
+
+        try {
+            const response = await fetch(url)
+            const {success, error, original, processed} = await response.json()
+            if (success) {
+                setOriginalText(original)
+                setProcessedText(processed)
+            } else {
+                throw new Error(error)
+            }
+        } catch (error) {
+            console.error('Failed to get text processing preview from the server', error)
+        } finally {
+            setPreviewLoading(false)
+        }
+    }
 
     return (
         <Container>
@@ -50,12 +87,11 @@ const TopicModellingParameters = () => {
 
             <div className="text-processing-container">
                 <h1 className="text-processing-heading">Prepare your text for topic modelling</h1>
-                {/*
-                <h2 className="text-processing-subheading">
-                    Prepare your text for topic modelling
-                </h2> */}
 
-                <form className={`text-processing-options${optionsLoading ? ' empty' : ''}`}>
+                <form
+                    className={`text-processing-options${optionsLoading ? ' empty' : ''}`}
+                    onSubmit={handlePreviewRequest}
+                >
                     {optionsLoading ? (
                         <Spinner />
                     ) : (
@@ -73,7 +109,6 @@ const TopicModellingParameters = () => {
                             />
 
                             <CustomButton
-                                onClick={handlePreviewClick}
                                 style={{margin: '2rem auto 1rem'}}
                                 disabled={selectedProcessingOptions.length > 0 ? false : true}
                             >
