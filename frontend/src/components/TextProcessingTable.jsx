@@ -3,10 +3,9 @@ import React from 'react'
 import './TextProcessingTable.scss'
 
 import SwitchCheckbox from './common/SwitchCheckbox'
-import Spinner from './common/Spinner'
 
 const TextProcessingTable = ({operations, selectedOptions, toggleProcessingOption}) => {
-    if (!operations.length) return <Spinner />
+    if (!operations.length) return null
 
     return (
         <table className="text-processing-table">
