@@ -30,12 +30,14 @@ const TopicModellingParameters = () => {
         fetchTextPools()
     }, [])
 
-    const toggleProcessingOption = option => {
-        if (!selectedProcessingOptions.includes(option)) {
-            setSelectedProcessingOptions(previousOptions => [...previousOptions, option])
+    const toggleProcessingOption = operationName => {
+        console.log('switch toggle event: ', operationName)
+
+        if (!selectedProcessingOptions.includes(operationName)) {
+            setSelectedProcessingOptions(previousOptions => [...previousOptions, operationName])
         } else {
             setSelectedProcessingOptions(previousOptions =>
-                previousOptions.filter(previousOption => previousOptions !== option)
+                previousOptions.filter(previousOption => previousOption !== operationName)
             )
         }
     }
@@ -67,6 +69,7 @@ const TopicModellingParameters = () => {
                             <TextProcessingTable
                                 operations={processingOperations}
                                 toggleProcessingOption={toggleProcessingOption}
+                                selectedOptions={selectedProcessingOptions}
                             />
 
                             <CustomButton

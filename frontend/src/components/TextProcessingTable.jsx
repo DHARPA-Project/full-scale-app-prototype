@@ -5,7 +5,7 @@ import './TextProcessingTable.scss'
 import SwitchCheckbox from './common/SwitchCheckbox'
 import Spinner from './common/Spinner'
 
-const TextProcessingTable = ({operations}) => {
+const TextProcessingTable = ({operations, selectedOptions, toggleProcessingOption}) => {
     if (!operations.length) return <Spinner />
 
     return (
@@ -19,7 +19,12 @@ const TextProcessingTable = ({operations}) => {
                 {operations.map(operation => (
                     <tr key={operation.name}>
                         <th>
-                            <SwitchCheckbox />
+                            <SwitchCheckbox
+                                enabled={
+                                    operation.enabled || selectedOptions.includes(operation.name)
+                                }
+                                onToggle={() => toggleProcessingOption(operation.name)}
+                            />
                         </th>
                         <td>{operation.description}</td>
                     </tr>
