@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react'
 
 import {Container} from 'semantic-ui-react'
 
+import {Diff} from 'diff'
+
 import './TopicModellingParameters.scss'
 
 import TopicModellingSteps from './TopicModellingSteps'
@@ -20,6 +22,7 @@ const TopicModellingParameters = () => {
     const [previewLoading, setPreviewLoading] = useState(false)
     const [originalText, setOriginalText] = useState('')
     const [processedText, setProcessedText] = useState('')
+    const [preview, setPreview] = useState([])
 
     useEffect(() => {
         const fetchTextPools = async () => {
@@ -44,7 +47,11 @@ const TopicModellingParameters = () => {
 
     useEffect(() => {
         if (originalText.length && processedText.length) {
-            // TO DO: generate preview
+            const diff = new Diff()
+            const difference = diff.diff(originalText, processedText)
+
+            setPreview(difference)
+            setPreviewLoading(false)
         }
     }, [originalText, processedText])
 
@@ -76,8 +83,6 @@ const TopicModellingParameters = () => {
             }
         } catch (error) {
             console.error('Failed to get text processing preview from the server', error)
-        } finally {
-            setPreviewLoading(false)
         }
     }
 
@@ -120,7 +125,7 @@ const TopicModellingParameters = () => {
                     )}
                 </form>
 
-                <TextProcessingOutput />
+                <TextProcessingOutput loading={previewLoading} preview={preview} />
             </div>
         </Container>
     )

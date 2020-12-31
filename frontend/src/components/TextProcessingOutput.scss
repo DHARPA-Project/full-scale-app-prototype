@@ -1,6 +1,7 @@
 .text-processing-output {
     min-height: 50vh;
-    grid-area: content;
+    grid-area: output;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -20,10 +21,19 @@
     }
 
     &-text {
+        word-break: break-all;
         column-count: 2;
         column-gap: 2rem;
         text-align: justify;
         color: #767676;
+
+        & .added {
+            color: var(--mainColor);
+        }
+
+        & .removed {
+            color: var(--accentColor);
+        }
     }
 
     &-footer {
