@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import {useHistory} from 'react-router-dom'
 
 import {Container} from 'semantic-ui-react'
 
@@ -14,6 +15,8 @@ import TextProcessingTable from './TextProcessingTable'
 import TextProcessingOutput from './TextProcessingOutput'
 
 const TopicModellingParameters = () => {
+    const history = useHistory()
+
     const [optionsLoading, setOptionsLoading] = useState(true)
     const [textPools, setTextPools] = useState([])
     const [processingOperations, setProcessingOperations] = useState([])
@@ -22,7 +25,7 @@ const TopicModellingParameters = () => {
     const [previewLoading, setPreviewLoading] = useState(false)
     const [originalText, setOriginalText] = useState('')
     const [processedText, setProcessedText] = useState('')
-    const [preview, setPreview] = useState([])
+    const [preview, setPreview] = useState('')
 
     useEffect(() => {
         const fetchTextPools = async () => {
@@ -111,27 +114,38 @@ const TopicModellingParameters = () => {
                                 selectedTextPool={selectedTextPool}
                                 handleTextPoolSelect={handleTextPoolSelect}
                             />
-
                             <TextProcessingTable
                                 operations={processingOperations}
                                 textPoolSelected={!!selectedTextPool}
                                 toggleProcessingOption={toggleProcessingOption}
                                 selectedOptions={selectedProcessingOptions}
                             />
-
-                            <CustomButton
-                                style={{margin: '2rem auto 1rem'}}
-                                disabled={selectedProcessingOptions.length > 0 ? false : true}
-                            >
-                                {selectedProcessingOptions.length > 0
-                                    ? `Let's see what we've got so far!`
-                                    : 'Required options not selected'}
-                            </CustomButton>
+                            <div className="text-processing-options-footer">
+                                <CustomButton
+                                    disabled={selectedProcessingOptions.length > 0 ? false : true}
+                                    type="submit"
+                                >
+                                    {selectedProcessingOptions.length > 0
+                                        ? `Let's see what we've got so far!`
+                                        : 'Required options not selected'}
+                                </CustomButton>
+                            </div>
                         </>
                     )}
                 </form>
 
                 <TextProcessingOutput loading={previewLoading} preview={preview} />
+
+                <div className="text-processing-footer">
+                    <CustomButton
+                        onClick={() => history.push('/topic-modelling/analysis')}
+                        disabled={preview ? false : true}
+                    >
+                        {preview
+                            ? `We're done here. Let's move on!`
+                            : 'Processing options not selected'}
+                    </CustomButton>
+                </div>
             </div>
         </Container>
     )

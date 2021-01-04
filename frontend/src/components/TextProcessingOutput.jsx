@@ -1,16 +1,12 @@
 import React, {useState, useEffect} from 'react'
-import {useHistory} from 'react-router-dom'
 
 import './TextProcessingOutput.scss'
 
 import {textPreviewPlaceholder} from '../constants/const'
 
-import CustomButton from './common/CustomButton'
 import Spinner from './common/Spinner'
 
 const TextProcessingOutput = ({loading, preview}) => {
-    const history = useHistory()
-
     const [output, setOutput] = useState(textPreviewPlaceholder)
 
     const explanationTextStyle = {columnCount: 1, padding: '5rem', textAlign: 'center'}
@@ -50,14 +46,6 @@ const TextProcessingOutput = ({loading, preview}) => {
                         }
                     >
                         {output}
-                    </div>
-                    <div className="text-processing-output-footer">
-                        <CustomButton
-                            onClick={() => history.push('/topic-modelling/analysis')}
-                            disabled={preview ? false : true}
-                        >
-                            We're done here. Let's move on!
-                        </CustomButton>
                     </div>
                 </>
             )}

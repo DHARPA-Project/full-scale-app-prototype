@@ -4,7 +4,6 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 
     &-explanation {
         display: flex;
@@ -21,6 +20,7 @@
     }
 
     &-text {
+        flex-grow: 1;
         word-break: break-all;
         column-count: 2;
         column-gap: 2rem;
