@@ -39,6 +39,11 @@
     --breakHuge: 1800px;
 }
 
+html,
+body {
+    width: 100%;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -46,6 +51,10 @@ body {
         'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+    min-height: 100vh;
 }
 
 code {
