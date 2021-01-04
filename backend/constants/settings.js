@@ -1,0 +1,3 @@
+// the length of the preview text to be shown to the researcher...
+// ... after various text processing options have been applied
+export const previewLength = 2500

@@ -2,10 +2,10 @@ import express, {text} from 'express'
 
 const router = express.Router()
 
-import {processText} from '../utils/textCleanup.js'
-
 import sampleText from '../data/sampleTextPools.js'
 import {topicModellingOperations} from '../data/textProcessingOperations.js'
+import {processText} from '../utils/textCleanup.js'
+import {previewLength} from '../constants/settings.js'
 
 router.route('/options').get((req, res) => {
     try {
@@ -35,7 +35,7 @@ router.route('/processing').get((req, res) => {
             return res.json({success: false, error: 'text pool with specified ID not found'})
         }
 
-        const original = textPool.text
+        const original = textPool.text.slice(0, previewLength)
         // operations will be a string if only one query param was passed...
         // ... and an array of strings if multiple query params were passed
         const textOperations = typeof operations === 'string' ? [operations] : operations
