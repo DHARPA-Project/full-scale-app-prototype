@@ -13,7 +13,7 @@ const TextProcessingTable = ({
     if (!operations.length) return null
 
     return (
-        <table className="text-processing-table">
+        <table className={`text-processing-table ${!textPoolSelected && 'muted'}`}>
             <thead>
                 <tr>
                     <th colSpan="2">Text Processing Options</th>

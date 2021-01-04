@@ -15,7 +15,7 @@ const TextPoolSelect = ({textPools, selectedTextPool, handleTextPoolSelect}) => 
             </label> */}
             <select
                 className="text-pool-choice-select"
-                autoFocus
+                autoFocus={!selectedTextPool}
                 name="text-pools"
                 id="text-pools"
                 onChange={handleTextPoolSelect}

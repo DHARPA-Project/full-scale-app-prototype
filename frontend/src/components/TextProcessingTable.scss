@@ -4,6 +4,10 @@
     border-radius: 0.25rem;
     border-collapse: collapse;
 
+    &.muted {
+        opacity: 0.3;
+    }
+
     & thead tr th {
         padding: 1rem;
     }

@@ -38,7 +38,7 @@
     }
 
     &-footer {
-        min-height: 6rem;
+        height: 6rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -46,7 +46,7 @@
 }
 
 .text-processing-footer {
-    min-height: 6rem;
+    height: 6rem;
     grid-area: footer;
     display: flex;
     justify-content: center;

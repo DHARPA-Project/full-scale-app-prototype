@@ -136,7 +136,11 @@ const TopicModellingParameters = () => {
                     )}
                 </form>
 
-                <TextProcessingOutput loading={previewLoading} preview={preview} />
+                <TextProcessingOutput
+                    loading={previewLoading}
+                    preview={preview}
+                    textPoolSelected={!!selectedTextPool}
+                />
 
                 <div className="text-processing-footer">
                     <CustomButton

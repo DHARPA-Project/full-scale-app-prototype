@@ -21,4 +21,10 @@
     & option {
         text-align: center;
     }
+
+    &:focus {
+        outline: none;
+        border: 2px solid var(--accentColorOverlay-3);
+        box-shadow: 0 0 0.5rem 0.1rem var(--accentColorOverlay-3);
+    }
 }

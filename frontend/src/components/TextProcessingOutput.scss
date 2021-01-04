@@ -5,6 +5,10 @@
     display: flex;
     flex-direction: column;
 
+    &.muted {
+        opacity: 0.3;
+    }
+
     &-explanation {
         display: flex;
         justify-content: space-evenly;

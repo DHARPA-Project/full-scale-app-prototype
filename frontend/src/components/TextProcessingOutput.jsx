@@ -6,7 +6,7 @@ import {textPreviewPlaceholder} from '../constants/const'
 
 import Spinner from './common/Spinner'
 
-const TextProcessingOutput = ({loading, preview}) => {
+const TextProcessingOutput = ({loading, preview, textPoolSelected}) => {
     const [output, setOutput] = useState(textPreviewPlaceholder)
 
     const explanationTextStyle = {columnCount: 1, padding: '5rem', textAlign: 'center'}
@@ -29,7 +29,7 @@ const TextProcessingOutput = ({loading, preview}) => {
     }, [preview])
 
     return (
-        <div className="text-processing-output">
+        <div className={`text-processing-output ${!textPoolSelected && 'muted'}`}>
             {loading ? (
                 <Spinner />
             ) : (
