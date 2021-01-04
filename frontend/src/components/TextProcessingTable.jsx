@@ -4,7 +4,12 @@ import './TextProcessingTable.scss'
 
 import SwitchCheckbox from './common/SwitchCheckbox'
 
-const TextProcessingTable = ({operations, selectedOptions, toggleProcessingOption}) => {
+const TextProcessingTable = ({
+    operations,
+    textPoolSelected,
+    selectedOptions,
+    toggleProcessingOption
+}) => {
     if (!operations.length) return null
 
     return (
@@ -22,6 +27,7 @@ const TextProcessingTable = ({operations, selectedOptions, toggleProcessingOptio
                                 enabled={
                                     operation.enabled || selectedOptions.includes(operation.name)
                                 }
+                                disabled={!textPoolSelected}
                                 onToggle={() => toggleProcessingOption(operation.name)}
                             />
                         </th>

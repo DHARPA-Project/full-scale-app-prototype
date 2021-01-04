@@ -5,6 +5,14 @@
     height: 1.6rem;
     margin: 0.5rem;
 
+    &.disabled {
+        cursor: not-allowed;
+
+        & .switch-slider {
+            cursor: not-allowed;
+        }
+    }
+
     &-checkbox {
         display: none;
 

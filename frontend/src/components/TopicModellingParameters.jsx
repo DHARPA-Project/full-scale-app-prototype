@@ -109,6 +109,7 @@ const TopicModellingParameters = () => {
 
                             <TextProcessingTable
                                 operations={processingOperations}
+                                textPoolSelected={!!selectedTextPool}
                                 toggleProcessingOption={toggleProcessingOption}
                                 selectedOptions={selectedProcessingOptions}
                             />
