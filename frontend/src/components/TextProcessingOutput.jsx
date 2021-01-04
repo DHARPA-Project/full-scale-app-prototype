@@ -6,10 +6,8 @@ import {textPreviewPlaceholder} from '../constants/const'
 
 import Spinner from './common/Spinner'
 
-const TextProcessingOutput = ({loading, preview, textPoolSelected}) => {
+const TextProcessingOutput = ({loading, preview, classes}) => {
     const [output, setOutput] = useState(textPreviewPlaceholder)
-
-    const explanationTextStyle = {columnCount: 1, padding: '5rem', textAlign: 'center'}
 
     useEffect(() => {
         if (preview?.length) {
@@ -29,7 +27,7 @@ const TextProcessingOutput = ({loading, preview, textPoolSelected}) => {
     }, [preview])
 
     return (
-        <div className={`text-processing-output ${!textPoolSelected && 'muted'}`}>
+        <div className={`text-processing-output ${classes}`}>
             {loading ? (
                 <Spinner />
             ) : (
@@ -40,12 +38,9 @@ const TextProcessingOutput = ({loading, preview, textPoolSelected}) => {
                         <span className="output-added">added fragments</span>
                     </div>
                     <div
-                        className="text-processing-output-text"
-                        style={
-                            output === textPreviewPlaceholder
-                                ? explanationTextStyle
-                                : {columnCount: 2}
-                        }
+                        className={`text-processing-output-text ${
+                            output === textPreviewPlaceholder ? 'placeholder' : ''
+                        }`}
                     >
                         {output}
                     </div>

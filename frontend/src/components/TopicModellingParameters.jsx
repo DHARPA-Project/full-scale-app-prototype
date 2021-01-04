@@ -119,18 +119,16 @@ const TopicModellingParameters = () => {
                             />
                             <TextProcessingTable
                                 operations={processingOperations}
-                                textPoolSelected={!!selectedTextPool}
+                                classes={!selectedTextPool ? 'muted' : ''}
                                 toggleProcessingOption={toggleProcessingOption}
                                 selectedOptions={selectedProcessingOptions}
                             />
                             <div className="text-processing-options-footer">
                                 <CustomButton
-                                    disabled={selectedProcessingOptions.length > 0 ? false : true}
+                                    classes={!selectedTextPool ? 'muted' : ''}
                                     type="submit"
                                 >
-                                    {selectedProcessingOptions.length > 0
-                                        ? `Let's see what we've got so far!`
-                                        : 'Required options not selected'}
+                                    Let's see what we've got so far!
                                 </CustomButton>
                             </div>
                         </>
@@ -140,17 +138,15 @@ const TopicModellingParameters = () => {
                 <TextProcessingOutput
                     loading={previewLoading}
                     preview={preview}
-                    textPoolSelected={!!selectedTextPool}
+                    classes={!selectedTextPool ? 'muted' : ''}
                 />
 
                 <div className="text-processing-footer">
                     <CustomButton
                         onClick={() => history.push('/topic-modelling/analysis')}
-                        disabled={preview ? false : true}
+                        classes={!selectedTextPool ? 'muted' : ''}
                     >
-                        {preview
-                            ? `We're done here. Let's move on!`
-                            : 'Processing options not selected'}
+                        We're done here. Let's move on!
                     </CustomButton>
                 </div>
             </div>

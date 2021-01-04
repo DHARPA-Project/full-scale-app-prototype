@@ -5,16 +5,17 @@
     justify-content: center;
     align-items: center;
     min-width: 7rem;
-    border: none;
+    border: 2px solid var(--mainColorOverlay-1);
     margin: 1rem;
-    padding: 0 1rem;
-    background-color: var(--mainColor);
+    padding: 0.5rem 1rem;
+    background-color: var(--mainColorOverlay-1);
     color: white;
     font-size: 0.9rem;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 2.5rem;
     letter-spacing: 0.1rem;
     cursor: pointer;
+
     @media (min-width: var(--breakMedium)) {
         font-size: 1rem;
         min-width: 13rem;
@@ -25,13 +26,13 @@
         background-color: var(--lightColor);
     }
 
-    &:hover:not(:disabled),
-    &:focus:not(:disabled),
-    &:active:not(:disabled) {
-        background-color: var(--accentColorOverlay-1);
-        // box-shadow: 0 0 0.5rem 0.5rem (--accentColorOverlay-3);
-        color: --lightColor;
-        font-weight: 400;
+    &:hover,
+    &:focus {
+        background-color: transparent;
+        box-shadow: 0 0 0.3rem 0.3rem var(--mainColorOverlay-2);
+        border: 2px solid var(--mainColorOverlay-1);
+        color: var(--mainColorOverlay-2);
+        font-weight: 700;
         outline: none;
     }
 
@@ -41,22 +42,22 @@
     }
 
     &.inverted {
-        border: 1px solid var(--darkColor);
-        background-color: var(--lightColor);
-        color: var(--darkColor);
+        border: 2px solid var(--mainColorOverlay-1);
+        background-color: transparent;
+        color: var(--mainColorOverlay-1);
 
         &:hover,
         &:focus {
             border: none;
-            background-color: var(--accentColorOverlay-1);
+            background-color: var(--mainColorOverlay-1);
             // box-shadow: 0 0 0.5rem 0.5rem var(--accentColorOverlay-3);
-            color: var(--lightColor);
-            font-weight: 400;
+            color: white;
+            font-weight: 700;
             outline: none;
         }
 
         &:active {
-            box-shadow: 0 0 0.5rem 0.5rem var(--accentColorOverlay-3);
+            box-shadow: 0 0 0.5rem 0.5rem var(--mainColorOverlay-2);
             outline: none;
         }
     }
