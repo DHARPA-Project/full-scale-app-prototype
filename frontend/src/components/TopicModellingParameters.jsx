@@ -65,6 +65,11 @@ const TopicModellingParameters = () => {
         }
     }
 
+    const handleTextPoolSelect = event => {
+        setSelectedProcessingOptions([])
+        setSelectedTextPool(event.target.value)
+    }
+
     const handlePreviewRequest = async event => {
         event.preventDefault()
 
@@ -104,7 +109,7 @@ const TopicModellingParameters = () => {
                             <TextPoolSelect
                                 textPools={textPools}
                                 selectedTextPool={selectedTextPool}
-                                setSelectedTextPool={setSelectedTextPool}
+                                handleTextPoolSelect={handleTextPoolSelect}
                             />
 
                             <TextProcessingTable
