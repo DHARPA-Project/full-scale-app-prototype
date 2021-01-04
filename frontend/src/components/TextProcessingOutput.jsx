@@ -23,6 +23,8 @@ const TextProcessingOutput = ({loading, preview}) => {
                     </span>
                 ))
             )
+        } else {
+            setOutput(textPreviewPlaceholder)
         }
     }, [preview])
 

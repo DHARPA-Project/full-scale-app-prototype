@@ -20,6 +20,7 @@ const TopicModellingParameters = () => {
     const [optionsLoading, setOptionsLoading] = useState(true)
     const [textPools, setTextPools] = useState([])
     const [processingOperations, setProcessingOperations] = useState([])
+
     const [selectedTextPool, setSelectedTextPool] = useState(null)
     const [selectedProcessingOptions, setSelectedProcessingOptions] = useState([])
     const [previewLoading, setPreviewLoading] = useState(false)
@@ -69,6 +70,7 @@ const TopicModellingParameters = () => {
     }
 
     const handleTextPoolSelect = event => {
+        setPreview('')
         setSelectedProcessingOptions([])
         setSelectedTextPool(event.target.value)
     }
