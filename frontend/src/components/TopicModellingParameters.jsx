@@ -55,7 +55,6 @@ const TopicModellingParameters = () => {
             const difference = diff.diff(originalText, processedText)
 
             setPreview(difference)
-            setPreviewLoading(false)
         }
     }, [originalText, processedText])
 
@@ -93,6 +92,8 @@ const TopicModellingParameters = () => {
             }
         } catch (error) {
             console.error('Failed to get text processing preview from the server', error)
+        } finally {
+            setPreviewLoading(false)
         }
     }
 
