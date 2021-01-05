@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import {motion} from 'framer-motion'
 
 import './TextProcessingOutput.scss'
 
@@ -37,13 +38,15 @@ const TextProcessingOutput = ({loading, preview, classes}) => {
                         <span className="output-deleted">deleted fragments</span>
                         <span className="output-added">added fragments</span>
                     </div>
-                    <div
+                    <motion.div
                         className={`text-processing-output-text ${
                             output === textPreviewPlaceholder ? 'placeholder' : ''
                         }`}
+                        initial={{opacity: 0}}
+                        animate={{opacity: 1, transition: {duration: 0.5}}}
                     >
                         {output}
-                    </div>
+                    </motion.div>
                 </>
             )}
         </div>
