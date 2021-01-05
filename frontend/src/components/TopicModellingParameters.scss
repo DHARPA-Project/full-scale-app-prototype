@@ -2,8 +2,6 @@
     display: grid;
     column-gap: 5rem;
     grid-template-areas:
-        'heading heading'
-        'subheading subheading'
         'options output'
         'options footer';
     grid-template-columns: 33% auto;
