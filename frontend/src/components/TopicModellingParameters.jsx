@@ -27,8 +27,6 @@ const TopicModellingParameters = () => {
     const [selectedTextPool, setSelectedTextPool] = useState(null)
     const [selectedProcessingOptions, setSelectedProcessingOptions] = useState([])
     const [previewLoading, setPreviewLoading] = useState(false)
-    const [originalText, setOriginalText] = useState('')
-    const [processedText, setProcessedText] = useState('')
     const [preview, setPreview] = useState('')
 
     useEffect(() => {
@@ -52,22 +50,15 @@ const TopicModellingParameters = () => {
         }
     }, [])
 
-    useEffect(() => {
-        if (originalText.length && processedText.length) {
-            const diff = new Diff()
-            const difference = diff.diff(originalText, processedText)
-
-            setPreview(difference)
-        }
-    }, [originalText, processedText])
-
     const toggleProcessingOption = operationName => {
-        if (!selectedProcessingOptions.includes(operationName)) {
-            setSelectedProcessingOptions(previousOptions => [...previousOptions, operationName])
-        } else {
+        setPreview('')
+
+        if (selectedProcessingOptions.includes(operationName)) {
             setSelectedProcessingOptions(previousOptions =>
                 previousOptions.filter(previousOption => previousOption !== operationName)
             )
+        } else {
+            setSelectedProcessingOptions(previousOptions => [...previousOptions, operationName])
         }
     }
 
@@ -96,8 +87,10 @@ const TopicModellingParameters = () => {
             const response = await fetch(url)
             const {success, error, original, processed} = await response.json()
             if (success) {
-                setOriginalText(original)
-                setProcessedText(processed)
+                if (original.length && processed.length) {
+                    const diff = new Diff()
+                    setPreview(diff.diff(original, processed))
+                }
             } else {
                 throw new Error(error)
             }
