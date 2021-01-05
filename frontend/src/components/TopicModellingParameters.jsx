@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {useHistory} from 'react-router-dom'
 
 import {Container} from 'semantic-ui-react'
@@ -14,7 +14,10 @@ import TextPoolSelect from './TextPoolSelect'
 import TextProcessingTable from './TextProcessingTable'
 import TextProcessingOutput from './TextProcessingOutput'
 
+import {Context} from '../context'
+
 const TopicModellingParameters = () => {
+    const {createNotification} = useContext(Context)
     const history = useHistory()
 
     const [optionsLoading, setOptionsLoading] = useState(true)
@@ -76,6 +79,14 @@ const TopicModellingParameters = () => {
 
     const handlePreviewRequest = async event => {
         event.preventDefault()
+
+        if (!selectedProcessingOptions.length) {
+            createNotification(
+                "You haven't selected any text processing options.", //message
+                'info', // type
+                5000 // duration
+            )
+        }
 
         setPreviewLoading(true)
 
