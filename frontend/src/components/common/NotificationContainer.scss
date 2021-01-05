@@ -1,0 +1,57 @@
+.notification-list {
+    box-sizing: border-box;
+    position: fixed;
+    z-index: 99;
+
+    &.top-right,
+    &.bottom-right {
+        & .notification {
+            animation: toast-in-right 0.7s;
+        }
+    }
+
+    &.top-left,
+    &.bottom-left {
+        & .notification {
+            animation: toast-in-left 0.7s;
+        }
+    }
+
+    &.top-right {
+        top: 2rem;
+        right: 2rem;
+    }
+
+    &.bottom-right {
+        bottom: 2rem;
+        right: 2rem;
+    }
+
+    &.top-left {
+        top: 2rem;
+        left: 2rem;
+    }
+
+    &.bottom-left {
+        bottom: 2rem;
+        left: 2rem;
+    }
+}
+
+@keyframes toast-in-right {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        translate: translateX(0);
+    }
+}
+
+@keyframes toast-in-left {
+    from {
+        transform: translateX(-100%);
+    }
+    to {
+        translate: translateX(0);
+    }
+}

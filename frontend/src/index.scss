@@ -25,12 +25,12 @@
     --lightColorOverlay-4: rgba(230, 230, 235, 0.25);
     --lightColorOverlay-5: rgba(230, 230, 235, 0.05);
 
-    --textColor: rgba(0, 0, 0, 1);
-    --textColorOverlay-1: rgba(0, 0, 0, 0.95);
-    --textColorOverlay-2: rgba(0, 0, 0, 0.75);
-    --textColorOverlay-3: rgba(0, 0, 0, 0.5);
-    --textColorOverlay-4: rgba(0, 0, 0, 0.25);
-    --textColorOverlay-5: rgba(0, 0, 0, 0.05);
+    --darkColor: rgba(0, 0, 0, 1);
+    --darkColorOverlay-1: rgba(0, 0, 0, 0.95);
+    --darkColorOverlay-2: rgba(0, 0, 0, 0.75);
+    --darkColorOverlay-3: rgba(0, 0, 0, 0.5);
+    --darkColorOverlay-4: rgba(0, 0, 0, 0.25);
+    --darkColorOverlay-5: rgba(0, 0, 0, 0.05);
 
     --accentColor: rgb(239, 57, 112);
     --accentColorOverlay-1: rgba(239, 57, 112, 0.95);
@@ -38,6 +38,11 @@
     --accentColorOverlay-3: rgba(239, 57, 112, 0.5);
     --accentColorOverlay-4: rgba(239, 57, 112, 0.25);
     --accentColorOverlay-5: rgba(239, 57, 112, 0.05);
+
+    --successColor: #5cb85c;
+    --infoColor: #5bc0de;
+    --warningColor: #f0ad4e;
+    --errorColor: #d9534f;
 
     --semanticPositiveColor: rgb(33, 186, 69);
     --semanticPositiveHoveredColor: rgb(22, 171, 57);

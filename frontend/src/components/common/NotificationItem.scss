@@ -1,0 +1,83 @@
+.notification {
+    position: relative;
+    display: grid;
+    column-gap: 1rem;
+    grid-template-areas: 'icon content';
+    grid-template-columns: 2rem 18rem;
+    padding: 1rem 2rem 1rem 1rem;
+    overflow: hidden;
+    border-radius: 0.2rem;
+    box-shadow: 0 0 0.7rem var(--darkColorOverlay-3);
+    color: white;
+    opacity: 0.9;
+    transition: 0.3s ease;
+
+    &:not(:last-of-type) {
+        margin-bottom: 1rem;
+    }
+
+    &.success {
+        background-color: var(--successColor);
+    }
+
+    &.info {
+        background-color: var(--infoColor);
+    }
+
+    &.warning {
+        background-color: var(--warningColor);
+    }
+
+    &.error {
+        background-color: var(--errorColor);
+    }
+
+    &:hover {
+        box-shadow: 0 0 12px #fff;
+        opacity: 1;
+    }
+}
+
+.notification-content {
+    grid-area: content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.notification-message {
+    width: 100%;
+    margin: 0;
+    text-align: left;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    // white-space: nowrap;
+}
+
+.notification-icon {
+    grid-area: icon;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+
+    &.large {
+        font-size: 2rem;
+    }
+}
+
+.close-button {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.4rem;
+    font-size: 1.25rem;
+
+    &.large {
+        font-size: 1.5rem;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}

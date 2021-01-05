@@ -6,10 +6,11 @@ import TopHeader from './TopHeader'
 import TopicModellingDataInput from './TopicModellingDataInput'
 import TopicModellingParameters from './TopicModellingParameters'
 import TopicModellingAnalysis from './TopicModellingAnalysis'
+import NotificationContainer from './common/NotificationContainer'
 
 import './App.scss'
 
-function App() {
+const App = () => {
     return (
         <div className="app">
             <TopHeader />
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/topic-modelling/analysis" component={TopicModellingAnalysis} />
                 <Route exact path="/" component={HomePage} />
             </Switch>
+            <NotificationContainer />
         </div>
     )
 }

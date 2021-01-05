@@ -1,14 +1,36 @@
-import React, {createContext, useState} from 'react'
+import React, {createContext, useState, useReducer} from 'react'
+import {v4 as uuidv4} from 'uuid'
 
 import {isValidUploadedFile} from '../utils/helpers'
 
 export const Context = createContext()
 
+const notificationReducer = (state, action) => {
+    switch (action.type) {
+        case 'addNotification':
+            return [...state, action.payload]
+        case 'removeNotification':
+            return state.filter(notification => notification.id !== action.payload)
+        default:
+            return state
+    }
+}
+
 const ContextProvider = props => {
+    const [notifications, dispatch] = useReducer(notificationReducer, [])
+
     const [fileUploadInProgress, setFileUploadInProgress] = useState(false)
     const [uploadedFiles, setUploadedFiles] = useState([])
     const [filesReadyForSubmission, setFilesReadyForSubmission] = useState(false)
     const [showModal, setShowModal] = useState(false)
+
+    const createNotification = (message, type = 'warning', lifeSpan) =>
+        dispatch({
+            type: 'addNotification',
+            payload: {id: uuidv4(), type, message, lifeSpan}
+        })
+
+    const destroyNotification = id => dispatch({type: 'removeNotification', payload: id})
 
     const removeUploadedFileById = id2remove => {
         const newFileList = uploadedFiles.filter(uploadedFile => uploadedFile.id !== id2remove)
@@ -22,6 +44,11 @@ const ContextProvider = props => {
     return (
         <Context.Provider
             value={{
+                notifications,
+                createNotification,
+                destroyNotification,
+                showModal,
+                setShowModal,
                 fileUploadInProgress,
                 setFileUploadInProgress,
                 uploadedFiles,
@@ -29,9 +56,7 @@ const ContextProvider = props => {
                 removeUploadedFileById,
                 removeAllInvalidFiles,
                 filesReadyForSubmission,
-                setFilesReadyForSubmission,
-                showModal,
-                setShowModal
+                setFilesReadyForSubmission
             }}
         >
             {props.children}
