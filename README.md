@@ -31,13 +31,18 @@ This should open the app in a new browser instance. If it isn't opened automatic
 
 ## To Do:
 
-On the Data Preparation page, allow the user to select the desired batch of files from the previously uploaded batches
+Change main color
+Create header
+Make entire toastie clickable
+Create custom Container component to replace the SemanticUI one
+Animate toastie on exit with framer motion
 
-Should the user be shown warnings / tips such as "Your sources contain X HTML tags. Would you like them removed before proceeding further?"
-
-Show warning sign next to "HTML tag removal" option if tags found in text but option disabled
+Add notifications for all possible server errors
+Add error-notification pop-up / toastie
 
 Add confirmation pop-ups, e.g. for file removal
+
+Show warning sign next to "HTML tag removal" option if tags found in text but option disabled
 
 Collapse (with animation) file upload area when files are uploaded / conditionally collapse when more than X (e.g. 5 or 10) files have been uploaded
 
@@ -48,3 +53,15 @@ Make the table displaying the uploaded file list scrollable
 Change drag-and-drop area icon (down-arrow?)
 
 Change color of file-removal buttons on hover to red
+
+When hovering over operations, wrap in a dark overlay and show a "more info" button
+
+Extract time stamps from file names
+
+File upload progress bar
+
+Change the active step title color to the main index.scss color
+
+Proper form validation (sign up, sign in)
+
+Improve text processing operations (e.g. remove numbers/digits, remove punctuation)
