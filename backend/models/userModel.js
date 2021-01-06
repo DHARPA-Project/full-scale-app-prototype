@@ -1,15 +1,11 @@
 import mongoose from 'mongoose'
 
-import {emailRegex} from '../utils/regex'
+import {emailRegex} from '../utils/regex.js'
 
 const userSchema = mongoose.Schema(
     {
         _id: mongoose.Schema.Types.ObjectId,
-        firstName: {
-            type: String,
-            required: true
-        },
-        lastName: {
+        name: {
             type: String,
             required: true
         },
