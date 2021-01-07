@@ -104,9 +104,9 @@ router.route('/login').post(async (req, res) => {
             success: true,
             message: 'authentication successful',
             user: {
-                id: newUser._id,
-                name: newUser.name,
-                email: newUser.email,
+                id: existingUser._id,
+                name: existingUser.name,
+                email: existingUser.email,
                 token: generateToken({
                     id: existingUser._id,
                     name: existingUser.name,

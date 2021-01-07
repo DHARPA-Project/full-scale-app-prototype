@@ -56,7 +56,7 @@ const TopicModellingParameters = () => {
         }
 
         fetchTextPools()
-    }, [])
+    }, [createNotification])
 
     const toggleProcessingOption = operationName => {
         setPreview('')
