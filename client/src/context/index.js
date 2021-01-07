@@ -2,6 +2,7 @@ import React, {createContext, useState, useReducer} from 'react'
 import {v4 as uuidv4} from 'uuid'
 
 import {isValidUploadedFile} from '../utils/helpers'
+import {loadUserFromLS, saveUserToLS} from '../utils/localStorage'
 
 export const Context = createContext()
 
@@ -16,13 +17,20 @@ const notificationReducer = (state, action) => {
     }
 }
 
-const ContextProvider = props => {
+const ContextProvider = ({children}) => {
+    const [loggedInUser, setLoggedInUser] = useState(loadUserFromLS())
+
     const [notifications, dispatch] = useReducer(notificationReducer, [])
 
     const [fileUploadInProgress, setFileUploadInProgress] = useState(false)
     const [uploadedFiles, setUploadedFiles] = useState([])
     const [filesReadyForSubmission, setFilesReadyForSubmission] = useState(false)
     const [showModal, setShowModal] = useState(false)
+
+    const saveLoggedInUser = userData => {
+        saveUserToLS(userData)
+        setLoggedInUser(userData)
+    }
 
     const createNotification = (message, type = 'warning', lifeSpan) =>
         dispatch({
@@ -44,6 +52,8 @@ const ContextProvider = props => {
     return (
         <Context.Provider
             value={{
+                loggedInUser,
+                saveLoggedInUser,
                 notifications,
                 createNotification,
                 destroyNotification,
@@ -59,7 +69,7 @@ const ContextProvider = props => {
                 setFilesReadyForSubmission
             }}
         >
-            {props.children}
+            {children}
         </Context.Provider>
     )
 }
