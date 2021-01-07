@@ -1,6 +1,8 @@
 import React from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 
+import PrivateRoute from '../routes/PrivateRoute'
+import PublicRoute from '../routes/PublicRoute'
 import HomePage from './HomePage'
 import TopHeader from './TopHeader'
 import TopicModellingDataInput from './TopicModellingDataInput'
@@ -18,12 +20,19 @@ const App = () => {
             {/* <TopHeader /> */}
             <Switch>
                 <Redirect exact from="/topic-modelling" to="/topic-modelling/data-input" />
-                <Route path="/signup" component={RegistrationPage} />
-                <Route path="/login" component={LoginPage} />
-                <Route path="/topic-modelling/data-input" component={TopicModellingDataInput} />
-                <Route path="/topic-modelling/parameters" component={TopicModellingParameters} />
-                <Route path="/topic-modelling/analysis" component={TopicModellingAnalysis} />
-                <Route exact path="/" component={HomePage} />
+                <PublicRoute exact path="/signup" component={RegistrationPage} />
+                <PublicRoute exact path="/login" component={LoginPage} />
+                <PrivateRoute
+                    exact
+                    path="/topic-modelling/data-input"
+                    component={TopicModellingDataInput}
+                />
+                <PrivateRoute
+                    path="/topic-modelling/parameters"
+                    component={TopicModellingParameters}
+                />
+                <PrivateRoute path="/topic-modelling/analysis" component={TopicModellingAnalysis} />
+                <PrivateRoute exact path="/" component={HomePage} />
             </Switch>
             <NotificationContainer />
         </div>
