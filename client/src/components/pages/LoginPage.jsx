@@ -1,5 +1,4 @@
-import React, {useContext, useState} from 'react'
-import {Redirect} from 'react-router'
+import React, {useContext} from 'react'
 import axios from 'axios'
 
 import AuthForm from '../common/AuthForm'
@@ -9,10 +8,7 @@ import './LoginPage.scss'
 import {Context} from '../../context'
 
 const LoginPage = () => {
-    const {createNotification} = useContext(Context)
-
-    const [token, setToken] = useState('')
-    const [redirect, setRedirect] = useState(localStorage.getItem('userTokenTime') ? true : false)
+    const {saveLoggedInUser, createNotification} = useContext(Context)
 
     const handleLogin = async event => {
         event.preventDefault()
@@ -33,12 +29,7 @@ const LoginPage = () => {
                 }
             )
 
-            setToken(data.token)
-            localStorage.setItem(
-                'userTokenTime',
-                JSON.stringify({token, time: new Date().getTime()})
-            )
-            setRedirect(true)
+            saveLoggedInUser(data.user)
         } catch (error) {
             console.error('login request failed:')
             console.dir(error)
@@ -55,8 +46,6 @@ const LoginPage = () => {
             )
         }
     }
-
-    if (redirect) return <Redirect to="/" />
 
     return (
         <div className="login">

@@ -1,5 +1,4 @@
-import React, {useContext, useState} from 'react'
-import {Redirect} from 'react-router'
+import React, {useContext} from 'react'
 import axios from 'axios'
 
 import AuthForm from '../common/AuthForm'
@@ -9,9 +8,7 @@ import './RegistrationPage.scss'
 import {Context} from '../../context'
 
 const SignUpPage = () => {
-    const {createNotification} = useContext(Context)
-
-    const [redirect, setRedirect] = useState(localStorage.getItem('userTokenTime') ? true : false)
+    const {saveLoggedInUser, createNotification} = useContext(Context)
 
     const handleSignUp = async event => {
         event.preventDefault()
@@ -40,11 +37,8 @@ const SignUpPage = () => {
                     }
                 }
             )
-            localStorage.setItem(
-                'userTokenTime',
-                JSON.stringify({token: data.user.token, time: new Date().getTime()})
-            )
-            setRedirect(true)
+
+            saveLoggedInUser(data.user)
         } catch (error) {
             console.error('registration request failed:')
             console.dir(error)
@@ -61,8 +55,6 @@ const SignUpPage = () => {
             )
         }
     }
-
-    if (redirect) return <Redirect to="/" />
 
     return (
         <div className="registration">
