@@ -1,0 +1,71 @@
+.form-container {
+    max-width: 80vw;
+    width: 30rem;
+    margin: 0 auto;
+    padding: 5rem;
+    border: 0.25vmin solid var(--mainColor);
+    opacity: 0.8;
+}
+
+.form-headline {
+    margin: 0 0 1rem;
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-align: center;
+    opacity: 0.7;
+}
+
+.form-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: 1rem;
+}
+
+.form-input {
+    width: 100%;
+    margin: 1.5vmin 0;
+    padding: 1vmin 2vmin;
+    background-color: transparent;
+    border: 0.2vmin solid var(--mainColor);
+    color: var(--darkColor);
+
+    &::placeholder {
+        color: var(--mainColor);
+        font-size: 0.75rem;
+        opacity: 0.7;
+    }
+
+    &:focus {
+        outline: none;
+        border: 0.2vmin solid var(--accentColor);
+        box-shadow: 0 0 1vmin var(--accentColor);
+    }
+}
+
+.submit-button {
+    margin: 3vmin 0 0;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    background-color: var(--mainColor);
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    &:hover,
+    &:focus {
+        background-color: var(--accentColor);
+        box-shadow: var(--boxGlow);
+    }
+}
+
+.form-footer {
+    padding: 0.5rem;
+    text-align: center;
+
+    & a {
+        color: var(--accentColor);
+    }
+}
