@@ -7,6 +7,7 @@ const AuthForm = ({handleSubmit, isLoginForm}) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [confirmedPassword, setConfirmedPassword] = useState('')
 
     return (
         <div className="form-container">
@@ -38,6 +39,16 @@ const AuthForm = ({handleSubmit, isLoginForm}) => {
                     value={password}
                     onChange={event => setPassword(event.target.value)}
                 />
+                {!isLoginForm && (
+                    <input
+                        name="confirm"
+                        type="password"
+                        placeholder="confirm password"
+                        className="form-input"
+                        value={confirmedPassword}
+                        onChange={event => setConfirmedPassword(event.target.value)}
+                    />
+                )}
                 <button className="submit-button" type="submit">
                     {isLoginForm ? 'Log In' : 'Sign Up'}
                 </button>

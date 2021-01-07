@@ -20,10 +20,18 @@ const LoginPage = () => {
         const {email, password} = event.target.elements
 
         try {
-            const {data} = await axios.post('/api/users/login', {
-                email: email.value,
-                password: password.value
-            })
+            const {data} = await axios.post(
+                '/api/users/login',
+                {
+                    email: email.value,
+                    password: password.value
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            )
 
             setToken(data.token)
             localStorage.setItem(
@@ -43,7 +51,7 @@ const LoginPage = () => {
             createNotification(
                 notificationText, //message
                 'error', // type
-                5000 // duration (setting to 0 will make it never expire)
+                10000 // duration (setting to 0 will make it never expire)
             )
         }
     }

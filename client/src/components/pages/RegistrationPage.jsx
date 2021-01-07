@@ -11,24 +11,38 @@ import {Context} from '../../context'
 const SignUpPage = () => {
     const {createNotification} = useContext(Context)
 
-    const [token, setToken] = useState('')
     const [redirect, setRedirect] = useState(localStorage.getItem('userTokenTime') ? true : false)
 
     const handleSignUp = async event => {
         event.preventDefault()
 
-        const {name, email, password} = event.target.elements
+        const {name, email, password, confirm} = event.target.elements
+
+        if (password.value !== confirm.value) {
+            return createNotification(
+                'Passwords do not match', //message
+                'error', // type
+                10000 // duration (setting to 0 will make it never expire)
+            )
+        }
 
         try {
-            const {data} = await axios.post('/api/users', {
-                name: name.value,
-                email: email.value,
-                password: password.value
-            })
-            setToken(data.token)
+            const {data} = await axios.post(
+                '/api/users',
+                {
+                    name: name.value,
+                    email: email.value,
+                    password: password.value
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            )
             localStorage.setItem(
                 'userTokenTime',
-                JSON.stringify({token, time: new Date().getTime()})
+                JSON.stringify({token: data.user.token, time: new Date().getTime()})
             )
             setRedirect(true)
         } catch (error) {
@@ -43,7 +57,7 @@ const SignUpPage = () => {
             createNotification(
                 notificationText, //message
                 'error', // type
-                5000 // duration (setting to 0 will make it never expire)
+                10000 // duration (setting to 0 will make it never expire)
             )
         }
     }
