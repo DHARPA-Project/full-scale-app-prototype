@@ -33,6 +33,7 @@
 
     &-drop-area {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         margin: 0 1rem;
@@ -62,5 +63,13 @@
                 color: white;
             }
         }
+    }
+
+    & .icon {
+        font-size: 3rem;
+    }
+
+    & .instructions {
+        padding: 1rem;
     }
 }
