@@ -1,8 +1,9 @@
 import React, {useContext, useState, useRef} from 'react'
 
 import {Button, Divider, Grid, Header, Icon, Label, Segment} from 'semantic-ui-react'
-import {RiDragDropFill} from 'react-icons/ri'
-import {AiFillFolderOpen} from 'react-icons/ai'
+
+import FolderIcon from './common/icons/FolderIcon'
+import DragAndDropIcon from './common/icons/DragAndDropIcon'
 
 import {Context} from '../context'
 import {generateId} from '../utils/helpers'
@@ -114,7 +115,7 @@ const FileUpload = () => {
 
                         <Grid.Row verticalAlign="middle">
                             <Grid.Column className="file-upload-browse-area">
-                                <AiFillFolderOpen className="icon" />
+                                <FolderIcon />
                                 <p className="instructions">Find files by browsing</p>
                                 <Button
                                     onClick={event => {
@@ -135,7 +136,7 @@ const FileUpload = () => {
                                     onDragOver={handleHover}
                                     onDragLeave={handleHover}
                                 >
-                                    <RiDragDropFill className="icon" />
+                                    <DragAndDropIcon />
                                     <p className="instructions">Drag and drop files here</p>
                                 </div>
                             </Grid.Column>
