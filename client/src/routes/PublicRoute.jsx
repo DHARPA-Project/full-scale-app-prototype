@@ -7,8 +7,6 @@ import {isAuthenticated} from '../utils/auth'
 const PublicRoute = ({component: RouteComponent, ...rest}) => {
     const {loggedInUser} = useContext(Context)
 
-    console.log('logged-in user: ', loggedInUser)
-
     return (
         <Route
             {...rest}
