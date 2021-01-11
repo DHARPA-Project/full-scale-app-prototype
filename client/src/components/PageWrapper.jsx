@@ -4,13 +4,14 @@ import './PageWrapper.scss'
 
 import NavBar from './NavBar'
 import ProfileBubble from './ProfileBubble'
+import Main from './Main'
 
 const PageWrapper = ({children}) => {
     return (
         <div className="page-wrapper">
             <NavBar />
             <ProfileBubble />
-            {children}
+            <Main>{children}</Main>
         </div>
     )
 }
