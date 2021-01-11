@@ -3,6 +3,25 @@
 }
 
 :root {
+    --viridian: green;
+    --midnight: black;
+    --tomato: tomato;
+
+    --text-color-primary: white;
+    --text-color-secondary: rgba(0, 0, 0, 0.7);
+    --background-color-primary: rgb(48, 44, 64);
+
+    --background-color-secondary: rgba(0, 0, 0, 0.7);
+    --accent-color-positive: var(--viridian);
+    --accent-color-negative: var(--tomato);
+    --accent-color-primary: var(--accent-color-positive);
+
+    --navbar-compact-width: 4rem;
+    --navbar-expanded-width: 14rem;
+
+    --navbar-background-color: rgba(21, 21, 25, 0.5);
+    // --navbar-background-color: rgba(29, 33, 61, 0.5);
+
     --headerHeight: 2rem;
 
     --darkColor: rgb(51, 67, 80);
@@ -68,6 +87,7 @@ body {
         'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: var(--background-color-primary);
 }
 
 #root {
