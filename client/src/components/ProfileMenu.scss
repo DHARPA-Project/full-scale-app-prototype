@@ -1,0 +1,60 @@
+.profile-menu-nav {
+    position: relative;
+    right: -0.5rem;
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.profile-menu-list {
+    position: relative;
+    padding: 0;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    text-align: center;
+    border-radius: 3px;
+    background-color: var(--navbar-background-color);
+    list-style: none;
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: -5px;
+        right: 1rem;
+        border-bottom: 5px solid var(--navbar-background-color);
+        border-right: 5px solid transparent;
+        border-left: 5px solid transparent;
+    }
+}
+
+.profile-menu-item {
+    line-height: 1.5rem;
+    padding: 0.4rem 1rem;
+    color: var(--text-color-primary);
+
+    &:last-child {
+        // border-top: 1px dotted var(--text-color-primary);
+    }
+
+    & a:link,
+    & a:visited {
+        color: var(--text-color-secondary);
+    }
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+}
+
+.profile-menu-logout {
+    background-color: transparent;
+    border: none;
+    padding: 0.5rem 0 0;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: var(--text-color-primary);
+    cursor: pointer;
+
+    &:hover {
+        color: white;
+    }
+}

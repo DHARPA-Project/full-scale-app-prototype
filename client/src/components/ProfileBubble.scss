@@ -1,0 +1,55 @@
+.profile-bubble {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    margin-right: 2rem;
+    padding: 0 1rem;
+    border-radius: 50%;
+    cursor: pointer;
+
+    & .user-status {
+        position: absolute;
+        right: 45px;
+        top: 11px;
+        transform: translateY(-50%);
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        top: 10px;
+        right: 0;
+        border-top: 5px solid white;
+        border-right: 5px solid transparent;
+        border-left: 5px solid transparent;
+    }
+
+    & .profile-menu-nav {
+        height: 0;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    &:hover,
+    &:active,
+    &:focus {
+        overflow: visible;
+
+        &:after {
+            top: 8px;
+            border-top: none;
+            border-bottom: 5px solid white;
+            border-right: 5px solid transparent;
+            border-left: 5px solid transparent;
+        }
+        .profile-menu-nav {
+            height: auto;
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}

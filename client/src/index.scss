@@ -8,7 +8,7 @@
     --tomato: tomato;
 
     --text-color-primary: white;
-    --text-color-secondary: rgba(0, 0, 0, 0.7);
+    --text-color-secondary: rgba(255, 255, 255, 0.7);
     --background-color-primary: rgb(48, 44, 64);
 
     --background-color-secondary: rgba(0, 0, 0, 0.7);
@@ -20,9 +20,8 @@
     --navbar-expanded-width: 14rem;
 
     --navbar-background-color: rgba(21, 21, 25, 0.5);
-    // --navbar-background-color: rgba(29, 33, 61, 0.5);
 
-    --headerHeight: 2rem;
+    --header-height: 2rem;
 
     --darkColor: rgb(51, 67, 80);
     --darkColorOverlay-1: rgba(51, 67, 80, 0.75);
@@ -101,6 +100,10 @@ code {
 a {
     text-decoration: none;
     color: black;
+}
+
+ul {
+    list-style: none;
 }
 
 // --------------- General Semantic UI adjustments ---------------
