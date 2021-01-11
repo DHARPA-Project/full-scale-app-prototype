@@ -10,6 +10,7 @@ import NotificationContainer from './common/NotificationContainer'
 import RegistrationPage from './pages/RegistrationPage'
 import LoginPage from './pages/LoginPage'
 import LogoutPage from './pages/LogoutPage'
+import IntroPage from './pages/IntroPage'
 
 import './App.scss'
 
@@ -31,6 +32,7 @@ const App = () => {
                     component={TopicModellingParameters}
                 />
                 <PrivateRoute path="/topic-modelling/analysis" component={TopicModellingAnalysis} />
+                <PrivateRoute exact path="/" component={IntroPage} />
             </Switch>
             <NotificationContainer />
         </div>
