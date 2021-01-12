@@ -2,8 +2,8 @@ import React from 'react'
 
 import './PageWrapper.scss'
 
-import NavBar from './NavBar'
-import ProfileBubble from './ProfileBubble'
+import NavBar from '../NavBar'
+import ProfileBubble from '../ProfileBubble'
 import Main from './Main'
 
 const PageWrapper = ({children}) => {
