@@ -17,19 +17,19 @@
     }
 
     &.success {
-        background-color: var(--successColor);
+        background-color: var(--success-color);
     }
 
     &.info {
-        background-color: var(--infoColor);
+        background-color: var(--info-color);
     }
 
     &.warning {
-        background-color: var(--warningColor);
+        background-color: var(--warning-color);
     }
 
     &.error {
-        background-color: var(--errorColor);
+        background-color: var(--error-color);
     }
 
     &:hover {

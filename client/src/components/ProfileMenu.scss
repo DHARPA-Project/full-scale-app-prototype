@@ -29,15 +29,15 @@
 .profile-menu-item {
     line-height: 1.5rem;
     padding: 0.4rem 1rem;
-    color: var(--text-color-primary);
+    color: var(--main-color-01);
 
     &:last-child {
-        // border-top: 1px dotted var(--text-color-primary);
+        // border-top: 1px dotted var(--main-color-01);
     }
 
     & a:link,
     & a:visited {
-        color: var(--text-color-secondary);
+        color: var(--main-color-02);
     }
 
     &:hover {
@@ -51,7 +51,7 @@
     padding: 0.5rem 0 0;
     font-size: 0.8rem;
     text-transform: uppercase;
-    color: var(--text-color-primary);
+    color: var(--main-color-01);
     cursor: pointer;
 
     &:hover {

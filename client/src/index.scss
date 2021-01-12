@@ -3,18 +3,22 @@
 }
 
 :root {
-    --viridian: green;
+    --viridian: #338033;
     --midnight: black;
     --tomato: tomato;
 
-    --text-color-primary: white;
-    --text-color-secondary: rgba(255, 255, 255, 0.7);
-    --background-color-primary: rgb(48, 44, 64);
-
-    --background-color-secondary: rgba(0, 0, 0, 0.7);
     --accent-color-positive: var(--viridian);
     --accent-color-negative: var(--tomato);
-    --accent-color-primary: var(--accent-color-positive);
+
+    --main-color-01: white;
+    --main-color-02: rgba(255, 255, 255, 0.7);
+
+    --background-color-01: rgb(48, 44, 64);
+    --background-color-02: rgba(0, 0, 0, 0.7);
+
+    --accent-color-01: goldenrod;
+    --accent-color-02: var(--accent-color-positive);
+    --accent-color-03: var(--accent-color-positive);
 
     --navbar-compact-width: 4rem;
     --navbar-expanded-width: 14rem;
@@ -57,21 +61,21 @@
     --accentColorOverlay-4: rgba(239, 57, 112, 0.25);
     --accentColorOverlay-5: rgba(239, 57, 112, 0.05);
 
-    --successColor: #5cb85c;
-    --infoColor: #5bc0de;
-    --warningColor: #f0ad4e;
-    --errorColor: #d9534f;
+    --success-color: #5cb85c;
+    --info-color: #5bc0de;
+    --warning-color: #f0ad4e;
+    --error-color: #d9534f;
 
     --semanticPositiveColor: rgb(33, 186, 69);
     --semanticPositiveHoveredColor: rgb(22, 171, 57);
     --semanticPositiveHoveredColor-03: rgba(22, 171, 57, 0.25);
 
-    --boxGlow: 0 0 5px 5px rgba(210, 245, 235, 0.2);
+    --box-glow: 0 0 5px 5px rgba(210, 245, 235, 0.2);
 
-    --breakSmall: 360px;
-    --breakMedium: 760px;
-    --breakLarge: 1200px;
-    --breakHuge: 1800px;
+    --break-small: 360px;
+    --break-medium: 760px;
+    --break-large: 1200px;
+    --break-huge: 1800px;
 }
 
 html,
@@ -86,7 +90,7 @@ body {
         'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: var(--background-color-primary);
+    background: var(--background-color-01);
 }
 
 #root {

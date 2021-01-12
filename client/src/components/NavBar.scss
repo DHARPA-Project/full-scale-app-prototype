@@ -1,7 +1,8 @@
 .nav {
     &-bar {
         position: fixed;
-        // top: 0;
+        top: 0;
+        left: 0;
         width: var(--navbar-compact-width);
         height: 100vh;
         background-color: var(--navbar-background-color);
@@ -37,7 +38,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        color: var(--text-color-primary);
+        color: var(--main-color-01);
 
         & .nav-logo {
             position: relative;
@@ -67,7 +68,7 @@
         height: 4rem;
 
         &-text {
-            color: var(--text-color-primary);
+            color: var(--main-color-01);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -89,7 +90,7 @@
         // border-left: 4px solid transparent;
 
         &.active {
-            // border-left: 4px solid var(--text-color-primary);
+            // border-left: 4px solid var(--main-color-01);
         }
 
         &::after {
@@ -115,6 +116,6 @@
         min-width: 1.75rem;
         margin: 0 1.2rem;
         font-size: 1.75rem;
-        color: var(--text-color-primary);
+        color: var(--main-color-01);
     }
 }
