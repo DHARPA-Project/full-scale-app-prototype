@@ -53,6 +53,14 @@
         outline: none;
     }
 
+    &:hover,
+    &:active,
+    &:focus {
+        .icon {
+            fill: var(--background-color-01);
+        }
+    }
+
     &:hover:before,
     &:focus:before {
         left: -20%;
@@ -90,6 +98,25 @@
             left: -20%;
             width: 130%;
         }
+
+        &:hover,
+        &:active,
+        &:focus {
+            .icon {
+                fill: var(--main-color-01);
+            }
+        }
+
+        .icon {
+            fill: var(--background-color-01);
+        }
+    }
+
+    .icon {
+        position: relative;
+        left: -0.75rem;
+        font-size: 1.5rem;
+        fill: var(--main-color-01);
     }
 
     span,
