@@ -28,7 +28,7 @@ const FileList = () => {
     if (!uploadedFiles || !uploadedFiles.length) return <FileListPlaceholder />
 
     return (
-        <>
+        <div className="file-list">
             <Segment style={{display: 'flex'}}>
                 <Button
                     className="remove-files"
@@ -113,7 +113,7 @@ const FileList = () => {
                     })}
                 </Table.Body>
             </Table>
-        </>
+        </div>
     )
 }
 

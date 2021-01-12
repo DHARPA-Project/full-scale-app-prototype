@@ -1,14 +1,31 @@
 import React, {useContext, useState, useRef} from 'react'
 
-import {Button, Divider, Grid, Header, Icon, Label, Segment} from 'semantic-ui-react'
+import {IoHelpCircleOutline} from 'react-icons/io5'
+import {BiCheck} from 'react-icons/bi'
 
 import FolderIcon from './common/icons/FolderIcon'
 import DragAndDropIcon from './common/icons/DragAndDropIcon'
+import Modal from './common/Modal'
+import CustomButton from './common/CustomButton'
 
 import {Context} from '../context'
 import {generateId} from '../utils/helpers'
 
 import './FileUpload.scss'
+
+const fileUploadInstructions = () => (
+    <>
+        <h1>File Upload Instructions</h1>
+        <ul>
+            <li>Only *.txt files can be submitted for topic modelling analysis</li>
+            <li>The file names must contain a time stamp of the following format: *#%@*</li>
+            <li>
+                The file names or content may not include discrediting information about Italy or
+                Italians (for your own sake)
+            </li>
+        </ul>
+    </>
+)
 
 const FileUpload = () => {
     const fileInputRef = useRef(null)
@@ -17,19 +34,17 @@ const FileUpload = () => {
         setFileUploadInProgress,
         uploadedFiles,
         setUploadedFiles,
-        setShowModal
+        filesReadyForSubmission
     } = useContext(Context) //prettier-ignore
 
-    const [fileUploadAreaCollapsed, setFileUploadAreaCollapsed] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+    const [fileBatchTitle, setFileBatchTitle] = useState('')
     const [dropAreaHovered, setDropAreaHovered] = useState(false)
-
-    const toggleFileUploadCollapse = () => setFileUploadAreaCollapsed(!fileUploadAreaCollapsed)
 
     const handleHover = event => {
         event.preventDefault()
         if (event.type === 'dragover') setDropAreaHovered(true)
-        if (event.type === 'dragleave') setDropAreaHovered(false)
-        if (event.type === 'mouseleave') setDropAreaHovered(false)
+        if (event.type === 'dragleave' || event.type === 'mouseleave') setDropAreaHovered(false)
     }
 
     const handleFileSelect = event => {
@@ -80,71 +95,87 @@ const FileUpload = () => {
         }
     }
 
+    const handleFileSubmit = event => {
+        event.preventDefault()
+        console.log('submitting files:')
+        console.log(uploadedFiles)
+    }
+
     return (
-        <React.Fragment>
-            <Header size="huge" attached="top" textAlign="center" style={{position: 'relative'}}>
-                <div>
-                    <Icon
-                        name={`caret ${fileUploadAreaCollapsed ? 'right' : 'down'}`}
-                        size="large"
-                        onClick={toggleFileUploadCollapse}
-                        className="collapse-icon"
-                    />
-                    <Header.Content>Upload text files for topic modelling</Header.Content>
-                </div>
-                <Label
-                    color="grey"
-                    floating
-                    className="help-tag"
-                    onClick={() => setShowModal(true)}
+        <div className="file-upload">
+            <h1 className="file-upload-headline">
+                <span>Upload Files</span>
+                <IoHelpCircleOutline onClick={() => setShowModal(true)} className="icon" />
+                <Modal showCross={false} isVisible={showModal} setIsVisible={setShowModal}>
+                    {fileUploadInstructions()}
+                </Modal>
+            </h1>
+
+            <form id="upload" onSubmit={handleFileSubmit}>
+                <input
+                    ref={fileInputRef}
+                    className="file-upload-file-input"
+                    type="file"
+                    onChange={handleFileSelect}
+                />
+
+                <div
+                    className={`file-upload-drop-area${dropAreaHovered ? ' hovered' : ''}`}
+                    onDrop={handleFileSelect}
+                    onDragOver={handleHover}
+                    onDragLeave={handleHover}
                 >
-                    ?
-                </Label>
-            </Header>
-            <Segment placeholder attached className={fileUploadAreaCollapsed ? 'collapsed' : ''}>
-                <form action="#" method="get" className="file-upload" id="upload">
+                    <div className="file-upload-half">
+                        <CustomButton
+                            onClick={event => {
+                                event.preventDefault()
+                                fileInputRef.current.click()
+                            }}
+                        >
+                            <FolderIcon />
+                            Browse files
+                        </CustomButton>
+                    </div>
+
+                    <div className="file-upload-divider">or</div>
+
+                    <div className="file-upload-half">
+                        <DragAndDropIcon classes="file-upload-icon" />
+                        <p className="instructions">Drag and drop files here</p>
+                    </div>
+                </div>
+
+                <div className={`submission-ready${uploadedFiles ? '' : ' concealed'}`}>
                     <input
-                        ref={fileInputRef}
-                        className="file-upload-input"
-                        type="file"
-                        onChange={handleFileSelect}
+                        name="title"
+                        type="text"
+                        placeholder="give your batch of files a title for future reference"
+                        className="file-upload-text-input"
+                        value={fileBatchTitle}
+                        onChange={event => setFileBatchTitle(event.target.value)}
                     />
 
-                    <Grid columns={2} stackable textAlign="center">
-                        <Divider vertical>Or</Divider>
+                    <input
+                        name="tags"
+                        type="text"
+                        placeholder="list tags describing your batch of files"
+                        className="file-upload-text-input"
+                        value={fileBatchTitle}
+                        onChange={event => setFileBatchTitle(event.target.value)}
+                    />
 
-                        <Grid.Row verticalAlign="middle">
-                            <Grid.Column className="file-upload-browse-area">
-                                <FolderIcon />
-                                <p className="instructions">Find files by browsing</p>
-                                <Button
-                                    onClick={event => {
-                                        event.preventDefault()
-                                        fileInputRef.current.click()
-                                    }}
-                                >
-                                    Browse
-                                </Button>
-                            </Grid.Column>
-
-                            <Grid.Column>
-                                <div
-                                    className={`file-upload-drop-area${
-                                        dropAreaHovered ? ' hovered' : ''
-                                    }`}
-                                    onDrop={handleFileSelect}
-                                    onDragOver={handleHover}
-                                    onDragLeave={handleHover}
-                                >
-                                    <DragAndDropIcon />
-                                    <p className="instructions">Drag and drop files here</p>
-                                </div>
-                            </Grid.Column>
-                        </Grid.Row>
-                    </Grid>
-                </form>
-            </Segment>
-        </React.Fragment>
+                    <CustomButton
+                        classes={`file-upload-submit-button${
+                            !uploadedFiles.length ? ' hidden' : ''
+                        }`}
+                        type="submit"
+                        disabled={filesReadyForSubmission ? false : true}
+                    >
+                        <BiCheck className="icon" /> Submit all files
+                    </CustomButton>
+                </div>
+            </form>
+        </div>
     )
 }
 

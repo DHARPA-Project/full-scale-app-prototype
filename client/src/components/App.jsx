@@ -11,6 +11,7 @@ import RegistrationPage from './pages/RegistrationPage'
 import LoginPage from './pages/LoginPage'
 import LogoutPage from './pages/LogoutPage'
 import IntroPage from './pages/IntroPage'
+import FileUploadPage from './pages/FileUploadPage'
 
 import './App.scss'
 
@@ -22,6 +23,8 @@ const App = () => {
                 <PublicRoute exact path="/signup" component={RegistrationPage} />
                 <PublicRoute exact path="/login" component={LoginPage} />
                 <PrivateRoute exact path="/logout" component={LogoutPage} />
+                <PrivateRoute exact path="/" component={IntroPage} />
+                <PrivateRoute exact path="/file-upload" component={FileUploadPage} />
                 <PrivateRoute
                     exact
                     path="/topic-modelling/data-input"
@@ -32,7 +35,6 @@ const App = () => {
                     component={TopicModellingParameters}
                 />
                 <PrivateRoute path="/topic-modelling/analysis" component={TopicModellingAnalysis} />
-                <PrivateRoute exact path="/" component={IntroPage} />
             </Switch>
             <NotificationContainer />
         </div>

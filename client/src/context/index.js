@@ -25,7 +25,6 @@ const ContextProvider = ({children}) => {
     const [fileUploadInProgress, setFileUploadInProgress] = useState(false)
     const [uploadedFiles, setUploadedFiles] = useState([])
     const [filesReadyForSubmission, setFilesReadyForSubmission] = useState(false)
-    const [showModal, setShowModal] = useState(false)
 
     const saveLoggedInUser = userData => {
         saveUserToLS(userData)
@@ -57,8 +56,6 @@ const ContextProvider = ({children}) => {
                 notifications,
                 createNotification,
                 destroyNotification,
-                showModal,
-                setShowModal,
                 fileUploadInProgress,
                 setFileUploadInProgress,
                 uploadedFiles,

@@ -1,0 +1,8 @@
+.upload-page {
+    width: 100%;
+    height: 100%;
+    padding: 50px 0;
+    display: grid;
+    grid-template-columns: [controls] 30% [list] 70%;
+    grid-column-gap: 5rem;
+}

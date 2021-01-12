@@ -1,34 +1,35 @@
-.ui.placeholder.segment {
-    transition: height 3s ease;
-
-    &.collapsed {
-        border: none;
-        height: 0;
-        min-height: 0;
-        overflow: hidden;
-        padding: 0;
-    }
-}
-
-.ui.label.help-tag {
-    border-radius: 50%;
-    box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.2);
-    font-size: 1rem;
-}
-
-.ui.label.help-tag:hover {
-    background-color: var(--semanticPositiveHoveredColor) !important;
-    box-shadow: 0 0 0 0.2rem var(--semanticPositiveHoveredColor-03);
-    cursor: pointer;
-}
-
-.ui.icon.collapse-icon:hover {
-    color: var(--semanticPositiveHoveredColor) !important;
-}
-
 .file-upload {
-    &-input {
+    position: relative;
+    height: 100%;
+
+    &-file-input {
         display: none;
+    }
+
+    &-headline {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--main-color-01);
+        font-size: 1.5rem;
+
+        & .icon {
+            margin-left: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 2.2rem;
+            transition: all 0.3s;
+            font-size: 3rem;
+            fill: var(--main-color-02);
+
+            &:hover {
+                color: var(--accent-color-01);
+                text-shadow: 0 0 20px rgba(255, 255, 255, 1);
+            }
+        }
     }
 
     &-drop-area {
@@ -36,40 +37,107 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin: 0 1rem;
-        border: 2px dashed var(--lightColor);
+        margin: 1.5rem auto 5rem;
+        border: 1px dashed var(--main-color-01);
         padding: 2rem;
         border-radius: 0.5rem;
         font-size: 1rem;
         font-weight: 400;
         text-align: center;
         background-color: transparent;
+        opacity: 0.7;
+        transition: 0.3s;
+
+        &:hover {
+            opacity: 1;
+            // border-color: var(--accent-color-01);
+        }
 
         &.hovered {
-            color: var(--accentColor);
-            border-color: var(--accentColor);
+            border-color: var(--accent-color-01);
             border-style: solid;
-            box-shadow: inset 0 0 0.5rem 0.5rem var(--accentColorOverlay-3);
+            box-shadow: inset 0 0 0.5rem var(--accent-color-01);
         }
     }
 
-    &-browse-area,
-    &-drop-area {
-        &:hover {
-            border-color: var(--semanticPositiveHoveredColor);
+    &-divider {
+        position: relative;
+        width: 100%;
+        margin: 2rem auto;
+        color: var(--main-color-02);
+        text-transform: uppercase;
+        font-weight: 300;
 
-            .ui.button {
-                background-color: var(--semanticPositiveHoveredColor);
-                color: white;
-            }
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 0;
+            width: 40%;
+            border-bottom: 1px dashed var(--main-color-01);
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 0;
+            width: 40%;
+            border-bottom: 1px dashed var(--main-color-01);
         }
     }
 
-    & .icon {
+    &-half {
+        width: 100%;
+        padding: 1.5rem 0;
+        text-align: center;
+
+        & button {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    &-icon {
         font-size: 3rem;
+        fill: var(--main-color-02);
     }
 
     & .instructions {
         padding: 1rem;
+        color: var(--main-color-02);
+    }
+
+    &-text-input {
+        width: 100%;
+        margin: 0.75rem 0;
+        padding: 0.75rem 1.5rem;
+        background-color: transparent;
+        border: 0.2vmin solid var(--main-color-02);
+        border-radius: 0.2rem;
+        color: var(--main-color-01);
+        font-size: 0.9rem;
+
+        &::placeholder {
+            color: var(--main-color-02);
+            font-size: 0.75rem;
+            opacity: 0.7;
+        }
+
+        &:focus {
+            outline: none;
+            border: 0.2vmin solid var(--accent-color-01);
+            box-shadow: 0 0 0.3rem var(--accent-color-01);
+        }
+    }
+
+    &-submit-button {
+        width: 100%;
+        margin: 2rem auto;
+        text-transform: uppercase;
     }
 }

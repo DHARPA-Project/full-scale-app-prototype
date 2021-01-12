@@ -1,6 +1,6 @@
 import React from 'react'
 
-import PageWrapper from '../PageWrapper'
+import PageWrapper from '../common/PageWrapper'
 
 import './IntroPage.scss'
 
