@@ -1,24 +1,39 @@
 .custom-button {
+    position: relative;
     height: 2.5rem;
     justify-self: center;
     display: flex;
     justify-content: center;
     align-items: center;
     min-width: 7rem;
-    border: 2px solid var(--mainColorOverlay-1);
+    border: 2px solid var(--main-color-01);
     margin: 1rem;
-    padding: 0.5rem 1rem;
-    background-color: var(--mainColorOverlay-1);
-    color: white;
+    padding: 1rem 2rem;
+    background-color: transparent;
+    color: var(--main-color-01);
     font-size: 0.9rem;
     font-weight: 400;
     line-height: 2.5rem;
     letter-spacing: 0.1rem;
+    overflow: hidden;
     cursor: pointer;
 
-    @media (min-width: var(--breakMedium)) {
+    @media (min-width: var(--break-medium)) {
         font-size: 1rem;
         min-width: 13rem;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        width: 0px;
+        height: 120%;
+        left: -20%;
+        bottom: 0;
+        background-color: var(--main-color-01);
+        transform: skewX(45deg);
+        z-index: -1;
+        transition: 0.3s;
     }
 
     &:disabled {
@@ -29,36 +44,51 @@
     &:hover,
     &:focus {
         background-color: transparent;
-        box-shadow: 0 0 0.3rem 0.3rem var(--mainColorOverlay-2);
-        border: 2px solid var(--mainColorOverlay-1);
-        color: var(--mainColorOverlay-2);
-        font-weight: 700;
+        color: var(--background-color-01);
         outline: none;
     }
 
     &:active {
-        box-shadow: 0 0 0.5rem 0.5rem var(--accentColorOverlay-3);
+        box-shadow: 0 0 1rem var(--main-color-01);
         outline: none;
     }
 
+    &:hover:before,
+    &:focus:before {
+        left: -20%;
+        width: 130%;
+    }
+
     &.inverted {
-        border: 2px solid var(--mainColorOverlay-1);
-        background-color: transparent;
-        color: var(--mainColorOverlay-1);
+        border: 2px solid var(--main-color-01);
+        background-color: var(--main-color-01);
+        color: var(--background-color-01);
+        z-index: 2;
+
+        &:before {
+            content: '';
+            position: absolute;
+            width: 0px;
+            height: 120%;
+            left: -20%;
+            bottom: 0;
+            background-color: var(--background-color-01);
+            transform: skewX(45deg);
+            z-index: -1;
+            transition: 0.3s;
+        }
 
         &:hover,
         &:focus {
-            border: none;
-            background-color: var(--mainColorOverlay-1);
-            // box-shadow: 0 0 0.5rem 0.5rem var(--accentColorOverlay-3);
-            color: white;
-            font-weight: 700;
+            border: 2px solid var(--main-color-01);
+            color: var(--main-color-01);
             outline: none;
         }
 
-        &:active {
-            box-shadow: 0 0 0.5rem 0.5rem var(--mainColorOverlay-2);
-            outline: none;
+        &:hover:before,
+        &:focus:before {
+            left: -20%;
+            width: 130%;
         }
     }
 

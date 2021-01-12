@@ -6,7 +6,7 @@ import './CustomButton.scss'
 const CustomButton = ({children, inverted, classes, ...otherProps}) => {
     return (
         <button
-            className={`custom-button ${inverted ? 'inverted' : ''} ${classes}`}
+            className={`custom-button${inverted ? ' inverted' : ''}${classes ? classes : ''}`}
             {...otherProps}
         >
             {children}
