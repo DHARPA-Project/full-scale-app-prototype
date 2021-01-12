@@ -38,7 +38,24 @@
 
     &:disabled {
         cursor: not-allowed;
-        background-color: var(--lightColor);
+        opacity: 0.1;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: transparent;
+            color: var(--main-color-01);
+
+            & .icon {
+                fill: var(--main-color-01);
+            }
+        }
+
+        &:hover::before,
+        &:focus::before,
+        &:active::before {
+            width: 0;
+        }
     }
 
     &:hover,
