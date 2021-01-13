@@ -3,6 +3,12 @@
     height: 100%;
     padding: 50px 0;
     display: grid;
-    grid-template-columns: [controls] 30% [list] 70%;
+    grid-template-columns: 1fr 2fr;
     grid-column-gap: 5rem;
+
+    &.step-validation {
+    }
+
+    &.step-submission {
+    }
 }

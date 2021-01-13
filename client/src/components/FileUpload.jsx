@@ -145,7 +145,7 @@ const FileUpload = () => {
                     </div>
                 </div>
 
-                <div className={`submission-ready${uploadedFiles ? '' : ' concealed'}`}>
+                <div className={`submittable${filesReadyForSubmission ? '' : ' concealed'}`}>
                     <input
                         name="title"
                         type="text"
@@ -169,7 +169,6 @@ const FileUpload = () => {
                             !uploadedFiles.length ? ' hidden' : ''
                         }`}
                         type="submit"
-                        disabled={filesReadyForSubmission ? false : true}
                     >
                         <BiCheck className="icon" /> Submit all files
                     </CustomButton>

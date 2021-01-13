@@ -1,6 +1,22 @@
 .file-upload {
     position: relative;
     height: 100%;
+    overflow: hidden;
+
+    .submittable {
+        opacity: 1;
+        visibility: visible;
+        position: relative;
+        transform: translateY(0);
+        transition: all 0.5s;
+
+        &.concealed {
+            position: absolute;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20vh);
+        }
+    }
 
     &-file-input {
         display: none;
