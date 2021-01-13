@@ -1,0 +1,25 @@
+.file-list-control-options {
+    display: flex;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    color: var(--background-color-02);
+
+    .stats {
+        margin: auto;
+        display: flex;
+        opacity: 0.5;
+
+        &-bubble {
+            margin: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+
+            &.valid {
+                background-color: var(--accent-color-02);
+            }
+            &.invalid {
+                background-color: var(--accent-color-03);
+            }
+        }
+    }
+}
