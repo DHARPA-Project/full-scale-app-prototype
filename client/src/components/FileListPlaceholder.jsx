@@ -1,15 +1,17 @@
 import React from 'react'
 
-import {Header, Icon, Segment} from 'semantic-ui-react'
+import {AiOutlineFileUnknown} from 'react-icons/ai'
+
+import './FileListPlaceholder.scss'
 
 const FileListPlaceholder = () => {
     return (
-        <Segment placeholder>
-            <Header icon>
-                <Icon name="pdf file outline" />
-                No documents have been uploaded.
-            </Header>
-        </Segment>
+        <div className="file-list-placeholder">
+            <div className="middle">
+                <AiOutlineFileUnknown />
+                <h2>No documents have been uploaded.</h2>
+            </div>
+        </div>
     )
 }
 
