@@ -1,0 +1,51 @@
+.file-list-table {
+    width: 100%;
+    color: var(--main-color-02);
+    border-collapse: collapse;
+
+    tbody {
+        max-height: 50vh;
+        overflow: scroll;
+    }
+
+    tr {
+        height: 3rem;
+    }
+
+    tr:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    // tr:last-child:not(:nth-child(even)) td {
+    //     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    // }
+
+    th {
+        text-transform: uppercase;
+        background-color: rgba(0, 0, 0, 0.2);
+        padding: 1rem 0;
+    }
+
+    td {
+        .remove-file-button {
+            padding: 1rem;
+            cursor: pointer;
+
+            &:hover svg {
+                fill: var(--accent-color-03);
+            }
+        }
+    }
+
+    td:first-child {
+        padding-left: 3rem;
+    }
+
+    td:not(:first-child) {
+        text-align: center;
+    }
+
+    .invalid {
+        color: var(--accent-color-03);
+    }
+}
