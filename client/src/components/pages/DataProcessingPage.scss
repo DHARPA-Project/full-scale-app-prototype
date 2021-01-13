@@ -1,0 +1,51 @@
+.text-processing {
+    &-page {
+        height: 100%;
+        width: 100%;
+    }
+
+    &-heading {
+        padding: 1rem;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+        text-align: center;
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+        color: var(--main-color-02);
+        background-color: var(--background-color-02);
+    }
+
+    &-container {
+        min-height: 60vh;
+        display: flex;
+    }
+
+    &-options {
+        height: 65vh;
+        width: 30%;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+
+        &.empty {
+            justify-content: center;
+        }
+
+        &-submit {
+            margin-top: auto;
+        }
+    }
+
+    &-output {
+        height: 65vh;
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+
+        button {
+            margin-top: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+}

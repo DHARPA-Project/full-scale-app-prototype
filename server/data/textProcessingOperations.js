@@ -19,7 +19,7 @@ export const topicModellingOperations = [
         mandatory: false
     },
     {
-        description: 'remove numbers',
+        description: 'remove digits',
         name: 'numbers',
         enabled: false,
         mandatory: false

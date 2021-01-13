@@ -12,6 +12,7 @@ import LoginPage from './pages/LoginPage'
 import LogoutPage from './pages/LogoutPage'
 import IntroPage from './pages/IntroPage'
 import FileUploadPage from './pages/FileUploadPage'
+import DataProcessingPage from './pages/DataProcessingPage'
 
 import './App.scss'
 
@@ -25,6 +26,7 @@ const App = () => {
                 <PrivateRoute exact path="/logout" component={LogoutPage} />
                 <PrivateRoute exact path="/" component={IntroPage} />
                 <PrivateRoute exact path="/file-upload" component={FileUploadPage} />
+                <PrivateRoute exact path="/data-processing" component={DataProcessingPage} />
                 <PrivateRoute
                     exact
                     path="/topic-modelling/data-input"
