@@ -16,7 +16,9 @@ const TextProcessingOutput = ({loading, preview, classes}) => {
                 preview.map((fragment, index) => (
                     <span
                         key={index}
-                        className={fragment.added ? 'added' : fragment.removed ? 'removed' : ''}
+                        className={
+                            fragment.added ? 'added' : fragment.removed ? 'removed' : 'regular'
+                        }
                     >
                         {fragment.value}
                     </span>
@@ -28,18 +30,18 @@ const TextProcessingOutput = ({loading, preview, classes}) => {
     }, [preview])
 
     return (
-        <div className={`text-processing-output ${classes}`}>
+        <div className={`text-processing-preview ${classes}`}>
             {loading ? (
                 <Spinner />
             ) : (
                 <>
-                    <div className="text-processing-output-explanation">
-                        <span className="output-unchanged">unchanged text</span>
-                        <span className="output-deleted">deleted fragments</span>
-                        <span className="output-added">added fragments</span>
+                    <div className="text-processing-preview-explanation">
+                        <span className="regular">unchanged text</span>
+                        <span className="removed">deleted fragments</span>
+                        <span className="added">added fragments</span>
                     </div>
                     <motion.div
-                        className={`text-processing-output-text ${
+                        className={`text-processing-preview-text ${
                             output === textPreviewPlaceholder ? 'placeholder' : ''
                         }`}
                         initial={{opacity: 0}}

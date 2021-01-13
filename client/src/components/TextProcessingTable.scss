@@ -1,16 +1,19 @@
 .text-processing-table {
     width: 100%;
-    border: 1px solid var(--mainColorOverlay-3);
+    border: 1px solid var(--main-color-02);
     border-radius: 0.25rem;
     border-collapse: collapse;
 
     & thead tr th {
         padding: 1rem;
+        color: var(--main-color-02);
+        font-size: 0.9rem;
+        letter-spacing: 1px;
     }
 
     & tr:not(:last-child),
     th:not(:last-child) {
-        border: 1px solid var(--mainColorOverlay-3);
+        border: 1px solid var(--main-color-02);
     }
 
     & tr:last-child {
@@ -19,10 +22,12 @@
     }
 
     & th {
-        background-color: var(--mainColorOverlay-5);
+        background-color: transparent;
     }
 
     & td {
         padding: 0 1rem;
+        color: var(--main-color-02);
+        font-size: 0.8rem;
     }
 }
