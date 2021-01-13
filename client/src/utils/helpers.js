@@ -1,6 +1,7 @@
+import {v4 as uuidv4} from 'uuid'
+
 import {fileTypes} from '../constants/const'
 
-export const generateId = () =>
-    Date.now() + Number.parseInt(Math.random() + Math.random() * 10 ** 10).toString()
+export const generateId = () => uuidv4()
 
-export const isValidUploadedFile = file => file.fileObj.type === fileTypes.text
+export const isValidUploadedFile = file => file.type === fileTypes.text
