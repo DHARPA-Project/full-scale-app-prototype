@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react'
+import axios from 'axios'
 
 import {useHistory} from 'react-router-dom'
 
@@ -35,13 +36,11 @@ const DataProcessingPage = () => {
     useEffect(() => {
         const fetchTextPools = async () => {
             try {
-                const response = await fetch('/api/text/options/', {
-                    headers: {
-                        'Content-Type': 'multipart/form-data',
-                        Authorization: 'Bearer ' + loggedInUser.token
-                    }
+                const response = await axios.get('/api/text/options/', {
+                    headers: {Authorization: 'Bearer ' + loggedInUser.token}
                 })
-                const {success, error, pools, operations} = await response.json()
+
+                const {success, error, pools, operations} = response.data
                 if (success) {
                     setTextPools(pools)
                     setProcessingOperations(operations)
@@ -97,8 +96,10 @@ const DataProcessingPage = () => {
         const url = `/api/text/processing?id=${selectedTextPool}&operations=${selectedProcessingOptions.join('&operations=')}` //prettier-ignore
 
         try {
-            const response = await fetch(url)
-            const {success, error, original, processed} = await response.json()
+            const response = await axios.get(url, {
+                headers: {Authorization: 'Bearer ' + loggedInUser.token}
+            })
+            const {success, error, original, processed} = response.data
             if (success) {
                 if (original.length && processed.length) {
                     const diff = new Diff()

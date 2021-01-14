@@ -33,11 +33,14 @@ router.route('/options').get(async (req, res) => {
 router.route('/processing').get((req, res) => {
     try {
         const {id, operations} = req.query
-        const textPool = sampleText.find(item => item.id === id)
+        // temporarily use mock text pool instead of real one
+        const textPool = sampleText[0]
+        // const textPool = sampleText.find(item => item.id === id)
 
         if (!textPool) {
-            res.status(404)
-            return res.json({success: false, error: 'text pool with specified ID not found'})
+            return res
+                .status(404)
+                .json({success: false, error: 'text pool with specified ID not found'})
         }
 
         const original = textPool.text.slice(0, previewLength)
