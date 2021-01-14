@@ -85,8 +85,8 @@
     }
 
     &.inverted {
-        border: 2px solid var(--main-color-01);
-        background-color: var(--main-color-01);
+        border: 2px solid var(--background-color-01);
+        background-color: transparent;
         color: var(--background-color-01);
         z-index: 2;
 

@@ -179,11 +179,14 @@ const DataProcessingPage = () => {
                         applied?
                     </h1>
                     <div style={{width: '100%', display: 'flex', justifyContent: 'space-evenly'}}>
-                        <CustomButton onClick={() => setShowSubmitPrompt(false)}>
+                        <CustomButton classes="inverted" onClick={() => setShowSubmitPrompt(false)}>
                             <FaArrowAltCircleLeft />
                             &nbsp; Hang on a bit!
                         </CustomButton>
-                        <CustomButton onClick={() => history.push('/topic-modelling/analysis')}>
+                        <CustomButton
+                            classes="inverted"
+                            onClick={() => history.push('/file-management')}
+                        >
                             Yes. Let's do this! &nbsp;
                             <FaArrowAltCircleRight />
                         </CustomButton>
