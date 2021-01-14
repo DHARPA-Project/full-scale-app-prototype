@@ -48,4 +48,28 @@ router.post('/', upload.array('file'), async (req, res) => {
     }
 })
 
+router.get('/', async (req, res) => {
+    try {
+        const userId = req.user._id
+
+        const fileBatches = await FileBatchModel.find({user: userId})
+
+        return res.status(200).json({
+            success: true,
+            message: `${fileBatches.length} file batches found`,
+            batches: fileBatches.map(({_id, files, options, title, tags, createdAt}) => ({
+                id: _id,
+                title,
+                tags,
+                options,
+                date: createdAt,
+                files: files.map(file => file.split('---')[1]).join(', ')
+            }))
+        })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({success: false, error: 'server error'})
+    }
+})
+
 export default router
