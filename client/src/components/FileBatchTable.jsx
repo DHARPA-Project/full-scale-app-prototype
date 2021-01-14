@@ -57,7 +57,7 @@ const FileBatchTable = () => {
                     <th>Created</th>
                     <th>Tags</th>
                     <th>Files</th>
-                    <th>Settings</th>
+                    <th>Processing</th>
                     <th>Output</th>
                     <th></th>
                 </tr>

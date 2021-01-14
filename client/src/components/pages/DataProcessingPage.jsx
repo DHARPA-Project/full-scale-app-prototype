@@ -60,7 +60,8 @@ const DataProcessingPage = () => {
         }
 
         fetchTextPools()
-    }, [])
+        // eslint-disable-next-line
+    }, [loggedInUser.token])
 
     const toggleProcessingOption = operationName => {
         setPreview('')
