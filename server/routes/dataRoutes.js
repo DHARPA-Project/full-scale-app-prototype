@@ -30,9 +30,10 @@ const upload = multer({storage})
 router.post('/', upload.array('file'), async (req, res) => {
     try {
         const {title, tags, files} = req.body
+        const user = req.user._id
         const fileList = req.files
 
-        const fileBatch = new FileBatchModel({title, tags, files})
+        const fileBatch = new FileBatchModel({user, title, tags, files})
 
         const savedFileBatch = await fileBatch.save()
 
