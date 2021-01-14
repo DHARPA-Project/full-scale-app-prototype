@@ -6,10 +6,15 @@ import sampleText from '../data/sampleTextPools.js'
 import {topicModellingOperations} from '../data/textProcessingOperations.js'
 import {processText} from '../utils/textCleanup.js'
 import {previewLength} from '../constants/settings.js'
+import FileBatchModel from '../models/fileBatchModel.js'
 
-router.route('/options').get((req, res) => {
+router.route('/options').get(async (req, res) => {
     try {
-        const textPools = sampleText
+        const userId = req.user._id
+        const batches = await FileBatchModel.find({user: userId})
+        console.log('batches found: ', batches)
+
+        const textPools = batches.map(({_id, title}) => ({id: _id, title}))
         const availableOperations = topicModellingOperations
         setTimeout(
             () =>

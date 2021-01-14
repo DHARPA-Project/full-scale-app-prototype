@@ -27,7 +27,7 @@ const TextPoolSelect = ({textPools, selectedTextPool, handleTextPoolSelect}) => 
                 <option value=""> -- select a previously uploaded text pool -- </option>
                 {textPools.map(pool => (
                     <option key={pool.id} value={pool.id}>
-                        {`${pool.name} - ${pool.date}`}
+                        {pool.title ? pool.title : pool.id}
                     </option>
                 ))}
             </select>

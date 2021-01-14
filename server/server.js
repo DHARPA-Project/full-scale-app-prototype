@@ -33,6 +33,6 @@ app.get('/api', (req, res) => {
 
 app.use('/api/users', userRoutes)
 app.use('/api/data', authMiddleware, dataRoutes)
-app.use('/api/text', textRoutes)
+app.use('/api/text', authMiddleware, textRoutes)
 
 app.listen(port, console.log(`server running in ${process.env.NODE_ENV} mode on port ${port}`))

@@ -19,7 +19,7 @@ import {Context} from '../../context'
 import PageWrapper from '../common/PageWrapper'
 
 const DataProcessingPage = () => {
-    const {createNotification} = useContext(Context)
+    const {loggedInUser, createNotification} = useContext(Context)
     const history = useHistory()
 
     const [optionsLoading, setOptionsLoading] = useState(true)
@@ -35,7 +35,12 @@ const DataProcessingPage = () => {
     useEffect(() => {
         const fetchTextPools = async () => {
             try {
-                const response = await fetch('/api/text/options/')
+                const response = await fetch('/api/text/options/', {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + loggedInUser.token
+                    }
+                })
                 const {success, error, pools, operations} = await response.json()
                 if (success) {
                     setTextPools(pools)
@@ -56,7 +61,7 @@ const DataProcessingPage = () => {
         }
 
         fetchTextPools()
-    }, [createNotification])
+    }, [])
 
     const toggleProcessingOption = operationName => {
         setPreview('')
