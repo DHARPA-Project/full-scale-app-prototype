@@ -1,4 +1,5 @@
 import React, {useContext, useState, useRef} from 'react'
+import axios from 'axios'
 
 import {IoHelpCircleOutline} from 'react-icons/io5'
 import {BiCheck} from 'react-icons/bi'
@@ -9,7 +10,6 @@ import Modal from './common/Modal'
 import CustomButton from './common/CustomButton'
 
 import {Context} from '../context'
-import {generateId} from '../utils/helpers'
 
 import './FileUpload.scss'
 
@@ -31,14 +31,17 @@ const FileUpload = () => {
     const fileInputRef = useRef(null)
 
     const {
+        loggedInUser,
         setFileUploadInProgress,
         uploadedFiles,
         setUploadedFiles,
-        filesReadyForSubmission
+        filesReadyForSubmission,
+        createNotification
     } = useContext(Context) //prettier-ignore
 
     const [showModal, setShowModal] = useState(false)
     const [fileBatchTitle, setFileBatchTitle] = useState('')
+    const [fileBatchTags, setFileBatchTags] = useState('')
     const [dropAreaHovered, setDropAreaHovered] = useState(false)
 
     const handleHover = event => {
@@ -49,56 +52,93 @@ const FileUpload = () => {
 
     const handleFileSelect = event => {
         event.preventDefault()
-        setFileUploadInProgress(true)
         setDropAreaHovered(false)
-        let inputFileObject = null
-        const inputFileList = []
+        let inputFileList
+
+        // if file submitted via input
+        if (event.target.files) {
+            inputFileList = [...event.target.files]
+            // if file submitted via drag-and-drop
+        } else if (event.dataTransfer) {
+            inputFileList = [...event.dataTransfer.files]
+        }
+
+        if (!uploadedFiles?.length) return setUploadedFiles(inputFileList)
+
+        const newUploadedFiles = [...uploadedFiles]
+        inputFileList.forEach(newFile => {
+            // add only the newly uploaded files that have not been previously uploaded
+            if (
+                uploadedFiles.every(
+                    existingFile =>
+                        existingFile.name !== newFile.name &&
+                        existingFile.size !== newFile.size &&
+                        existingFile.lastModified !== newFile.lastModified
+                )
+            )
+                newUploadedFiles.push(newFile)
+        })
+        setUploadedFiles(newUploadedFiles)
+    }
+
+    const handleFileSubmit = async event => {
+        event.preventDefault()
+
+        if (!uploadedFiles.length) {
+            return createNotification(
+                `Please upload files before submitting!`, //message
+                'error', // type
+                10000 // setting duration to 0 will make it never expire
+            )
+        }
+
+        setFileUploadInProgress(true)
+        const formData = new FormData()
+
+        formData.append('title', fileBatchTitle)
+        formData.append('tags', fileBatchTags)
+
+        for (let i = 0; i < uploadedFiles.length; i++) {
+            formData.append('file', uploadedFiles[i])
+        }
 
         try {
-            // if file submitted via input
-            if (event.target.files) {
-                inputFileObject = event.target.files
-                // if file submitted via drag-and-drop
-            } else if (event.dataTransfer) {
-                inputFileObject = event.dataTransfer.files
-            }
+            const response = await axios.post(
+                '/api/data',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + loggedInUser.token
+                    }
+                },
+                {
+                    onUploadProgress: progressEvent =>
+                        console.log('percent loaded: ', 100 * progressEvent.loaded / progressEvent.total) // prettier-ignore
+                }
+            )
 
-            for (let i = 0; i < inputFileObject.length; i++) {
-                inputFileList.push({
-                    fileObj: inputFileObject[i],
-                    id: generateId()
-                })
-            }
-
-            if (uploadedFiles && uploadedFiles?.length) {
-                const newUploadedFiles = [...uploadedFiles]
-                inputFileList.forEach(newFile => {
-                    // add only the newly uploaded files that have not been previously uploaded
-                    if (
-                        uploadedFiles.every(
-                            existingFile =>
-                                existingFile.fileObj.name !== newFile.fileObj.name &&
-                                existingFile.fileObj.size !== newFile.fileObj.size &&
-                                existingFile.fileObj.lastModified !== newFile.fileObj.lastModified
-                        )
-                    )
-                        newUploadedFiles.push(newFile)
-                })
-                setUploadedFiles(newUploadedFiles)
-            } else {
-                setUploadedFiles(inputFileList)
+            if (response?.data?.success && response?.data?.message) {
+                setUploadedFiles([])
+                setFileBatchTitle('')
+                setFileBatchTags('')
+                console.log('File(s) successfully uploaded: ', response)
+                createNotification(
+                    response?.data?.message || `Upload successful.`, //message
+                    'success', // type
+                    10000 // setting duration to 0 will make it never expire
+                )
             }
         } catch (error) {
-            console.error('ERROR: file upload failed: ', error)
+            console.error(`File upload failed: ${error}`)
+            createNotification(
+                `File upload failed: ${error}`, //message
+                'error', // type
+                10000 // setting duration to 0 will make it never expire
+            )
         } finally {
             setFileUploadInProgress(false)
         }
-    }
-
-    const handleFileSubmit = event => {
-        event.preventDefault()
-        console.log('submitting files:')
-        console.log(uploadedFiles)
     }
 
     return (
@@ -111,11 +151,19 @@ const FileUpload = () => {
                 </Modal>
             </h1>
 
-            <form id="upload" onSubmit={handleFileSubmit}>
+            <form
+                id="upload"
+                action="/api/data"
+                method="post"
+                encType="multipart/form-data"
+                onSubmit={handleFileSubmit}
+            >
                 <input
                     ref={fileInputRef}
                     className="file-upload-file-input"
+                    name="file"
                     type="file"
+                    multiple
                     onChange={handleFileSelect}
                 />
 
@@ -160,8 +208,8 @@ const FileUpload = () => {
                         type="text"
                         placeholder="list tags describing your batch of files"
                         className="file-upload-text-input"
-                        value={fileBatchTitle}
-                        onChange={event => setFileBatchTitle(event.target.value)}
+                        value={fileBatchTags}
+                        onChange={event => setFileBatchTags(event.target.value)}
                     />
 
                     <CustomButton

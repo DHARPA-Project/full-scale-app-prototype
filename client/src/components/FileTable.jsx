@@ -9,7 +9,7 @@ import {Context} from '../context'
 import {fileTypes} from '../constants/const'
 
 const FileTable = () => {
-    const {uploadedFiles, removeUploadedFileById} = useContext(Context)
+    const {uploadedFiles, removeUploadedFileByName} = useContext(Context)
 
     return (
         <table className="file-list-table">
@@ -25,16 +25,16 @@ const FileTable = () => {
 
             <tbody>
                 {uploadedFiles.map(file => {
-                    const isValidFile = file.fileObj.type === fileTypes.text
+                    const isValidFile = file.type === fileTypes.text
                     return (
-                        <tr key={file.id}>
+                        <tr key={file.name}>
                             <td>
                                 <span className={`file-name${isValidFile ? '' : ' invalid'}`}>
-                                    {file.fileObj.name}
+                                    {file.name}
                                 </span>
                             </td>
-                            <td>{file.fileObj.size}</td>
-                            <td>{file.fileObj.lastModified}</td>
+                            <td>{file.size}</td>
+                            <td>{file.lastModified}</td>
                             <td>
                                 {isValidFile ? (
                                     <ImCheckmark className="icon" />
@@ -45,7 +45,7 @@ const FileTable = () => {
                             <td>
                                 <div
                                     className="remove-file-button"
-                                    onClick={() => removeUploadedFileById(file.id)}
+                                    onClick={() => removeUploadedFileByName(file.name)}
                                 >
                                     <FaTrashAlt />
                                 </div>

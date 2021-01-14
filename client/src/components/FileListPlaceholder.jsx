@@ -9,7 +9,7 @@ const FileListPlaceholder = () => {
         <div className="file-list-placeholder">
             <div className="middle">
                 <AiOutlineFileUnknown />
-                <h2>No documents have been uploaded.</h2>
+                <h2>No documents available for upload.</h2>
             </div>
         </div>
     )

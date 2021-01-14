@@ -21,7 +21,7 @@ const FileList = () => {
     const [numValidFiles, setNumValidFiles] = useState(0)
 
     useEffect(() => {
-        const validFiles = uploadedFiles.filter(file => file.fileObj.type === fileTypes.text).length
+        const validFiles = uploadedFiles.filter(file => file.type === fileTypes.text).length
         setNumValidFiles(validFiles)
         setFilesReadyForSubmission(uploadedFiles.length > 0 && uploadedFiles.length === validFiles)
     }, [uploadedFiles, setFilesReadyForSubmission])

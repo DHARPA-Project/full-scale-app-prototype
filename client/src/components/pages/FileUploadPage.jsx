@@ -6,12 +6,10 @@ import {Context} from '../../context'
 import FileUpload from '../FileUpload'
 import FileList from '../FileList'
 import PageWrapper from '../common/PageWrapper'
+import Spinner from '../common/Spinner'
 
 const FileUploadPage = () => {
-    const {
-        uploadedFiles,
-        filesReadyForSubmission
-    } = useContext(Context) //prettier-ignore
+    const {uploadedFiles, filesReadyForSubmission, fileUploadInProgress} = useContext(Context) //prettier-ignore
 
     return (
         <PageWrapper>
@@ -29,7 +27,7 @@ const FileUploadPage = () => {
                 </div>
 
                 <div className="upload-right">
-                    <FileList />
+                    {fileUploadInProgress ? <Spinner /> : <FileList />}
                 </div>
             </div>
         </PageWrapper>

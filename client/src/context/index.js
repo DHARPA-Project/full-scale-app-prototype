@@ -1,7 +1,6 @@
 import React, {createContext, useState, useReducer} from 'react'
-import {v4 as uuidv4} from 'uuid'
 
-import {isValidUploadedFile} from '../utils/helpers'
+import {generateId, isValidUploadedFile} from '../utils/helpers'
 import {loadUserFromLS, saveUserToLS} from '../utils/localStorage'
 
 export const Context = createContext()
@@ -34,14 +33,13 @@ const ContextProvider = ({children}) => {
     const createNotification = (message, type = 'warning', lifeSpan) =>
         dispatch({
             type: 'addNotification',
-            payload: {id: uuidv4(), type, message, lifeSpan}
+            payload: {id: generateId(), type, message, lifeSpan}
         })
 
     const destroyNotification = id => dispatch({type: 'removeNotification', payload: id})
 
-    const removeUploadedFileById = id2remove => {
-        const newFileList = uploadedFiles.filter(uploadedFile => uploadedFile.id !== id2remove)
-        if (newFileList.length < uploadedFiles.length) setUploadedFiles(newFileList)
+    const removeUploadedFileByName = name2remove => {
+        setUploadedFiles(uploadedFiles.filter(file => file.name !== name2remove))
     }
 
     const removeAllInvalidFiles = () => {
@@ -60,7 +58,7 @@ const ContextProvider = ({children}) => {
                 setFileUploadInProgress,
                 uploadedFiles,
                 setUploadedFiles,
-                removeUploadedFileById,
+                removeUploadedFileByName,
                 removeAllInvalidFiles,
                 filesReadyForSubmission,
                 setFilesReadyForSubmission
