@@ -1,4 +1,5 @@
-import React, {useContext, useState, useRef} from 'react'
+import React, {useContext, useState, useRef, useEffect} from 'react'
+import {useHistory} from 'react-router-dom'
 import axios from 'axios'
 
 import {IoHelpCircleOutline} from 'react-icons/io5'
@@ -28,8 +29,6 @@ const fileUploadInstructions = () => (
 )
 
 const FileUpload = () => {
-    const fileInputRef = useRef(null)
-
     const {
         loggedInUser,
         setFileUploadInProgress,
@@ -39,10 +38,20 @@ const FileUpload = () => {
         createNotification
     } = useContext(Context) //prettier-ignore
 
+    const history = useHistory()
+
+    const fileInputRef = useRef(null)
+    const batchTitleRef = useRef(null)
+    const timeoutRef = useRef(null)
+
     const [showModal, setShowModal] = useState(false)
     const [fileBatchTitle, setFileBatchTitle] = useState('')
     const [fileBatchTags, setFileBatchTags] = useState('')
     const [dropAreaHovered, setDropAreaHovered] = useState(false)
+
+    useEffect(() => {
+        return () => clearTimeout(timeoutRef)
+    }, [])
 
     const handleHover = event => {
         event.preventDefault()
@@ -92,6 +101,15 @@ const FileUpload = () => {
             )
         }
 
+        if (!fileBatchTitle) {
+            batchTitleRef.current.focus()
+            return createNotification(
+                `You must give a title to your batch of files.`, //message
+                'error', // type
+                5000 // setting duration to 0 will make it never expire
+            )
+        }
+
         setFileUploadInProgress(true)
         const formData = new FormData()
 
@@ -126,8 +144,9 @@ const FileUpload = () => {
                 createNotification(
                     response?.data?.message || `Upload successful.`, //message
                     'success', // type
-                    10000 // setting duration to 0 will make it never expire
+                    5000 // setting duration to 0 will make it never expire
                 )
+                timeoutRef.current = setTimeout(() => history.push('/file-management'), 6000)
             }
         } catch (error) {
             console.error(`File upload failed: ${error}`)
@@ -199,6 +218,7 @@ const FileUpload = () => {
                         type="text"
                         placeholder="give your batch of files a title for future reference"
                         className="file-upload-text-input"
+                        ref={batchTitleRef}
                         value={fileBatchTitle}
                         onChange={event => setFileBatchTitle(event.target.value)}
                     />
