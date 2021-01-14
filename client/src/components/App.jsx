@@ -3,15 +3,13 @@ import {Redirect, Switch} from 'react-router-dom'
 
 import PrivateRoute from '../routes/PrivateRoute'
 import PublicRoute from '../routes/PublicRoute'
-import TopicModellingDataInput from './TopicModellingDataInput'
-import TopicModellingParameters from './TopicModellingParameters'
-import TopicModellingAnalysis from './TopicModellingAnalysis'
 import NotificationContainer from './common/NotificationContainer'
 import RegistrationPage from './pages/RegistrationPage'
 import LoginPage from './pages/LoginPage'
 import LogoutPage from './pages/LogoutPage'
 import IntroPage from './pages/IntroPage'
 import FileUploadPage from './pages/FileUploadPage'
+import FileManagementPage from './pages/FileManagementPage'
 import DataProcessingPage from './pages/DataProcessingPage'
 
 import './App.scss'
@@ -26,17 +24,8 @@ const App = () => {
                 <PrivateRoute exact path="/logout" component={LogoutPage} />
                 <PrivateRoute exact path="/" component={IntroPage} />
                 <PrivateRoute exact path="/file-upload" component={FileUploadPage} />
+                <PrivateRoute exact path="/file-management" component={FileManagementPage} />
                 <PrivateRoute exact path="/data-processing" component={DataProcessingPage} />
-                <PrivateRoute
-                    exact
-                    path="/topic-modelling/data-input"
-                    component={TopicModellingDataInput}
-                />
-                <PrivateRoute
-                    path="/topic-modelling/parameters"
-                    component={TopicModellingParameters}
-                />
-                <PrivateRoute path="/topic-modelling/analysis" component={TopicModellingAnalysis} />
             </Switch>
             <NotificationContainer />
         </div>
