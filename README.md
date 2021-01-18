@@ -4,7 +4,9 @@ This is the prototype of the topic modelling workflow for the DHARPA project.
 
 ## Installation
 
-The NPM package manager is required to install all the project dependencies.
+The NPM package manager is required to install all the project dependencies. NPM is typically installed along with Node.js. Therefore, you need to have the latter installed on your machine to run this project.
+
+This project requires a locally running MongoDB database. Therefore, you need to have MongoDB installed and running to enable the back-end services of this project.
 
 1. First clone the repository by running the following CLI command:<br>
 
@@ -17,19 +19,30 @@ The NPM package manager is required to install all the project dependencies.
 
 `cd ./topic-modelling-prototype`
 
-3. Once inside the directory of the repository, install the project dependencies:<br>
+3. Once inside the directory of the repository, run the following command to install the back-end dependencies:<br>
 
 `npm i`
 
-4. When all dependencies have been installed, start the app on a local server in development mode by running:<br>
+4. Then move into the 'client' directory and install all the front-end dependencies, by executing the following commands consecutively:<br>
 
-`npm start`
+`cd ./client`
+`npm i`
 
-This should open the app in a new browser instance. If it isn't opened automatically, open the following link in a browser:<br>
+4. When all front-end and back-end dependencies have been installed, start the app on a local server in development mode by running:<br>
+
+`npm run dev`
+
+This will start a local Express/Node server as well as a client server for the React-based front-end. A new browser instance is usually opened. If it isn't opened automatically, then open the following URL in a browser:<br>
 `http://localhost:3000`
 <br>
 
+You can also run the client-side or the server-side apps independently with the following commands:<br>
+`npm run client`
+`npm run server`
+
 ## To Do:
+
+When loading app, check if token in local storage is valid
 
 Change main color
 Create header
@@ -38,7 +51,6 @@ Create custom Container component to replace the SemanticUI one
 Animate toastie on exit with framer motion
 
 Add notifications for all possible server errors
-Add error-notification pop-up / toastie
 
 Add confirmation pop-ups, e.g. for file removal
 
@@ -49,8 +61,6 @@ Collapse (with animation) file upload area when files are uploaded / conditional
 Display filtered list of uploaded files and use select field in table header: all / valid / invalid
 
 Make the table displaying the uploaded file list scrollable
-
-Change drag-and-drop area icon (down-arrow?)
 
 Change color of file-removal buttons on hover to red
 
