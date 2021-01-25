@@ -4,7 +4,6 @@ import axios from 'axios'
 import AuthForm from '../common/AuthForm'
 
 import './LoginPage.scss'
-
 import {Context} from '../../context'
 
 const LoginPage = () => {
