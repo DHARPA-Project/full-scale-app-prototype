@@ -2,7 +2,6 @@ import React, {useContext, useState, useEffect} from 'react'
 
 import {FaTrashAlt} from 'react-icons/fa'
 
-import FileListPlaceholder from './FileListPlaceholder'
 import CustomButton from './common/CustomButton'
 
 import './FileList.scss'
@@ -26,7 +25,7 @@ const FileList = () => {
         setFilesReadyForSubmission(uploadedFiles.length > 0 && uploadedFiles.length === validFiles)
     }, [uploadedFiles, setFilesReadyForSubmission])
 
-    if (!uploadedFiles || !uploadedFiles.length) return <FileListPlaceholder />
+    if (!uploadedFiles?.length) return null
 
     return (
         <div className="file-list">
