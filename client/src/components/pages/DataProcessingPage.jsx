@@ -94,12 +94,13 @@ const DataProcessingPage = () => {
 
         setPreviewLoading(true)
 
-        const url = `/api/text/processing?id=${selectedTextPool}&operations=${selectedProcessingOptions.join('&operations=')}` //prettier-ignore
+        const url = `/api/data/text/preview/${selectedTextPool}?operations=${selectedProcessingOptions.join('&operations=')}` //prettier-ignore
 
         try {
             const response = await axios.get(url, {
                 headers: {Authorization: 'Bearer ' + loggedInUser.token}
             })
+
             const {success, error, original, processed} = response.data
             if (success) {
                 if (original.length && processed.length) {
