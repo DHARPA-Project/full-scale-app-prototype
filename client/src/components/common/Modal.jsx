@@ -41,7 +41,7 @@ const Modal = ({showCross, message, children, isVisible, setIsVisible}) => {
                 </motion.div>
             )}
         </AnimatePresence>,
-        document.getElementById('modal')
+        document.getElementById('dharpa-modal')
     )
 }
 

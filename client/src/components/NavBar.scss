@@ -1,8 +1,9 @@
 .nav {
     &-bar {
-        position: fixed;
-        top: 0;
-        left: 0;
+        // position: fixed;
+        // top: 0;
+        // left: 0;
+        padding-right: var(--navbar-compact-width); 
         width: var(--navbar-compact-width);
         height: 100vh;
         background-color: var(--navbar-background-color);
@@ -12,7 +13,7 @@
     }
 
     &:hover {
-        width: var(--navbar-expanded-width);
+        width: calc(var(--navbar-expanded-width) * 2 + var(--navbar-compact-width));
 
         .nav-item-text {
             opacity: 0.8;
