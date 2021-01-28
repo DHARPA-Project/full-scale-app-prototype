@@ -24,3 +24,5 @@ export const topicModellingAnalysisOptions = [
 
 export const textPreviewPlaceholder =
     'Here, you will be able to see the impact of the chosen processing operations on a text fragment extracted from the pool of text you select.'
+
+export const ApiBaseUrl = 'http://localhost:5000'

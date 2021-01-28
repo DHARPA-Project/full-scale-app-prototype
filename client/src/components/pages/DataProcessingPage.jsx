@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import axios from 'axios'
+import { ApiBaseUrl } from '../../constants/const'
 
 import {useHistory} from 'react-router-dom'
 
@@ -36,7 +37,7 @@ const DataProcessingPage = () => {
     useEffect(() => {
         const fetchTextPools = async () => {
             try {
-                const response = await axios.get('/api/text/options/', {
+                const response = await axios.get(`${ApiBaseUrl}/api/text/options/`, {
                     headers: {Authorization: 'Bearer ' + loggedInUser.token}
                 })
 
@@ -94,7 +95,7 @@ const DataProcessingPage = () => {
 
         setPreviewLoading(true)
 
-        const url = `/api/text/processing?id=${selectedTextPool}&operations=${selectedProcessingOptions.join('&operations=')}` //prettier-ignore
+        const url = `${ApiBaseUrl}/api/text/processing?id=${selectedTextPool}&operations=${selectedProcessingOptions.join('&operations=')}` //prettier-ignore
 
         try {
             const response = await axios.get(url, {

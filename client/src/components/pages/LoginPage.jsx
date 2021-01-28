@@ -1,5 +1,6 @@
 import React, {useContext} from 'react'
 import axios from 'axios'
+import { ApiBaseUrl } from '../../constants/const'
 
 import AuthForm from '../common/AuthForm'
 
@@ -16,7 +17,7 @@ const LoginPage = () => {
 
         try {
             const {data} = await axios.post(
-                '/api/users/login',
+                `${ApiBaseUrl}/api/users/login`,
                 {
                     email: email.value,
                     password: password.value

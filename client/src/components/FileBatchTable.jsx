@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import axios from 'axios'
+import { ApiBaseUrl } from '../constants/const'
 
 import {FaTrashAlt} from 'react-icons/fa'
 
@@ -19,7 +20,7 @@ const FileBatchTable = () => {
         const fetchFileBatches = async () => {
             setFileBatchLoading(true)
             try {
-                const response = await axios.get('/api/data', {
+                const response = await axios.get(`${ApiBaseUrl}/api/data`, {
                     headers: {Authorization: 'Bearer ' + loggedInUser.token}
                 })
 

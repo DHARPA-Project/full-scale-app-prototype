@@ -1,6 +1,7 @@
 import React, {useContext, useState, useRef, useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 import axios from 'axios'
+import { ApiBaseUrl } from '../constants/const'
 
 import {IoHelpCircleOutline} from 'react-icons/io5'
 import {BiCheck} from 'react-icons/bi'
@@ -122,7 +123,7 @@ const FileUpload = () => {
 
         try {
             const response = await axios.post(
-                '/api/data',
+                `${ApiBaseUrl}/api/data`,
                 formData,
                 {
                     headers: {
