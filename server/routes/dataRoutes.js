@@ -4,6 +4,8 @@ import multer from 'multer'
 
 import FileBatchModel from '../models/fileBatchModel.js'
 import {generateId} from '../utils/helpers.js'
+import {processText} from '../utils/textCleanup.js'
+import {previewLength} from '../constants/settings.js'
 
 const router = express.Router()
 
@@ -66,6 +68,40 @@ router.get('/', async (req, res) => {
                 files: files.map(file => file.split('---')[1]).join(', ')
             }))
         })
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({success: false, error: 'server error'})
+    }
+})
+
+router.get('/preview', async (req, res) => {
+    try {
+        const userId = req.user._id
+        const {id, operations} = req.query
+
+        const fileBatch = await FileBatchModel.findOne({user: userId, _id: id})
+
+        const aggregatedFileContent = fileBatch.files
+            .map(fileName => {
+                const fileLocation = `${uploadDirectory}/${fileName}`
+                if (!fs.existsSync(fileLocation)) return ''
+                return fs.readFileSync(fileLocation, 'utf-8')
+            })
+            .join('\n')
+
+        if (!aggregatedFileContent) {
+            return res
+                .status(404)
+                .json({success: false, message: `file batch with ID ${id} could not be found`})
+        }
+
+        const original = aggregatedFileContent.slice(0, previewLength)
+        // operations will be a string if only one query param was passed...
+        // ... and an array of strings if multiple query params were passed
+        const textOperations = typeof operations === 'string' ? [operations] : operations
+        const processed = processText(original, textOperations)
+
+        return res.status(200).json({success: true, original, processed})
     } catch (error) {
         console.error(error)
         return res.status(500).json({success: false, error: 'server error'})
