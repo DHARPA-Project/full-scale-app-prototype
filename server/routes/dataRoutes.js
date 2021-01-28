@@ -74,12 +74,13 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.get('/preview', async (req, res) => {
+router.get('/text/preview/:textBatchID', async (req, res) => {
     try {
         const userId = req.user._id
-        const {id, operations} = req.query
+        const textBatchID = req.params.textBatchID
+        const {operations} = req.query
 
-        const fileBatch = await FileBatchModel.findOne({user: userId, _id: id})
+        const fileBatch = await FileBatchModel.findOne({user: userId, _id: textBatchID})
 
         const aggregatedFileContent = fileBatch.files
             .map(fileName => {
@@ -90,9 +91,10 @@ router.get('/preview', async (req, res) => {
             .join('\n')
 
         if (!aggregatedFileContent) {
-            return res
-                .status(404)
-                .json({success: false, message: `file batch with ID ${id} could not be found`})
+            return res.status(404).json({
+                success: false,
+                message: `file batch with ID ${textBatchID} could not be found`
+            })
         }
 
         const original = aggregatedFileContent.slice(0, previewLength)
