@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react'
 import axios from 'axios'
 
 import {useHistory} from 'react-router-dom'
@@ -22,6 +22,8 @@ import PageWrapper from '../common/PageWrapper'
 const DataProcessingPage = () => {
     const {loggedInUser, createNotification} = useContext(Context)
     const history = useHistory()
+
+    const timeoutRef = useRef(null)
 
     const [optionsLoading, setOptionsLoading] = useState(true)
     const [textPools, setTextPools] = useState([])
@@ -117,6 +119,49 @@ const DataProcessingPage = () => {
         }
     }
 
+    const handleProcessingOptionsSubmit = async () => {
+        const url = `/api/data/text/${selectedTextPool}`
+
+        try {
+            const response = await axios.post(
+                url,
+                {
+                    operations: selectedProcessingOptions
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + loggedInUser.token
+                    }
+                }
+            )
+
+            if (response?.data?.success) {
+                createNotification(
+                    response?.data?.message
+                        ? response.data.message
+                        : `Text processing options successfully submitted`, //message
+                    'success', // type
+                    5000 // setting duration to 0 will make it never expire
+                )
+
+                setPreview('')
+                setSelectedProcessingOptions([])
+
+                timeoutRef.current = setTimeout(() => history.push('/file-management'), 6000)
+            } else {
+                throw new Error(response?.data?.error ? response.data.error : '')
+            }
+        } catch (error) {
+            console.error('Failed to submit text processing options to the server', error)
+            createNotification(
+                `Submitting text processing options to the failed.${error}`, //message
+                'error', // type
+                0 // setting duration to 0 will make it never expire
+            )
+        }
+    }
+
     return (
         <PageWrapper>
             <div className="text-processing-page">
@@ -185,10 +230,7 @@ const DataProcessingPage = () => {
                             <FaArrowAltCircleLeft />
                             &nbsp; Hang on a bit!
                         </CustomButton>
-                        <CustomButton
-                            classes="inverted"
-                            onClick={() => history.push('/file-management')}
-                        >
+                        <CustomButton classes="inverted" onClick={handleProcessingOptionsSubmit}>
                             Yes. Let's do this! &nbsp;
                             <FaArrowAltCircleRight />
                         </CustomButton>
