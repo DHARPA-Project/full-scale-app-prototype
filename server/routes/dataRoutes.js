@@ -82,6 +82,13 @@ router.get('/text/preview/:textBatchID', async (req, res) => {
 
         const fileBatch = await FileBatchModel.findOne({user: userId, _id: textBatchID})
 
+        if (!fileBatch) {
+            return res.status(404).json({
+                success: false,
+                message: `file batch with ID ${textBatchID} could not be found`
+            })
+        }
+
         const aggregatedFileContent = fileBatch.files
             .map(fileName => {
                 const fileLocation = `${uploadDirectory}/${fileName}`
@@ -90,13 +97,6 @@ router.get('/text/preview/:textBatchID', async (req, res) => {
             })
             .join('\n')
 
-        if (!aggregatedFileContent) {
-            return res.status(404).json({
-                success: false,
-                message: `file batch with ID ${textBatchID} could not be found`
-            })
-        }
-
         const original = aggregatedFileContent.slice(0, previewLength)
         // operations will be a string if only one query param was passed...
         // ... and an array of strings if multiple query params were passed
@@ -104,6 +104,55 @@ router.get('/text/preview/:textBatchID', async (req, res) => {
         const processed = processText(original, textOperations)
 
         return res.status(200).json({success: true, original, processed})
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({success: false, error: 'server error'})
+    }
+})
+
+router.post('/text/:textBatchID', async (req, res) => {
+    try {
+        const userId = req.user._id
+        const textBatchID = req.params.textBatchID
+        const {operations} = req.body
+
+        if (!operations) {
+            return res.status(400).json({
+                success: false,
+                message: 'missing required body content'
+            })
+        }
+
+        const fileBatch = await FileBatchModel.findOne({user: userId, _id: textBatchID})
+
+        if (!fileBatch) {
+            return res.status(404).json({
+                success: false,
+                message: `file batch with ID ${textBatchID} could not be found`
+            })
+        }
+
+        const aggregatedFileContent = fileBatch.files
+            .map(fileName => {
+                const fileLocation = `${uploadDirectory}/${fileName}`
+                if (!fs.existsSync(fileLocation)) return ''
+                return fs.readFileSync(fileLocation, 'utf-8')
+            })
+            .join('\n')
+
+        // operations will be a string if only one query param was passed...
+        // ... and an array of strings if multiple query params were passed
+        const textOperations = typeof operations === 'string' ? [operations] : operations
+        const output = processText(aggregatedFileContent, textOperations)
+
+        fileBatch.options = operations
+        fileBatch.output = output
+        await fileBatch.save()
+
+        return res.status(200).json({
+            success: true,
+            message: `file batch ${textBatchID} processed with options: ${operations}`
+        })
     } catch (error) {
         console.error(error)
         return res.status(500).json({success: false, error: 'server error'})
