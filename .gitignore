@@ -29,3 +29,8 @@ yarn-error.log*
 /uploads
 
 yarn.lock
+
+jupyter_integration/src/react-proto-src
+jupyter_integration/tsconfig.tsbuildinfo
+jupyter_integration/react_proto_as_extension/labextension*
+jupyter_integration/react_proto_as_extension.egg-info
