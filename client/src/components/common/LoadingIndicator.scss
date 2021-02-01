@@ -1,12 +1,17 @@
 .loading-indicator {
     width: 100%;
-    padding: 25%;
+    max-width: 50vmin;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    &-content {
+    &-square {
         position: relative;
-        width: 100%;
+        width: 60%;
         height: 0;
-        padding-top: 100%;
+        padding-top: 60%; // the padding is a replacement for height to make height === width
+        margin: auto;
 
         & div {
             position: absolute;
