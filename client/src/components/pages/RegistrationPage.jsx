@@ -14,6 +14,14 @@ const SignUpPage = () => {
 
         const {name, email, password, confirm} = event.target.elements
 
+        if (!name.value || !email.value || !password.value || !confirm.value) {
+            return createNotification(
+                'To register, please fill out all the fields!', //message
+                'error', // type
+                10000 // duration (setting to 0 will make it never expire)
+            )
+        }
+
         if (password.value !== confirm.value) {
             return createNotification(
                 'Passwords do not match', //message
@@ -42,13 +50,21 @@ const SignUpPage = () => {
             console.error('registration request failed:')
             console.dir(error)
 
-            const notificationText = error?.response?.data?.message
-                ? error.response.data.message
-                : error?.message
-                ? error.message
-                : 'registration failed'
+            const getNotificationText = () => {
+                if (
+                    error?.response?.data?.message?.message &&
+                    typeof error.response.data.message.message === 'string'
+                ) {
+                    return error.response.data.message.message
+                } else if (error?.message && typeof error.message === 'string') {
+                    return error.message
+                } else {
+                    return 'registration failed'
+                }
+            }
+
             createNotification(
-                notificationText, //message
+                getNotificationText(), //message
                 'error', // type
                 10000 // duration (setting to 0 will make it never expire)
             )

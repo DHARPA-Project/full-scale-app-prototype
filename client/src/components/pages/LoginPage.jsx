@@ -14,6 +14,14 @@ const LoginPage = () => {
 
         const {email, password} = event.target.elements
 
+        if (!email.value || !password.value) {
+            return createNotification(
+                'Missing email or password!', //message
+                'error', // type
+                10000 // duration (setting to 0 will make it never expire)
+            )
+        }
+
         try {
             const {data} = await axios.post(
                 '/api/users/login',
