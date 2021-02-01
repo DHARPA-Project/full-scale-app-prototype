@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import axios from 'axios'
 
 import AuthForm from '../common/AuthForm'
@@ -7,7 +7,11 @@ import './RegistrationPage.scss'
 import {Context} from '../../context'
 
 const SignUpPage = () => {
-    const {saveLoggedInUser, createNotification} = useContext(Context)
+    const {saveLoggedInUser, createNotification, removeAllNotifications} = useContext(Context)
+
+    useEffect(() => {
+        return removeAllNotifications
+    }, [removeAllNotifications])
 
     const handleSignUp = async event => {
         event.preventDefault()

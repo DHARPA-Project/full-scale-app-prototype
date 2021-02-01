@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import axios from 'axios'
 
 import AuthForm from '../common/AuthForm'
@@ -7,7 +7,11 @@ import './LoginPage.scss'
 import {Context} from '../../context'
 
 const LoginPage = () => {
-    const {saveLoggedInUser, createNotification} = useContext(Context)
+    const {saveLoggedInUser, createNotification, removeAllNotifications} = useContext(Context)
+
+    useEffect(() => {
+        return removeAllNotifications
+    }, [removeAllNotifications])
 
     const handleLogin = async event => {
         event.preventDefault()

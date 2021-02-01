@@ -1,13 +1,14 @@
-import React, {useContext, useEffect} from 'react'
+import {useContext, useEffect} from 'react'
 
 import {Context} from '../../context'
 
 const LogoutPage = () => {
-    const {saveLoggedInUser} = useContext(Context)
+    const {saveLoggedInUser, removeAllNotifications} = useContext(Context)
 
     useEffect(() => {
         saveLoggedInUser(null)
-    }, [saveLoggedInUser])
+        return removeAllNotifications
+    }, [saveLoggedInUser, removeAllNotifications])
 
     return null
 }
