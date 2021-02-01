@@ -110,6 +110,65 @@ router.get('/text/preview/:textBatchID', async (req, res) => {
     }
 })
 
+router.delete('/:fileBatchID', async (req, res) => {
+    try {
+        const userId = req.user._id
+        const fileBatchID = req.params.fileBatchID
+
+        if (!fileBatchID) {
+            return res.status(400).json({
+                success: false,
+                message: 'missing fileBatchID parameter'
+            })
+        }
+
+        const fileBatch = await FileBatchModel.findOne({user: userId, _id: fileBatchID})
+
+        if (!fileBatch) {
+            return res.status(404).json({
+                success: false,
+                message: `file batch with ID ${fileBatchID} could not be found`
+            })
+        }
+
+        console.log('file batch to delete: ', fileBatch)
+
+        fileBatch.files.forEach(fileName => {
+            const fileLocation = `${uploadDirectory}/${fileName}`
+
+            fs.unlink(fileLocation, unlinkError => {
+                if (unlinkError && unlinkError.code === 'ENOENT') {
+                    console.error(`failed to remove because file missing: ${fileLocation}`)
+                } else if (unlinkError) {
+                    console.error(`failed to remove ${fileLocation}`, unlinkError)
+                } else {
+                    console.info(`successfully removed ${fileLocation}`)
+                }
+            })
+        })
+
+        await fileBatch.remove()
+
+        // use timeout to simulate server response latency in development mode
+        if (process.env.NODE_ENV === 'development') {
+            setTimeout(() => {
+                return res.status(200).json({
+                    success: true,
+                    message: `file batch "${fileBatch.title}" deleted`
+                })
+            }, 1500)
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: `file batch "${fileBatch.title}" deleted`
+            })
+        }
+    } catch (error) {
+        console.error(error)
+        return res.status(500).json({success: false, error: 'server error'})
+    }
+})
+
 router.post('/text/:textBatchID', async (req, res) => {
     try {
         const userId = req.user._id
