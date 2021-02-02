@@ -1,0 +1,33 @@
+.file-batch-table {
+    tr {
+        height: 3rem;
+    }
+
+    tr:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    tr:last-child:not(:nth-child(even)) td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    td {
+        position: relative;
+
+        .remove-file-button {
+            cursor: pointer;
+
+            &:hover svg {
+                fill: var(--accent-color-03);
+            }
+        }
+    }
+
+    td:first-child {
+        padding-left: 3rem;
+    }
+
+    td:not(:first-child) {
+        text-align: center;
+    }
+}
