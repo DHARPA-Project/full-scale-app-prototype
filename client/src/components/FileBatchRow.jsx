@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import axios from 'axios'
 
 import {FaTrashAlt} from 'react-icons/fa'
+import {BsFolderSymlinkFill} from 'react-icons/bs'
 
 import './FileBatchRow.scss'
 import {Context} from '../context'
@@ -57,9 +58,11 @@ const FileBatchRow = ({id, title, date, tags, files, options, removeFileBatch}) 
             <td>{date.split('T')[0]}</td>
             <td>{tags}</td>
             <td>{files}</td>
-            <td>{options}</td>
+            <td>{options.join(', ')}</td>
             <td>
-                <Link to={`/output/${id}`}>see output</Link>
+                <Link to={`/files/${id}`} className="file-details-link">
+                    <BsFolderSymlinkFill />
+                </Link>
             </td>
             <td>
                 {batchBeingDeleted ? (

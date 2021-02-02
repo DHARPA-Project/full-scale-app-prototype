@@ -14,12 +14,22 @@
     td {
         position: relative;
 
+        .file-details-link,
         .remove-file-button {
             cursor: pointer;
 
             &:hover svg {
                 fill: var(--accent-color-03);
+                transform: scale(1.5);
             }
+        }
+
+        .file-details-link:hover svg {
+            fill: var(--accent-color-02);
+        }
+
+        .remove-file-button {
+            fill: var(--accent-color-03);
         }
     }
 
