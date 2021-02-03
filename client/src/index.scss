@@ -14,7 +14,7 @@
     --main-color-02: rgba(255, 255, 255, 0.7);
 
     --background-color-01: rgb(48, 44, 64);
-    --background-color-02: rgb(21, 21, 25);
+    --background-color-02: rgb(34, 34, 38);
 
     --accent-color-01: goldenrod;
     --accent-color-02: rgb(91, 177, 150);
@@ -22,6 +22,8 @@
     --accent-color-03: rgb(239, 57, 112);
 
     --loading-indicator-color: var(--accent-color-01);
+    --radio-button-color-selected: var(--accent-color-02);
+    --radio-button-color-neutral: var(--main-color-02);
 
     --navbar-compact-width: 4rem;
     --navbar-expanded-width: 14rem;
@@ -89,7 +91,7 @@ body {
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background: var(--background-color-01);
