@@ -1,8 +1,8 @@
 import React, {createContext, useState, useReducer, useCallback} from 'react'
 
-import {generateId, isValidUploadedFile} from '../utils/helpers'
+import {generateId} from '../utils/helpers'
 import {loadUserFromLS, saveUserToLS} from '../utils/localStorage'
-import {fileTypeNames} from '../constants/const'
+import {fileTypeNames, fileTypes} from '../constants/const'
 
 export const Context = createContext()
 
@@ -53,7 +53,9 @@ const ContextProvider = ({children}) => {
     }
 
     const removeAllInvalidFiles = () => {
-        setUploadedFiles(uploadedFiles.filter(isValidUploadedFile))
+        setUploadedFiles(existingFiles =>
+            existingFiles.filter(file => fileTypes[selectedFileType].includes(file.type))
+        )
     }
 
     return (
