@@ -1,6 +1,7 @@
 .page-header {
+    display: flex;
     margin-top: 2rem;
-    margin-bottom: 4rem;
+    margin-bottom: 5rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--main-color-02);
     animation: fadeIn 1.2s;

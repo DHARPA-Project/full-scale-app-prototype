@@ -2,31 +2,15 @@ import React, {useContext, useState, useRef, useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 import axios from 'axios'
 
-import {IoHelpCircleOutline} from 'react-icons/io5'
 import {BiCheck} from 'react-icons/bi'
 
 import FolderIcon from './common/icons/FolderIcon'
 import DragAndDropIcon from './common/icons/DragAndDropIcon'
-import Modal from './common/Modal'
 import CustomButton from './common/CustomButton'
 
 import {Context} from '../context'
 
 import './FileUpload.scss'
-
-const fileUploadInstructions = () => (
-    <>
-        <h1>File Upload Instructions</h1>
-        <ul>
-            <li>Only *.txt files can be submitted for topic modelling analysis</li>
-            <li>The file names must contain a time stamp of the following format: *#%@*</li>
-            <li>
-                The file names or content may not include discrediting information about Italy or
-                Italians (for your own sake)
-            </li>
-        </ul>
-    </>
-)
 
 const FileUpload = () => {
     const {
@@ -44,13 +28,12 @@ const FileUpload = () => {
     const batchTitleRef = useRef(null)
     const timeoutRef = useRef(null)
 
-    const [showModal, setShowModal] = useState(false)
     const [fileBatchTitle, setFileBatchTitle] = useState('')
     const [fileBatchTags, setFileBatchTags] = useState('')
     const [dropAreaHovered, setDropAreaHovered] = useState(false)
 
     useEffect(() => {
-        return () => clearTimeout(timeoutRef)
+        return () => clearTimeout(timeoutRef.current)
     }, [])
 
     const handleHover = event => {
@@ -146,7 +129,7 @@ const FileUpload = () => {
                     'success', // type
                     5000 // setting duration to 0 will make it never expire
                 )
-                timeoutRef.current = setTimeout(() => history.push('/file-management'), 6000)
+                // timeoutRef.current = setTimeout(() => history.push('/file-management'), 6000)
             }
         } catch (error) {
             console.error(`File upload failed: ${error}`)
@@ -161,88 +144,77 @@ const FileUpload = () => {
     }
 
     return (
-        <div className="file-upload">
-            <h1 className="file-upload-headline">
-                <span>Upload Files</span>
-                <IoHelpCircleOutline onClick={() => setShowModal(true)} className="icon" />
-                <Modal showCross={false} isVisible={showModal} setIsVisible={setShowModal}>
-                    {fileUploadInstructions()}
-                </Modal>
-            </h1>
+        <form
+            className="file-upload"
+            id="upload"
+            action="/api/data"
+            method="post"
+            encType="multipart/form-data"
+            onSubmit={handleFileSubmit}
+        >
+            <input
+                ref={fileInputRef}
+                className="file-upload-file-input"
+                name="file"
+                type="file"
+                multiple
+                onChange={handleFileSelect}
+            />
 
-            <form
-                id="upload"
-                action="/api/data"
-                method="post"
-                encType="multipart/form-data"
-                onSubmit={handleFileSubmit}
+            <div
+                className={`file-upload-drop-area${dropAreaHovered ? ' hovered' : ''}`}
+                onDrop={handleFileSelect}
+                onDragOver={handleHover}
+                onDragLeave={handleHover}
             >
-                <input
-                    ref={fileInputRef}
-                    className="file-upload-file-input"
-                    name="file"
-                    type="file"
-                    multiple
-                    onChange={handleFileSelect}
-                />
-
-                <div
-                    className={`file-upload-drop-area${dropAreaHovered ? ' hovered' : ''}`}
-                    onDrop={handleFileSelect}
-                    onDragOver={handleHover}
-                    onDragLeave={handleHover}
-                >
-                    <div className="file-upload-half">
-                        <CustomButton
-                            onClick={event => {
-                                event.preventDefault()
-                                fileInputRef.current.click()
-                            }}
-                        >
-                            <FolderIcon />
-                            Browse files
-                        </CustomButton>
-                    </div>
-
-                    <div className="file-upload-divider">or</div>
-
-                    <div className="file-upload-half">
-                        <DragAndDropIcon classes="file-upload-icon" />
-                        <p className="instructions">Drag and drop files here</p>
-                    </div>
-                </div>
-
-                <div className={`submittable${filesReadyForSubmission ? '' : ' concealed'}`}>
-                    <input
-                        name="title"
-                        type="text"
-                        placeholder="give your batch of files a title for future reference"
-                        className="file-upload-text-input"
-                        ref={batchTitleRef}
-                        value={fileBatchTitle}
-                        onChange={event => setFileBatchTitle(event.target.value)}
-                    />
-
-                    <input
-                        name="tags"
-                        type="text"
-                        placeholder="list tags describing your batch of files"
-                        className="file-upload-text-input"
-                        value={fileBatchTags}
-                        onChange={event => setFileBatchTags(event.target.value)}
-                    />
-
+                <div className="file-upload-half">
                     <CustomButton
-                        classes={`file-upload-submit-button${
-                            !uploadedFiles.length ? ' hidden' : ''
-                        }`}
-                        type="submit"
+                        onClick={event => {
+                            event.preventDefault()
+                            fileInputRef.current.click()
+                        }}
                     >
-                        <BiCheck className="icon" /> Submit all files
+                        <FolderIcon />
+                        Browse files
                     </CustomButton>
                 </div>
-            </form>
-        </div>
+
+                <div className="file-upload-divider">or</div>
+
+                <div className="file-upload-half">
+                    <DragAndDropIcon classes="file-upload-icon" />
+                    <p className="instructions">Drag and drop files here</p>
+                </div>
+            </div>
+
+            <div className={`submittable${filesReadyForSubmission ? '' : ' concealed'}`}>
+                <input
+                    name="title"
+                    type="text"
+                    placeholder="give your batch of files a title for future reference"
+                    className="file-upload-text-input"
+                    ref={batchTitleRef}
+                    value={fileBatchTitle}
+                    onChange={event => setFileBatchTitle(event.target.value)}
+                />
+
+                <input
+                    name="tags"
+                    type="text"
+                    placeholder="list tags describing your batch of files"
+                    className="file-upload-text-input"
+                    value={fileBatchTags}
+                    onChange={event => setFileBatchTags(event.target.value)}
+                />
+
+                <CustomButton
+                    classes={`file-upload-submit-button${!uploadedFiles.length ? ' hidden' : ''}`}
+                    type="submit"
+                >
+                    <BiCheck className="icon" /> Submit all files
+                </CustomButton>
+            </div>
+        </form>
     )
 }
 
