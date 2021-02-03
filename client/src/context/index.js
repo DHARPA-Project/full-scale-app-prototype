@@ -2,6 +2,7 @@ import React, {createContext, useState, useReducer, useCallback} from 'react'
 
 import {generateId, isValidUploadedFile} from '../utils/helpers'
 import {loadUserFromLS, saveUserToLS} from '../utils/localStorage'
+import {fileTypeNames} from '../constants/const'
 
 export const Context = createContext()
 
@@ -23,6 +24,8 @@ const ContextProvider = ({children}) => {
 
     const [notifications, dispatch] = useReducer(notificationReducer, [])
 
+    const [selectedFileType, setSelectedFileType] = useState(fileTypeNames[0])
+
     const [fileUploadInProgress, setFileUploadInProgress] = useState(false)
     const [uploadedFiles, setUploadedFiles] = useState([])
     const [filesReadyForSubmission, setFilesReadyForSubmission] = useState(false)
@@ -32,11 +35,14 @@ const ContextProvider = ({children}) => {
         setLoggedInUser(userData)
     }
 
-    const createNotification = (message, type = 'warning', lifeSpan) =>
-        dispatch({
-            type: 'addNotification',
-            payload: {id: generateId(), type, message, lifeSpan}
-        })
+    const createNotification = useCallback(
+        (message, type = 'warning', lifeSpan) =>
+            dispatch({
+                type: 'addNotification',
+                payload: {id: generateId(), type, message, lifeSpan}
+            }),
+        []
+    )
 
     const destroyNotification = id => dispatch({type: 'removeNotification', payload: id})
 
@@ -59,6 +65,8 @@ const ContextProvider = ({children}) => {
                 createNotification,
                 destroyNotification,
                 removeAllNotifications,
+                selectedFileType,
+                setSelectedFileType,
                 fileUploadInProgress,
                 setFileUploadInProgress,
                 uploadedFiles,

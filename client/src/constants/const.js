@@ -1,7 +1,11 @@
 // type of data files that can be uploaded
 export const fileTypes = {
-    text: 'text/plain'
+    text: 'text/plain',
+    csv: 'text/csv',
+    img: ['image/jpeg', 'image/png']
 }
+
+export const fileTypeNames = ['text', 'csv', 'img']
 
 export const topicModellingAnalysisOptions = [
     {

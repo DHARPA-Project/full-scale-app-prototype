@@ -9,7 +9,7 @@ import {Context} from '../context'
 import {fileTypes} from '../constants/const'
 
 const FileTable = () => {
-    const {uploadedFiles, removeUploadedFileByName} = useContext(Context)
+    const {uploadedFiles, removeUploadedFileByName, selectedFileType} = useContext(Context)
 
     return (
         <table className="file-list-table">
@@ -25,7 +25,9 @@ const FileTable = () => {
 
             <tbody>
                 {uploadedFiles.map(file => {
-                    const isValidFile = file.type === fileTypes.text
+                    // typeof fileTypes[selectedFileType] === string || array
+                    const isValidFile = fileTypes[selectedFileType].includes(file.type)
+
                     return (
                         <tr key={file.name}>
                             <td>

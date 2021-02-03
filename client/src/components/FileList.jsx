@@ -11,6 +11,7 @@ import FileTable from './FileTable'
 
 const FileList = () => {
     const {
+        selectedFileType,
         uploadedFiles,
         setUploadedFiles,
         removeAllInvalidFiles,
@@ -20,10 +21,13 @@ const FileList = () => {
     const [numValidFiles, setNumValidFiles] = useState(0)
 
     useEffect(() => {
-        const validFiles = uploadedFiles.filter(file => file.type === fileTypes.text).length
+        // typeof fileTypes[selectedFileType] === string || array
+        const validFiles = uploadedFiles.filter(file =>
+            fileTypes[selectedFileType].includes(file.type)
+        ).length
         setNumValidFiles(validFiles)
         setFilesReadyForSubmission(uploadedFiles.length > 0 && uploadedFiles.length === validFiles)
-    }, [uploadedFiles, setFilesReadyForSubmission])
+    }, [selectedFileType, uploadedFiles, setFilesReadyForSubmission])
 
     if (!uploadedFiles?.length) return null
 
