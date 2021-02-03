@@ -5,7 +5,7 @@ import multer from 'multer'
 import FileBatchModel from '../models/fileBatchModel.js'
 import {generateId} from '../utils/helpers.js'
 import {processText} from '../utils/textCleanup.js'
-import {previewLength} from '../constants/settings.js'
+import {previewLength, mimeTypes, fileTypeNames} from '../constants/settings.js'
 
 const router = express.Router()
 
@@ -31,11 +31,24 @@ const upload = multer({storage})
 
 router.post('/', upload.array('file'), async (req, res) => {
     try {
-        const {title, tags, files} = req.body
+        const {type, title, tags, files} = req.body
         const userId = req.user._id
         const fileList = req.files
 
-        const fileBatch = new FileBatchModel({user: userId, title, tags, files})
+        const filesNotMatchingRequiredType = fileList.filter(
+            file => !mimeTypes[type].includes(file.mimetype)
+        )
+
+        if (filesNotMatchingRequiredType.length) {
+            return res.status(404).json({
+                success: false,
+                message: `some files do not match the required type: ${filesNotMatchingRequiredType
+                    .map(file => file.originalname)
+                    .join(', ')}`
+            })
+        }
+
+        const fileBatch = new FileBatchModel({user: userId, type, title, tags, files})
 
         const savedFileBatch = await fileBatch.save()
 
@@ -56,18 +69,36 @@ router.get('/', async (req, res) => {
 
         const fileBatches = await FileBatchModel.find({user: userId})
 
-        return res.status(200).json({
-            success: true,
-            message: `${fileBatches.length} file batches found`,
-            batches: fileBatches.map(({_id, files, options, title, tags, createdAt}) => ({
-                id: _id,
-                title,
-                tags,
-                options,
-                date: createdAt,
-                files: files.map(file => file.split('---')[1]).join(', ')
-            }))
-        })
+        // use timeout to simulate server response latency in development mode
+        if (process.env.NODE_ENV === 'development') {
+            setTimeout(() => {
+                return res.status(200).json({
+                    success: true,
+                    message: `${fileBatches.length} file batches found`,
+                    batches: fileBatches.map(({_id, files, options, title, tags, createdAt}) => ({
+                        id: _id,
+                        title,
+                        tags,
+                        options,
+                        date: createdAt,
+                        files: files.map(file => file.split('---')[1]).join(', ')
+                    }))
+                })
+            }, 1500)
+        } else {
+            return res.status(200).json({
+                success: true,
+                message: `${fileBatches.length} file batches found`,
+                batches: fileBatches.map(({_id, files, options, title, tags, createdAt}) => ({
+                    id: _id,
+                    title,
+                    tags,
+                    options,
+                    date: createdAt,
+                    files: files.map(file => file.split('---')[1]).join(', ')
+                }))
+            })
+        }
     } catch (error) {
         console.error(error)
         return res.status(500).json({success: false, error: 'server error'})
