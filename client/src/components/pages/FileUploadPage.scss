@@ -33,35 +33,41 @@
         width: 100%;
         display: flex;
 
+        &.step-upload {
+            .upload-left {
+                .file-upload-drop-area {
+                    width: 100%;
+                }
+            }
+
+            .upload-right {
+                width: 0;
+            }
+        }
+
         &.step-validation,
         &.step-submission {
-            flex-direction: row;
-
             .upload-left {
-                width: 35%;
-                margin-right: auto;
-                margin-left: 0;
+                width: 40%;
+                padding-right: 2.5%;
             }
 
             .upload-right {
                 width: 60%;
-                margin-left: auto;
+                padding-left: 2.5%;
             }
         }
     }
 
     .upload-left {
-        width: 650px;
-        margin-left: auto;
-        margin-right: auto;
-        transition: width 0.5s;
-        transition-delay: margin 0.3s;
+        width: 50%;
+        margin: 0 auto;
+        transition: all 0.75s;
     }
 
     .upload-right {
-        width: 0;
+        margin: 0;
         overflow: hidden;
-        transition: width 0.5s;
-        transition-delay: flex-direction 0.3s;
+        transition: all 0.75s;
     }
 }

@@ -28,15 +28,15 @@
         justify-content: center;
         align-items: center;
         margin: 0 auto 5rem;
-        border: 1px dashed var(--main-color-01);
         padding: 2rem;
+        border: 1px dashed var(--main-color-01);
         border-radius: 0.5rem;
         font-size: 1rem;
         font-weight: 400;
         text-align: center;
         background-color: transparent;
         opacity: 0.7;
-        transition: 0.3s;
+        transition: 0.2s;
 
         &:hover {
             opacity: 1;
