@@ -1,5 +1,5 @@
 // type of data files that can be uploaded
-export const fileTypes = {
+export const mimeTypes = {
     text: 'text/plain',
     csv: 'text/csv',
     img: ['image/jpeg', 'image/png']

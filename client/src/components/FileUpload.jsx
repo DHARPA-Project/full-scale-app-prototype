@@ -11,10 +11,12 @@ import CustomButton from './common/CustomButton'
 import {Context} from '../context'
 
 import './FileUpload.scss'
+import {mimeTypes} from '../constants/const'
 
 const FileUpload = () => {
     const {
         loggedInUser,
+        selectedFileType,
         setFileUploadInProgress,
         uploadedFiles,
         setUploadedFiles,
@@ -87,21 +89,39 @@ const FileUpload = () => {
         if (!fileBatchTitle) {
             batchTitleRef.current.focus()
             return createNotification(
-                `You must give a title to your batch of files.`, //message
+                'You must give a title to your batch of files.', //message
                 'error', // type
                 5000 // setting duration to 0 will make it never expire
             )
         }
 
-        setFileUploadInProgress(true)
+        if (!selectedFileType) {
+            return createNotification(
+                'File type not selected', //message
+                'error', // type
+                5000 // setting duration to 0 will make it never expire
+            )
+        }
+
         const formData = new FormData()
+
+        for (let i = 0; i < uploadedFiles.length; i++) {
+            if (!mimeTypes[selectedFileType].includes(uploadedFiles[i].type)) {
+                return createNotification(
+                    `File ${uploadedFiles[i].name} does not match the selected file type of ${selectedFileType}`, //message
+                    'error', // type
+                    5000 // setting duration to 0 will make it never expire
+                )
+            }
+
+            formData.append('file', uploadedFiles[i])
+        }
 
         formData.append('title', fileBatchTitle)
         formData.append('tags', fileBatchTags)
+        formData.append('type', selectedFileType)
 
-        for (let i = 0; i < uploadedFiles.length; i++) {
-            formData.append('file', uploadedFiles[i])
-        }
+        setFileUploadInProgress(true)
 
         try {
             const response = await axios.post(
@@ -132,9 +152,13 @@ const FileUpload = () => {
                 // timeoutRef.current = setTimeout(() => history.push('/file-management'), 6000)
             }
         } catch (error) {
-            console.error(`File upload failed: ${error}`)
+            const errorMessage = error?.response?.data?.message
+                ? error.response.data.message
+                : error
+
+            console.error(`File upload failed: ${errorMessage}`)
             createNotification(
-                `File upload failed: ${error}`, //message
+                `File upload failed: ${errorMessage}`, //message
                 'error', // type
                 10000 // setting duration to 0 will make it never expire
             )

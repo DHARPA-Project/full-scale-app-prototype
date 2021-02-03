@@ -6,7 +6,7 @@ import {FaTrashAlt} from 'react-icons/fa'
 
 import './FileTable.scss'
 import {Context} from '../context'
-import {fileTypes} from '../constants/const'
+import {mimeTypes} from '../constants/const'
 
 const FileTable = () => {
     const {uploadedFiles, removeUploadedFileByName, selectedFileType} = useContext(Context)
@@ -25,8 +25,8 @@ const FileTable = () => {
 
             <tbody>
                 {uploadedFiles.map(file => {
-                    // typeof fileTypes[selectedFileType] === string || array
-                    const isValidFile = fileTypes[selectedFileType].includes(file.type)
+                    // typeof mimeTypes[selectedFileType] === string || array
+                    const isValidFile = mimeTypes[selectedFileType].includes(file.type)
 
                     return (
                         <tr key={file.name}>

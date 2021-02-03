@@ -6,7 +6,7 @@ import CustomButton from './common/CustomButton'
 
 import './FileList.scss'
 import {Context} from '../context'
-import {fileTypes} from '../constants/const'
+import {mimeTypes} from '../constants/const'
 import FileTable from './FileTable'
 
 const FileList = () => {
@@ -21,9 +21,9 @@ const FileList = () => {
     const [numValidFiles, setNumValidFiles] = useState(0)
 
     useEffect(() => {
-        // typeof fileTypes[selectedFileType] === string || array
+        // typeof mimeTypes[selectedFileType] === string || array
         const validFiles = uploadedFiles.filter(file =>
-            fileTypes[selectedFileType].includes(file.type)
+            mimeTypes[selectedFileType].includes(file.type)
         ).length
         setNumValidFiles(validFiles)
         setFilesReadyForSubmission(uploadedFiles.length > 0 && uploadedFiles.length === validFiles)
