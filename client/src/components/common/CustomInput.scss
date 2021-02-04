@@ -1,0 +1,41 @@
+.custom-input {
+    &-container {
+        position: relative;
+        display: block;
+    }
+
+    &-input {
+        appearance: none;
+        width: 100%;
+        margin: 0.75rem 0;
+        border: 1px solid var(--input-border-color);
+        border-radius: 3px;
+        padding: 0.75rem 1.5rem;
+        background: var(--input-background-color);
+        color: var(--input-text-color);
+        font-size: 0.9rem;
+        outline: none;
+
+        &:focus {
+            outline: none;
+            border: 1px solid var(--input-accent-color);
+            box-shadow: 0 0 0.3rem var(--input-accent-color);
+        }
+
+        &.filled + .custom-input-placeholder,
+        &:focus + .custom-input-placeholder {
+            top: 0;
+        }
+    }
+
+    &-placeholder {
+        position: absolute;
+        left: 1.5rem;
+        top: calc(50%);
+        transform: translateY(-50%);
+        color: var(--input-placeholder-color);
+        font-size: 0.75rem;
+        opacity: 0.7;
+        transition: all 0.3s ease;
+    }
+}

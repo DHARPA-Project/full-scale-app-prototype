@@ -22,8 +22,15 @@
     --accent-color-03: rgb(239, 57, 112);
 
     --loading-indicator-color: var(--accent-color-01);
+
     --radio-button-color-selected: var(--accent-color-02);
     --radio-button-color-neutral: var(--main-color-02);
+
+    --input-background-color: transparent;
+    --input-border-color: var(--main-color-02);
+    --input-placeholder-color: var(--main-color-02);
+    --input-text-color: var(--main-color-02);
+    --input-accent-color: var(--accent-color-01);
 
     --navbar-compact-width: 4rem;
     --navbar-expanded-width: 14rem;
