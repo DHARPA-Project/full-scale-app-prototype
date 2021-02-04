@@ -12,6 +12,7 @@ import {Context} from '../context'
 
 import './FileUpload.scss'
 import {mimeTypes} from '../constants/const'
+import CustomInput from './common/CustomInput'
 
 const FileUpload = () => {
     const {
@@ -212,23 +213,22 @@ const FileUpload = () => {
             </div>
 
             <div className={`submittable${filesReadyForSubmission ? '' : ' concealed'}`}>
-                <input
-                    name="title"
-                    type="text"
-                    placeholder="give your batch of files a title for future reference"
-                    className="file-upload-text-input"
-                    ref={batchTitleRef}
+                <CustomInput
+                    type={'text'}
+                    name={'title'}
+                    placeholder={'give your batch of files a title for future reference'}
+                    inputRef={batchTitleRef}
                     value={fileBatchTitle}
-                    onChange={event => setFileBatchTitle(event.target.value)}
+                    handleChange={event => setFileBatchTitle(event.target.value)}
                 />
 
-                <input
-                    name="tags"
-                    type="text"
-                    placeholder="list tags describing your batch of files"
-                    className="file-upload-text-input"
+                <CustomInput
+                    type={'text'}
+                    name={'tags'}
+                    placeholder={'list tags describing your batch of files'}
+                    inputRef={batchTitleRef}
                     value={fileBatchTags}
-                    onChange={event => setFileBatchTags(event.target.value)}
+                    handleChange={event => setFileBatchTags(event.target.value)}
                 />
 
                 <CustomButton
