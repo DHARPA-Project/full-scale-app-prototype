@@ -1,17 +1,16 @@
 import React, {useContext, useState, useRef, useEffect} from 'react'
-import {useHistory} from 'react-router-dom'
 import axios from 'axios'
 
 import {BiCheck} from 'react-icons/bi'
 
+import './FileUpload.scss'
+import {Context} from '../context'
+import {mimeTypes} from '../constants/const'
+import {useWiggle} from '../hooks/hooks'
+
 import FolderIcon from './common/icons/FolderIcon'
 import DragAndDropIcon from './common/icons/DragAndDropIcon'
 import CustomButton from './common/CustomButton'
-
-import {Context} from '../context'
-
-import './FileUpload.scss'
-import {mimeTypes} from '../constants/const'
 import CustomInput from './common/CustomInput'
 
 const FileUpload = () => {
@@ -25,17 +24,17 @@ const FileUpload = () => {
         createNotification
     } = useContext(Context) //prettier-ignore
 
-    const history = useHistory()
-
     const fileInputRef = useRef(null)
-    const batchTitleRef = useRef(null)
     const timeoutRef = useRef(null)
 
     const [fileBatchTitle, setFileBatchTitle] = useState('')
     const [fileBatchTags, setFileBatchTags] = useState('')
     const [dropAreaHovered, setDropAreaHovered] = useState(false)
 
+    const [wiggleRef, setWiggle] = useWiggle()
+
     useEffect(() => {
+        // eslint-disable-next-line
         return () => clearTimeout(timeoutRef.current)
     }, [])
 
@@ -88,12 +87,9 @@ const FileUpload = () => {
         }
 
         if (!fileBatchTitle) {
-            batchTitleRef.current.focus()
-            return createNotification(
-                'You must give a title to your batch of files.', //message
-                'error', // type
-                5000 // setting duration to 0 will make it never expire
-            )
+            setWiggle(true)
+            wiggleRef.current.focus()
+            return
         }
 
         if (!selectedFileType) {
@@ -150,7 +146,6 @@ const FileUpload = () => {
                     'success', // type
                     5000 // setting duration to 0 will make it never expire
                 )
-                // timeoutRef.current = setTimeout(() => history.push('/file-management'), 6000)
             }
         } catch (error) {
             const errorMessage = error?.response?.data?.message
@@ -217,7 +212,7 @@ const FileUpload = () => {
                     type={'text'}
                     name={'title'}
                     placeholder={'give your batch of files a title for future reference'}
-                    inputRef={batchTitleRef}
+                    inputRef={wiggleRef}
                     value={fileBatchTitle}
                     handleChange={event => setFileBatchTitle(event.target.value)}
                 />
@@ -226,7 +221,6 @@ const FileUpload = () => {
                     type={'text'}
                     name={'tags'}
                     placeholder={'list tags describing your batch of files'}
-                    inputRef={batchTitleRef}
                     value={fileBatchTags}
                     handleChange={event => setFileBatchTags(event.target.value)}
                 />
