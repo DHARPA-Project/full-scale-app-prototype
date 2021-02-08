@@ -17,19 +17,19 @@ const NavBar = () => {
             </div>
             <ul className="nav-list">
                 <li className="nav-item">
-                    <Link to="/file-upload" className="nav-link">
+                    <Link to="/upload" className="nav-link">
                         <GoCloudUpload className="nav-icon" />{' '}
                         <span className="nav-item-text">File Upload</span>
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/file-management" className="nav-link">
+                    <Link to="/files" className="nav-link">
                         <AiFillFolderOpen className="nav-icon" />{' '}
                         <span className="nav-item-text">File Management</span>
                     </Link>
                 </li>
                 <li className="nav-item">
-                    <Link to="/data-processing" className="nav-link">
+                    <Link to="/processing" className="nav-link">
                         <AiOutlineDatabase className="nav-icon" />{' '}
                         <span className="nav-item-text">Data Processing</span>
                     </Link>
