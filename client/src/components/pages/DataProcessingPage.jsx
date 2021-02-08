@@ -149,7 +149,7 @@ const DataProcessingPage = () => {
                 setPreview('')
                 setSelectedProcessingOptions([])
 
-                timeoutRef.current = setTimeout(() => history.push('/file-management'), 6000)
+                timeoutRef.current = setTimeout(() => history.push('/files'), 6000)
             } else {
                 throw new Error(response?.data?.error ? response.data.error : '')
             }
