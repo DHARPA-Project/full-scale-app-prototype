@@ -4,6 +4,7 @@
     margin: 0 calc(var(--navbar-expanded-width) + 1rem);
     padding-top: var(--header-height);
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     // overflow: hidden;
