@@ -9,15 +9,16 @@ import {Diff} from 'diff'
 
 import './DataProcessingPage.scss'
 
-import Spinner from '../common/Spinner'
-import CustomButton from '../common/CustomButton'
+import PageWrapper from '../common/PageWrapper'
 import Modal from '../common/Modal'
+import CustomButton from '../common/CustomButton'
+import LoadingIndicator from '../common/LoadingIndicator'
 import TextPoolSelect from '../TextPoolSelect'
 import TextProcessingTable from '../TextProcessingTable'
 import TextProcessingOutput from '../TextProcessingOutput'
 
 import {Context} from '../../context'
-import PageWrapper from '../common/PageWrapper'
+import PageHeader from '../common/PageHeader'
 
 const DataProcessingPage = () => {
     const {loggedInUser, createNotification} = useContext(Context)
@@ -164,15 +165,18 @@ const DataProcessingPage = () => {
 
     return (
         <PageWrapper>
-            <div className="text-processing-page">
-                <h1 className="text-processing-heading">Prepare your text for topic modelling</h1>
-                <div className="text-processing-container">
+            <div className="data-processing-page">
+                <PageHeader>
+                    <h1 className="data-processing-title">Process your data</h1>
+                </PageHeader>
+
+                <div className="data-processing-container">
                     {optionsLoading ? (
-                        <Spinner />
+                        <LoadingIndicator />
                     ) : (
                         <>
                             <form
-                                className={`text-processing-options${
+                                className={`data-processing-options${
                                     optionsLoading ? ' empty' : ''
                                 }`}
                                 onSubmit={handlePreviewRequest}
@@ -190,7 +194,7 @@ const DataProcessingPage = () => {
                                 />
                                 <CustomButton
                                     classes={
-                                        'text-processing-options-submit' +
+                                        'data-processing-options-submit' +
                                         (!selectedTextPool ? ' muted' : '')
                                     }
                                     type="submit"
@@ -199,7 +203,7 @@ const DataProcessingPage = () => {
                                 </CustomButton>
                             </form>
 
-                            <div className="text-processing-output">
+                            <div className="data-processing-output">
                                 <TextProcessingOutput
                                     loading={previewLoading}
                                     preview={preview}

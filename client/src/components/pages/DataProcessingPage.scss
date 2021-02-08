@@ -1,18 +1,13 @@
-.text-processing {
+.data-processing {
     &-page {
         height: 100%;
         width: 100%;
     }
 
-    &-heading {
-        padding: 1rem;
-        margin-top: 1rem;
-        margin-bottom: 2rem;
-        text-align: center;
-        font-size: 1.3rem;
-        letter-spacing: 1px;
-        color: var(--main-color-02);
-        background-color: var(--background-color-02);
+    &-title {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 300;
     }
 
     &-container {
