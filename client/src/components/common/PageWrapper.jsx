@@ -4,8 +4,9 @@ import './PageWrapper.scss'
 import {Context} from '../../context'
 
 import NavBar from '../NavBar'
-import ProfileBubble from '../ProfileBubble'
+
 import Main from './Main'
+import CornerMenu from '../CornerMenu'
 
 const PageWrapper = ({children}) => {
     const {removeAllNotifications} = useContext(Context)
@@ -17,7 +18,7 @@ const PageWrapper = ({children}) => {
     return (
         <div className="page-wrapper">
             <NavBar />
-            <ProfileBubble />
+            <CornerMenu />
             <Main>{children}</Main>
         </div>
     )
