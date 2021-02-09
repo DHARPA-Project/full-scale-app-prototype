@@ -1,0 +1,71 @@
+.module-board-container {
+    width: 100%;
+}
+
+.module-board {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.module-list {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 5px;
+    background-color: #49505e;
+    padding: 0.5rem;
+}
+
+.module-list-block {
+    display: flex;
+    flex-direction: column;
+}
+
+.workflow-input {
+    height: 30px;
+    width: calc(100% - 1rem);
+    margin: 0.5rem;
+    display: block;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+
+.workflow-output,
+.workflow-operations {
+    width: calc(100% - 1rem);
+    margin: 0.5rem;
+    padding: 0.5rem;
+    display: block;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1rem;
+}
+
+.workflow-output {
+    height: 30px;
+}
+
+.workflow-operations {
+    min-height: 30px;
+}
+
+.module-item {
+    min-height: 150px;
+    margin: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    color: #282c34;
+    font-weight: bold;
+}
