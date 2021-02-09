@@ -1,6 +1,8 @@
 import React from 'react'
 import {Switch} from 'react-router-dom'
 
+import './App.scss'
+
 import PrivateRoute from '../routes/PrivateRoute'
 import PublicRoute from '../routes/PublicRoute'
 import NotificationContainer from './common/NotificationContainer'
@@ -12,8 +14,7 @@ import FileUploadPage from './pages/FileUploadPage'
 import FileManagementPage from './pages/FileManagementPage'
 import FileDetailsPage from './pages/FileDetailsPage'
 import DataProcessingPage from './pages/DataProcessingPage'
-
-import './App.scss'
+import WorkflowBuilderPage from './pages/WorkflowBuilderPage'
 
 const App = () => {
     return (
@@ -27,6 +28,7 @@ const App = () => {
                 <PrivateRoute exact path="/files" component={FileManagementPage} />
                 <PrivateRoute exact path="/files/:id" component={FileDetailsPage} />
                 <PrivateRoute exact path="/processing" component={DataProcessingPage} />
+                <PrivateRoute exact path="/composition" component={WorkflowBuilderPage} />
             </Switch>
             <NotificationContainer />
         </div>

@@ -5,6 +5,7 @@ import {GoCloudUpload} from 'react-icons/go'
 import {AiFillFolderOpen} from 'react-icons/ai'
 import {AiOutlineDatabase} from 'react-icons/ai'
 import {AiOutlineDoubleRight} from 'react-icons/ai'
+import {FcWorkflow} from 'react-icons/fc'
 
 import './NavBar.scss'
 
@@ -32,6 +33,12 @@ const NavBar = () => {
                     <Link to="/processing" className="nav-link">
                         <AiOutlineDatabase className="nav-icon" />{' '}
                         <span className="nav-item-text">Data Processing</span>
+                    </Link>
+                </li>
+                <li className="nav-item">
+                    <Link to="/composition" className="nav-link">
+                        <FcWorkflow className="nav-icon" />{' '}
+                        <span className="nav-item-text">Workflow Builder</span>
                     </Link>
                 </li>
             </ul>

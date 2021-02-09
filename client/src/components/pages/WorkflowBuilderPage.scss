@@ -1,0 +1,17 @@
+.workflow-composition {
+    &-page {
+        height: calc(100% - var(--header-height));
+        width: 100%;
+    }
+
+    &-title {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 300;
+    }
+
+    &-content {
+        min-height: 60vh;
+        display: flex;
+    }
+}
