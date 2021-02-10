@@ -1,25 +1,40 @@
 .module-board-container {
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
 .module-board {
     display: flex;
+    flex-direction: column;
     justify-content: space-evenly;
 }
 
 .module-list {
-    width: 300px;
+    width: 100%;
+    padding: 0.5rem;
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     border-radius: 5px;
     background-color: #49505e;
-    padding: 0.5rem;
 }
 
-.module-list-block {
+.workflow-chain {
+    margin: 3rem 0;
+    padding: 0 0.5rem;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    background-color: #49505e;
+
+    & .module-card.input {
+        margin-right: auto;
+    }
+
+    & .module-card.output {
+        margin-left: auto;
+    }
 }
 
 .workflow-input {
@@ -35,10 +50,10 @@
     text-align: center;
 }
 
-.workflow-output,
 .workflow-operations {
-    width: calc(100% - 1rem);
-    margin: 0.5rem;
+    width: 100%;
+    min-height: 30px;
+    margin-bottom: 3rem;
     padding: 0.5rem;
     display: block;
     border: 1px solid white;
@@ -47,25 +62,5 @@
     color: white;
     font-weight: bold;
     text-align: center;
-    line-height: 1rem;
-}
-
-.workflow-output {
-    height: 30px;
-}
-
-.workflow-operations {
-    min-height: 30px;
-}
-
-.module-item {
-    min-height: 150px;
-    margin: 0.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    border-radius: 5px;
-    color: #282c34;
-    font-weight: bold;
+    line-height: 1.5rem;
 }

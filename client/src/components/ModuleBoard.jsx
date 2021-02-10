@@ -1,7 +1,11 @@
-import React, {useEffect, useState} from 'react'
-import CustomButton from './common/CustomButton'
+import React, {useContext, useState} from 'react'
 
 import './ModuleBoard.scss'
+import {generateId} from '../utils/helpers'
+
+import CustomButton from './common/CustomButton'
+import ModuleCard from './ModuleCard'
+import {Context} from '../context'
 
 const availableModules = [
     {
@@ -40,6 +44,8 @@ const operationMap = {
 }
 
 const ModuleBoard = () => {
+    const {createNotification} = useContext(Context)
+
     const [selectedModules, setSelectedModules] = useState([])
     const [input, setInput] = useState(0)
     const [output, setOutput] = useState(null)
@@ -57,8 +63,13 @@ const ModuleBoard = () => {
         setSelectedModules(prevList => prevList.filter((_, index) => index !== ind))
     }
 
-    const handleProcess = () => {
-        if (!operations.length) return
+    const handleWorkflowExecution = () => {
+        if (!operations.length)
+            return createNotification(
+                `No operations have been chosen!`, //message
+                'error', // type
+                5000 // setting duration to 0 will make it never expire
+            )
 
         let result
 
@@ -71,26 +82,24 @@ const ModuleBoard = () => {
 
     return (
         <div className="module-board-container">
-            <CustomButton style={{margin: '0 auto'}} onClick={handleProcess}>
-                Let's do this!
-            </CustomButton>
-
             <div className="module-board">
                 <div className="module-list">
-                    {availableModules.map((mod, ind) => (
-                        <div
-                            className="module-item"
-                            key={ind}
-                            onClick={() => addOperation(mod)}
-                            style={{backgroundColor: `${mod.color}`}}
-                        >
-                            {mod.name}
-                        </div>
+                    {availableModules.map((mod, index = generateId()) => (
+                        <ModuleCard key={index} color={mod.color}>
+                            <p>{mod.name}</p>
+                            <button
+                                className="module-card-button"
+                                onClick={() => addOperation(mod)}
+                            >
+                                +
+                            </button>
+                        </ModuleCard>
                     ))}
                 </div>
 
-                <div className="module-list">
-                    <div className="module-list-block">
+                <div className="workflow-chain">
+                    <ModuleCard key="input" classes="input right-arrow">
+                        <p>input</p>
                         <input
                             type="text"
                             className="workflow-input"
@@ -101,30 +110,38 @@ const ModuleBoard = () => {
                                 setInput(Number(inputFieldString))
                             }}
                         />
-                        {selectedModules.map((mod, ind) => (
-                            <div
-                                className="module-item"
-                                key={ind}
-                                onClick={() => removeOperation(ind)}
-                                style={{backgroundColor: `${mod.color}`}}
+                    </ModuleCard>
+                    <div className="module-list">
+                        {selectedModules.map((mod, index = generateId()) => (
+                            <ModuleCard
+                                key={index}
+                                color={mod.color}
+                                classes="right-arrow extensible"
                             >
-                                {mod.name}
-                            </div>
+                                <p>{mod.name}</p>
+                                <button
+                                    className="module-card-button"
+                                    onClick={() => removeOperation(index)}
+                                >
+                                    &#8722;
+                                </button>
+                            </ModuleCard>
                         ))}
                     </div>
-                    <div className="module-list-block">
-                        <div className="workflow-operations">
-                            {operations.reduce(
-                                (output, oper, index) => output + `${++index}. ${oper}, `,
-                                ''
-                            )}
-                        </div>
-                        <div className="workflow-output">
-                            {!operations.length ? 'no operations selected!' : output ?? output}
-                        </div>
-                    </div>
+                    <ModuleCard key="output" classes="output">
+                        <p>output</p>
+                        <p>{!operations.length ? 'no operations selected!' : output ?? output}</p>
+                    </ModuleCard>
                 </div>
             </div>
+
+            <div className="workflow-operations">
+                {operations.reduce((output, oper, index) => output + `${++index}. ${oper}, `, '')}
+            </div>
+
+            <CustomButton style={{margin: '0 auto'}} onClick={handleWorkflowExecution}>
+                Let's do this!
+            </CustomButton>
         </div>
     )
 }
