@@ -109,6 +109,8 @@ const ModuleBoard = () => {
     return (
         <div className="module-board-container">
             <div className="module-board">
+                <h2 className="module-container-title">MODULE PALETTE</h2>
+
                 <div className="module-list">
                     {availableModules.map((mod, index = generateId()) => (
                         <ModuleCard key={index} color={mod.color}>
@@ -123,9 +125,10 @@ const ModuleBoard = () => {
                     ))}
                 </div>
 
+                <h2 className="module-container-title">WORKFLOW ASSEMBLER</h2>
                 <div className="workflow-chain">
                     <ModuleCard key="input" classes="input right-arrow">
-                        <h2 className="workflow-input-title">INPUT</h2>
+                        <h3 className="workflow-input-title">INPUT</h3>
                         <label htmlFor="workflow-input-value">
                             value
                             <input

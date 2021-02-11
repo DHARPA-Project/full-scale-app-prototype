@@ -10,6 +10,10 @@
     justify-content: space-evenly;
 }
 
+.module-container-title {
+    margin-top: 3rem;
+}
+
 .module-list {
     width: 100%;
     display: flex;
@@ -19,7 +23,6 @@
 }
 
 .workflow-chain {
-    margin: 3rem 0;
     padding: 0 0.5rem;
     display: flex;
     justify-content: space-between;
@@ -84,7 +87,7 @@
 .workflow-operations {
     width: 100%;
     min-height: 30px;
-    margin-bottom: 3rem;
+    margin: 3rem 0;
     padding: 0.5rem;
     display: block;
     border: 1px solid white;
