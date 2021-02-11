@@ -11,27 +11,44 @@ const availableModules = [
     {
         name: 'double',
         code: 'double',
-        color: 'goldenrod'
+        color: 'goldenrod',
+        inputType: 'number',
+        outputType: 'number'
     },
     {
         name: 'nullify',
         code: 'nullify',
-        color: 'firebrick'
+        color: 'firebrick',
+        inputType: 'number',
+        outputType: 'number'
     },
     {
         name: 'square',
         code: 'square',
-        color: 'cornflowerblue'
+        color: 'cornflowerblue',
+        inputType: 'number',
+        outputType: 'number'
     },
     {
         name: 'reduce by one',
         code: 'decrease',
-        color: 'tomato'
+        color: 'tomato',
+        inputType: 'number',
+        outputType: 'number'
     },
     {
         name: 'increase by one',
         code: 'increase',
-        color: 'teal'
+        color: 'teal',
+        inputType: 'number',
+        outputType: 'number'
+    },
+    {
+        name: 'halve',
+        code: 'halve',
+        color: 'maroon',
+        inputType: 'number',
+        outputType: 'number'
     }
 ]
 
@@ -40,14 +57,16 @@ const operationMap = {
     nullify: x => 0,
     square: x => x * x,
     decrease: x => --x,
-    increase: x => ++x
+    increase: x => ++x,
+    halve: x => x / 2
 }
 
 const ModuleBoard = () => {
     const {createNotification} = useContext(Context)
 
     const [selectedModules, setSelectedModules] = useState([])
-    const [input, setInput] = useState(0)
+    const [inputValue, setInputValue] = useState(null)
+    const [inputType, setInputType] = useState('number')
     const [output, setOutput] = useState(null)
     const [operations, setOperations] = useState([])
 
@@ -64,9 +83,16 @@ const ModuleBoard = () => {
     }
 
     const handleWorkflowExecution = () => {
+        if (inputValue === null || inputValue === undefined)
+            return createNotification(
+                `No input data was provided!`, //message
+                'error', // type
+                5000 // setting duration to 0 will make it never expire
+            )
+
         if (!operations.length)
             return createNotification(
-                `No operations have been chosen!`, //message
+                `No operations have been selected!`, //message
                 'error', // type
                 5000 // setting duration to 0 will make it never expire
             )
@@ -74,7 +100,7 @@ const ModuleBoard = () => {
         let result
 
         operations.forEach((operationCode, index) => {
-            result = operationMap[operationCode](index === 0 ? input : result)
+            result = operationMap[operationCode](index === 0 ? inputValue : result)
         })
 
         setOutput(result)
@@ -99,17 +125,38 @@ const ModuleBoard = () => {
 
                 <div className="workflow-chain">
                     <ModuleCard key="input" classes="input right-arrow">
-                        <p>input</p>
-                        <input
-                            type="text"
-                            className="workflow-input"
-                            value={String(input)}
-                            onChange={event => {
-                                const inputFieldString = event.target.value
-                                if (isNaN(Number(inputFieldString))) return
-                                setInput(Number(inputFieldString))
-                            }}
-                        />
+                        <h2 className="workflow-input-title">INPUT</h2>
+                        <label htmlFor="workflow-input-value">
+                            value
+                            <input
+                                type="text"
+                                id="workflow-input-value"
+                                className="workflow-input"
+                                value={
+                                    inputValue !== null && inputValue !== undefined
+                                        ? String(inputValue)
+                                        : ''
+                                }
+                                onChange={event => {
+                                    const inputFieldString = event.target.value
+                                    if (isNaN(Number(inputFieldString))) return
+                                    setInputValue(Number(inputFieldString))
+                                }}
+                            />
+                        </label>
+                        <label htmlFor="workflow-input-type-label">
+                            type
+                            <select
+                                name="workflow-input-type"
+                                id="workflow-input-type"
+                                className="workflow-input-type-select"
+                                value={inputType}
+                                onChange={event => setInputType(Number(event.target.value))}
+                            >
+                                <option value="string">string</option>
+                                <option value="number">number</option>
+                            </select>
+                        </label>
                     </ModuleCard>
                     <div className="module-list">
                         {selectedModules.map((mod, index = generateId()) => (
