@@ -7,48 +7,53 @@ import CustomButton from './common/CustomButton'
 import ModuleCard from './ModuleCard'
 import {Context} from '../context'
 
+const ioTypes = {
+    number: 'number',
+    string: 'string'
+}
+
 const availableModules = [
-    {
-        name: 'double',
-        code: 'double',
-        color: 'goldenrod',
-        inputType: 'number',
-        outputType: 'number'
-    },
     {
         name: 'nullify',
         code: 'nullify',
         color: 'firebrick',
-        inputType: 'number',
-        outputType: 'number'
+        inputType: ioTypes.number,
+        outputType: ioTypes.number
     },
     {
         name: 'square',
         code: 'square',
         color: 'cornflowerblue',
-        inputType: 'number',
-        outputType: 'number'
+        inputType: ioTypes.number,
+        outputType: ioTypes.number
     },
     {
-        name: 'reduce by one',
-        code: 'decrease',
-        color: 'tomato',
-        inputType: 'number',
-        outputType: 'number'
-    },
-    {
-        name: 'increase by one',
-        code: 'increase',
-        color: 'teal',
-        inputType: 'number',
-        outputType: 'number'
+        name: 'double',
+        code: 'double',
+        color: 'goldenrod',
+        inputType: ioTypes.number,
+        outputType: ioTypes.number
     },
     {
         name: 'halve',
         code: 'halve',
         color: 'maroon',
-        inputType: 'number',
-        outputType: 'number'
+        inputType: ioTypes.number,
+        outputType: ioTypes.number
+    },
+    {
+        name: 'increase by one',
+        code: 'increase',
+        color: 'teal',
+        inputType: ioTypes.number,
+        outputType: ioTypes.number
+    },
+    {
+        name: 'reduce by one',
+        code: 'decrease',
+        color: 'tomato',
+        inputType: ioTypes.number,
+        outputType: ioTypes.number
     }
 ]
 
@@ -66,19 +71,28 @@ const ModuleBoard = () => {
 
     const [selectedModules, setSelectedModules] = useState([])
     const [inputValue, setInputValue] = useState(null)
-    const [inputType, setInputType] = useState('number')
-    const [output, setOutput] = useState(null)
-    const [operations, setOperations] = useState([])
+    const [inputType, setInputType] = useState(ioTypes.number)
+    const [workflowOutput, setWorkflowOutput] = useState(null)
 
     const addOperation = mod => {
-        setOutput(null)
-        setOperations(prevOperationList => [...prevOperationList, mod.code])
+        setWorkflowOutput(null)
+
+        const previousType = selectedModules.length
+            ? selectedModules[selectedModules.length - 1].outputType
+            : inputType
+
+        if (previousType !== mod.inputType)
+            return createNotification(
+                `Expected input not compatible with provided input!`, //message
+                'error', // type
+                5000 // setting duration to 0 will make it never expire
+            )
+
         setSelectedModules(prevList => [...prevList, mod])
     }
 
     const removeOperation = ind => {
-        setOutput(null)
-        setOperations(prevOperations => prevOperations.filter((_, index) => index !== ind))
+        setWorkflowOutput(null)
         setSelectedModules(prevList => prevList.filter((_, index) => index !== ind))
     }
 
@@ -90,7 +104,7 @@ const ModuleBoard = () => {
                 5000 // setting duration to 0 will make it never expire
             )
 
-        if (!operations.length)
+        if (!selectedModules.length)
             return createNotification(
                 `No operations have been selected!`, //message
                 'error', // type
@@ -99,17 +113,17 @@ const ModuleBoard = () => {
 
         let result
 
-        operations.forEach((operationCode, index) => {
-            result = operationMap[operationCode](index === 0 ? inputValue : result)
+        selectedModules.forEach((selectedModule, index) => {
+            result = operationMap[selectedModule.code](index === 0 ? inputValue : result)
         })
 
-        setOutput(result)
+        setWorkflowOutput(result)
     }
 
     return (
         <div className="module-board-container">
             <div className="module-board">
-                <h2 className="module-container-title">MODULE PALETTE</h2>
+                <h2 className="module-container-title">MODULE PALETTE / REPOSITORY</h2>
 
                 <div className="module-list">
                     {availableModules.map((mod, index = generateId()) => (
@@ -154,10 +168,13 @@ const ModuleBoard = () => {
                                 id="workflow-input-type"
                                 className="workflow-input-type-select"
                                 value={inputType}
-                                onChange={event => setInputType(Number(event.target.value))}
+                                onChange={event => setInputType(event.target.value)}
                             >
-                                <option value="string">string</option>
-                                <option value="number">number</option>
+                                {Object.values(ioTypes).map(ioType => (
+                                    <option value={ioType} key={ioType}>
+                                        {ioType}
+                                    </option>
+                                ))}
                             </select>
                         </label>
                     </ModuleCard>
@@ -180,13 +197,26 @@ const ModuleBoard = () => {
                     </div>
                     <ModuleCard key="output" classes="output">
                         <p>output</p>
-                        <p>{!operations.length ? 'no operations selected!' : output ?? output}</p>
+                        <p>
+                            {!selectedModules.length
+                                ? 'no operations selected!'
+                                : workflowOutput ?? workflowOutput}
+                        </p>
                     </ModuleCard>
                 </div>
             </div>
 
             <div className="workflow-operations">
-                {operations.reduce((output, oper, index) => output + `${++index}. ${oper}, `, '')}
+                {selectedModules.reduce(
+                    (summary, selectedModule, index) =>
+                        summary +
+                        ` --> ${index + 1}. ${selectedModule.code} ${
+                            index === selectedModules.length - 1 && workflowOutput
+                                ? ' = ' + workflowOutput
+                                : ''
+                        }`,
+                    `${inputValue ? inputValue : ''}`
+                )}
             </div>
 
             <CustomButton style={{margin: '0 auto'}} onClick={handleWorkflowExecution}>
