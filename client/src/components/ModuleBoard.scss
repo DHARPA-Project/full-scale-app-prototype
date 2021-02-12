@@ -11,7 +11,18 @@
 }
 
 .module-container-title {
-    margin-top: 3rem;
+    margin-top: 2rem;
+    font-weight: 300;
+}
+
+.module-list-wrapper {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+    background-color: #49505e;
 }
 
 .module-list {
@@ -20,22 +31,6 @@
     justify-content: space-evenly;
     border-radius: 5px;
     background-color: #49505e;
-}
-
-.workflow-chain {
-    padding: 0 0.5rem;
-    display: flex;
-    justify-content: space-between;
-    border-radius: 5px;
-    background-color: #49505e;
-
-    & .module-card.input {
-        margin-right: auto;
-    }
-
-    & .module-card.output {
-        margin-left: auto;
-    }
 }
 
 .workflow-input {

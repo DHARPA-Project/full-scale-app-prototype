@@ -2,60 +2,13 @@ import React, {useContext, useState} from 'react'
 
 import './ModuleBoard.scss'
 import {generateId} from '../utils/helpers'
+import {ioTypes, availableModules} from '../constants/const'
 
 import CustomButton from './common/CustomButton'
 import ModuleCard from './ModuleCard'
 import {Context} from '../context'
-
-const ioTypes = {
-    number: 'number',
-    string: 'string'
-}
-
-const availableModules = [
-    {
-        name: 'nullify',
-        code: 'nullify',
-        color: 'firebrick',
-        inputType: ioTypes.number,
-        outputType: ioTypes.number
-    },
-    {
-        name: 'square',
-        code: 'square',
-        color: 'cornflowerblue',
-        inputType: ioTypes.number,
-        outputType: ioTypes.number
-    },
-    {
-        name: 'double',
-        code: 'double',
-        color: 'goldenrod',
-        inputType: ioTypes.number,
-        outputType: ioTypes.number
-    },
-    {
-        name: 'halve',
-        code: 'halve',
-        color: 'maroon',
-        inputType: ioTypes.number,
-        outputType: ioTypes.number
-    },
-    {
-        name: 'increase by one',
-        code: 'increase',
-        color: 'teal',
-        inputType: ioTypes.number,
-        outputType: ioTypes.number
-    },
-    {
-        name: 'reduce by one',
-        code: 'decrease',
-        color: 'tomato',
-        inputType: ioTypes.number,
-        outputType: ioTypes.number
-    }
-]
+import WorkflowOutputCard from './WorkflowOutputCard'
+import WorkflowInputCard from './WorkflowInputCard'
 
 const operationMap = {
     double: x => x * 2,
@@ -83,7 +36,7 @@ const ModuleBoard = () => {
 
         if (previousType !== mod.inputType)
             return createNotification(
-                `Expected input not compatible with provided input!`, //message
+                `Module not compatible with provided input!`, //message
                 'error', // type
                 5000 // setting duration to 0 will make it never expire
             )
@@ -125,7 +78,7 @@ const ModuleBoard = () => {
             <div className="module-board">
                 <h2 className="module-container-title">MODULE PALETTE / REPOSITORY</h2>
 
-                <div className="module-list">
+                <div className="module-list-wrapper module-list">
                     {availableModules.map((mod, index = generateId()) => (
                         <ModuleCard key={index} color={mod.color}>
                             <p>{mod.name}</p>
@@ -140,44 +93,13 @@ const ModuleBoard = () => {
                 </div>
 
                 <h2 className="module-container-title">WORKFLOW ASSEMBLER</h2>
-                <div className="workflow-chain">
-                    <ModuleCard key="input" classes="input right-arrow">
-                        <h3 className="workflow-input-title">INPUT</h3>
-                        <label htmlFor="workflow-input-value">
-                            value
-                            <input
-                                type="text"
-                                id="workflow-input-value"
-                                className="workflow-input"
-                                value={
-                                    inputValue !== null && inputValue !== undefined
-                                        ? String(inputValue)
-                                        : ''
-                                }
-                                onChange={event => {
-                                    const inputFieldString = event.target.value
-                                    if (isNaN(Number(inputFieldString))) return
-                                    setInputValue(Number(inputFieldString))
-                                }}
-                            />
-                        </label>
-                        <label htmlFor="workflow-input-type-label">
-                            type
-                            <select
-                                name="workflow-input-type"
-                                id="workflow-input-type"
-                                className="workflow-input-type-select"
-                                value={inputType}
-                                onChange={event => setInputType(event.target.value)}
-                            >
-                                {Object.values(ioTypes).map(ioType => (
-                                    <option value={ioType} key={ioType}>
-                                        {ioType}
-                                    </option>
-                                ))}
-                            </select>
-                        </label>
-                    </ModuleCard>
+                <div className="module-list-wrapper workflow-chain">
+                    <WorkflowInputCard
+                        inputType={inputType}
+                        setInputType={setInputType}
+                        inputValue={inputValue}
+                        setInputValue={setInputValue}
+                    />
                     <div className="module-list">
                         {selectedModules.map((mod, index = generateId()) => (
                             <ModuleCard
@@ -195,14 +117,10 @@ const ModuleBoard = () => {
                             </ModuleCard>
                         ))}
                     </div>
-                    <ModuleCard key="output" classes="output">
-                        <p>output</p>
-                        <p>
-                            {!selectedModules.length
-                                ? 'no operations selected!'
-                                : workflowOutput ?? workflowOutput}
-                        </p>
-                    </ModuleCard>
+                    <WorkflowOutputCard
+                        workflowOutput={workflowOutput}
+                        isReady={!selectedModules.length}
+                    />
                 </div>
             </div>
 
