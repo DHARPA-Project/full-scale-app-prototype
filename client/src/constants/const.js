@@ -34,38 +34,40 @@ export const ioTypes = {
     string: 'string'
 }
 
+export const moduleCategories = {
+    number: 'number',
+    string: 'string'
+}
+
 export const availableModules = [
-    {
-        name: 'nullify',
-        code: 'nullify',
-        color: 'firebrick',
-        inputType: ioTypes.number,
-        outputType: ioTypes.number
-    },
     {
         name: 'square',
         code: 'square',
-        color: 'cornflowerblue',
+        category: moduleCategories.number,
+        color: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number
     },
     {
         name: 'double',
         code: 'double',
-        color: 'goldenrod',
+        category: moduleCategories.number,
+        color: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number
     },
     {
         name: 'halve',
         code: 'halve',
-        color: 'maroon',
+        category: moduleCategories.number,
+        color: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number
     },
     {
         name: 'increase by one',
         code: 'increase',
+        category: moduleCategories.number,
         color: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number
@@ -73,8 +75,33 @@ export const availableModules = [
     {
         name: 'decrease by one',
         code: 'decrease',
-        color: 'tomato',
+        category: moduleCategories.number,
+        color: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number
+    },
+    {
+        name: 'uppercase',
+        code: 'uppercase',
+        category: moduleCategories.string,
+        color: 'cornflowerblue',
+        inputType: ioTypes.string,
+        outputType: ioTypes.string
+    },
+    {
+        name: 'lowercase',
+        code: 'lowercase',
+        category: moduleCategories.string,
+        color: 'cornflowerblue',
+        inputType: ioTypes.string,
+        outputType: ioTypes.string
+    },
+    {
+        name: 'remove digits',
+        code: 'nodigits',
+        category: moduleCategories.string,
+        color: 'cornflowerblue',
+        inputType: ioTypes.string,
+        outputType: ioTypes.string
     }
 ]
