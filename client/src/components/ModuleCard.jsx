@@ -2,7 +2,7 @@ import React from 'react'
 
 import './ModuleCard.scss'
 
-const ModuleCard = ({classes, color, children}) => {
+const ModuleCard = ({classes, background, children}) => {
     return (
         <div
             className={`module-card-wrapper${
@@ -11,7 +11,7 @@ const ModuleCard = ({classes, color, children}) => {
         >
             <div
                 className={`module-card${classes ? ` ${classes}` : ''}`}
-                style={{backgroundColor: color}}
+                style={{background: background}}
             >
                 {children}
             </div>

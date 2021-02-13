@@ -36,7 +36,8 @@ export const ioTypes = {
 
 export const moduleCategories = {
     number: 'number',
-    string: 'string'
+    string: 'string',
+    conversion: 'conversion'
 }
 
 export const availableModules = [
@@ -44,7 +45,7 @@ export const availableModules = [
         name: 'square',
         code: 'square',
         category: moduleCategories.number,
-        color: 'teal',
+        background: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number
     },
@@ -52,7 +53,7 @@ export const availableModules = [
         name: 'double',
         code: 'double',
         category: moduleCategories.number,
-        color: 'teal',
+        background: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number
     },
@@ -60,7 +61,7 @@ export const availableModules = [
         name: 'halve',
         code: 'halve',
         category: moduleCategories.number,
-        color: 'teal',
+        background: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number
     },
@@ -68,7 +69,7 @@ export const availableModules = [
         name: 'increase by one',
         code: 'increase',
         category: moduleCategories.number,
-        color: 'teal',
+        background: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number
     },
@@ -76,7 +77,7 @@ export const availableModules = [
         name: 'decrease by one',
         code: 'decrease',
         category: moduleCategories.number,
-        color: 'teal',
+        background: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number
     },
@@ -84,7 +85,7 @@ export const availableModules = [
         name: 'uppercase',
         code: 'uppercase',
         category: moduleCategories.string,
-        color: 'cornflowerblue',
+        background: 'cornflowerblue',
         inputType: ioTypes.string,
         outputType: ioTypes.string
     },
@@ -92,16 +93,24 @@ export const availableModules = [
         name: 'lowercase',
         code: 'lowercase',
         category: moduleCategories.string,
-        color: 'cornflowerblue',
+        background: 'cornflowerblue',
         inputType: ioTypes.string,
         outputType: ioTypes.string
     },
     {
         name: 'remove digits',
-        code: 'nodigits',
+        code: 'removeDigits',
         category: moduleCategories.string,
-        color: 'cornflowerblue',
+        background: 'cornflowerblue',
         inputType: ioTypes.string,
+        outputType: ioTypes.string
+    },
+    {
+        name: 'digit to string',
+        code: 'stringifyNumber',
+        category: moduleCategories.conversion,
+        background: 'linear-gradient(to right, teal 50%, cornflowerblue 0)',
+        inputType: ioTypes.number,
         outputType: ioTypes.string
     }
 ]

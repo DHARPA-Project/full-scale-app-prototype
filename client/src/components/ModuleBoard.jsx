@@ -11,12 +11,15 @@ import WorkflowOutputCard from './WorkflowOutputCard'
 import WorkflowInputCard from './WorkflowInputCard'
 
 const operationMap = {
-    double: x => x * 2,
-    nullify: x => 0,
     square: x => x * x,
-    decrease: x => --x,
+    double: x => x * 2,
+    halve: x => x / 2,
     increase: x => ++x,
-    halve: x => x / 2
+    decrease: x => --x,
+    uppercase: x => x.toUpperCase(),
+    lowercase: x => x.toLowerCase(),
+    removeDigits: x => x.replace(/\d/g, ''),
+    stringifyNumber: x => String(x)
 }
 
 const ModuleBoard = () => {
@@ -70,7 +73,7 @@ const ModuleBoard = () => {
             result = operationMap[selectedModule.code](index === 0 ? inputValue : result)
         })
 
-        setWorkflowOutput(result)
+        setWorkflowOutput(typeof result === 'string' ? `"${result}"` : result)
     }
 
     return (
@@ -80,7 +83,7 @@ const ModuleBoard = () => {
 
                 <div className="module-list-wrapper module-list">
                     {availableModules.map((mod, index = generateId()) => (
-                        <ModuleCard key={index} color={mod.color}>
+                        <ModuleCard key={index} background={mod.background}>
                             <p>{mod.name}</p>
                             <button
                                 className="module-card-button"
@@ -99,12 +102,15 @@ const ModuleBoard = () => {
                         setInputType={setInputType}
                         inputValue={inputValue}
                         setInputValue={setInputValue}
+                        inputTypeExpectedByNextModule={
+                            selectedModules.length ? selectedModules[0].inputType : null
+                        }
                     />
                     <div className="module-list">
                         {selectedModules.map((mod, index = generateId()) => (
                             <ModuleCard
                                 key={index}
-                                color={mod.color}
+                                background={mod.background}
                                 classes="right-arrow extensible"
                             >
                                 <p>{mod.name}</p>
