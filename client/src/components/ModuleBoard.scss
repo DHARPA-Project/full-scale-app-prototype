@@ -93,3 +93,50 @@
     text-align: center;
     line-height: 1.5rem;
 }
+
+.workflow-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .workflow-button-reset,
+    .workflow-button-execute,
+    .workflow-button-save {
+        margin: 1rem;
+        cursor: pointer;
+
+        & svg {
+            height: 1.75rem;
+            width: 1.75rem;
+            fill: var(--main-color-01);
+        }
+
+        &:hover svg {
+            transform: scale(1.3);
+        }
+    }
+
+    .workflow-button-reset {
+        &:hover svg {
+            fill: var(--accent-color-03);
+        }
+    }
+
+    .workflow-button-execute {
+        & svg {
+            & path {
+                stroke: var(--main-color-01);
+            }
+        }
+
+        &:hover svg path {
+            stroke: var(--accent-color-02);
+        }
+    }
+
+    .workflow-button-save {
+        &:hover svg {
+            fill: var(--accent-color-01);
+        }
+    }
+}

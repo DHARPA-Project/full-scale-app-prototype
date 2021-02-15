@@ -1,12 +1,15 @@
 import React, {useContext, useState} from 'react'
 
+import {GrLaunch} from 'react-icons/gr'
+import {AiOutlineSave} from 'react-icons/ai'
+import {GoTrashcan} from 'react-icons/go'
+
 import './ModuleBoard.scss'
+import {Context} from '../context'
 import {generateId} from '../utils/helpers'
 import {ioTypes, availableModules} from '../constants/const'
 
-import CustomButton from './common/CustomButton'
 import ModuleCard from './ModuleCard'
-import {Context} from '../context'
 import WorkflowOutputCard from './WorkflowOutputCard'
 import WorkflowInputCard from './WorkflowInputCard'
 
@@ -58,6 +61,28 @@ const ModuleBoard = () => {
         )
     }
 
+    const handleWorkflowReset = () => {
+        setWorkflowOutput(null)
+        setInputValue(null)
+        setSelectedModules([])
+    }
+
+    const handleWorkflowSave = () => {
+        if (!selectedModules.length) {
+            return createNotification(
+                `No workflow elements have been selected!`, //message
+                'warning', // type
+                5000 // setting duration to 0 will make it never expire
+            )
+        }
+
+        createNotification(
+            `Workflow saved.`, //message
+            'success', // type
+            5000 // setting duration to 0 will make it never expire
+        )
+    }
+
     const handleWorkflowExecution = async () => {
         if (inputValue === null || inputValue === undefined)
             return createNotification(
@@ -72,6 +97,12 @@ const ModuleBoard = () => {
                 'error', // type
                 5000 // setting duration to 0 will make it never expire
             )
+
+        createNotification(
+            `Workflow execution started.`, //message
+            'success', // type
+            5000 // setting duration to 0 will make it never expire
+        )
 
         let result
 
@@ -148,6 +179,19 @@ const ModuleBoard = () => {
                         workflowOutput={workflowOutput}
                         isReady={!!workflowOutput}
                     />
+                    <div className="workflow-controls">
+                        <div className="workflow-button-reset" onClick={handleWorkflowReset}>
+                            <GoTrashcan />
+                        </div>
+
+                        <div className="workflow-button-execute" onClick={handleWorkflowExecution}>
+                            <GrLaunch />
+                        </div>
+
+                        <div className="workflow-button-save" onClick={handleWorkflowSave}>
+                            <AiOutlineSave />
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -163,10 +207,6 @@ const ModuleBoard = () => {
                     `${inputValue ? inputValue : ''}`
                 )}
             </div>
-
-            <CustomButton style={{margin: '0 auto'}} onClick={handleWorkflowExecution}>
-                Let's do this!
-            </CustomButton>
         </div>
     )
 }
