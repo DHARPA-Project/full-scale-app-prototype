@@ -30,29 +30,35 @@ const ModuleBoard = () => {
     const [inputType, setInputType] = useState(ioTypes.number)
     const [workflowOutput, setWorkflowOutput] = useState(null)
 
-    const addOperation = mod => {
+    const addModule = newModule => {
         setWorkflowOutput(null)
 
         const previousType = selectedModules.length
             ? selectedModules[selectedModules.length - 1].outputType
             : inputType
 
-        if (previousType !== mod.inputType)
+        if (previousType !== newModule.inputType)
             return createNotification(
                 `Module not compatible with provided input!`, //message
                 'error', // type
                 5000 // setting duration to 0 will make it never expire
             )
 
-        setSelectedModules(prevList => [...prevList, mod])
+        // clear the status of already selected modules and add new module
+        setSelectedModules(prevList => [
+            ...prevList.map(module => ({...module, status: null})),
+            newModule
+        ])
     }
 
-    const removeOperation = ind => {
+    const removeModule = ind => {
         setWorkflowOutput(null)
-        setSelectedModules(prevList => prevList.filter((_, index) => index !== ind))
+        setSelectedModules(prevList =>
+            prevList.filter((_, index) => index !== ind).map(module => ({...module, status: null}))
+        )
     }
 
-    const handleWorkflowExecution = () => {
+    const handleWorkflowExecution = async () => {
         if (inputValue === null || inputValue === undefined)
             return createNotification(
                 `No input data was provided!`, //message
@@ -69,10 +75,22 @@ const ModuleBoard = () => {
 
         let result
 
-        selectedModules.forEach((selectedModule, index) => {
-            result = operationMap[selectedModule.code](index === 0 ? inputValue : result)
-        })
+        for (let i = 0, len = selectedModules.length; i < len; i++) {
+            // simulate longer execution duration for each operation
+            await new Promise(resolve => setTimeout(resolve, 1000))
+            console.log('executing module: ', selectedModules[i])
+            result = operationMap[selectedModules[i].code](i === 0 ? inputValue : result)
 
+            console.log(`making module ${i} completed`)
+            setSelectedModules(prevModules =>
+                prevModules.map((module, index) =>
+                    index === i ? {...module, status: 'completed'} : module
+                )
+            )
+        }
+
+        // simulate minor delay before displaying output
+        await new Promise(resolve => setTimeout(resolve, 500))
         setWorkflowOutput(typeof result === 'string' ? `"${result}"` : result)
     }
 
@@ -85,10 +103,7 @@ const ModuleBoard = () => {
                     {availableModules.map((mod, index = generateId()) => (
                         <ModuleCard key={index} background={mod.background}>
                             <p>{mod.name}</p>
-                            <button
-                                className="module-card-button"
-                                onClick={() => addOperation(mod)}
-                            >
+                            <button className="module-card-button" onClick={() => addModule(mod)}>
                                 +
                             </button>
                         </ModuleCard>
@@ -111,12 +126,18 @@ const ModuleBoard = () => {
                             <ModuleCard
                                 key={index}
                                 background={mod.background}
-                                classes="right-arrow extensible"
+                                classes={`right-arrow extensible${
+                                    mod.status === 'completed'
+                                        ? ' completed'
+                                        : mod.status === 'failed'
+                                        ? ' failed'
+                                        : ''
+                                }`}
                             >
                                 <p>{mod.name}</p>
                                 <button
                                     className="module-card-button"
-                                    onClick={() => removeOperation(index)}
+                                    onClick={() => removeModule(index)}
                                 >
                                     &#8722;
                                 </button>
@@ -125,7 +146,7 @@ const ModuleBoard = () => {
                     </div>
                     <WorkflowOutputCard
                         workflowOutput={workflowOutput}
-                        isReady={!selectedModules.length}
+                        isReady={!!workflowOutput}
                     />
                 </div>
             </div>

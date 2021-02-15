@@ -13,6 +13,7 @@ const ModuleCard = ({classes, background, children}) => {
                 className={`module-card${classes ? ` ${classes}` : ''}`}
                 style={{background: background}}
             >
+                <div className="module-card-status" />
                 {children}
             </div>
             <div className="module-card-mirror"></div>

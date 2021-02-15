@@ -6,10 +6,12 @@ import ModuleCard from './ModuleCard'
 
 const WorkflowOutputCard = ({workflowOutput, isReady}) => {
     return (
-        <ModuleCard key="output" classes="output">
-            <p>output</p>
-            <p>{isReady ? 'no operations selected!' : workflowOutput ?? workflowOutput}</p>
-        </ModuleCard>
+        <div className="output-card-wrapper">
+            <ModuleCard key="output" classes={`output${isReady ? ' ready' : ''}`}>
+                <p>output</p>
+                <p>{workflowOutput ?? workflowOutput}</p>
+            </ModuleCard>
+        </div>
     )
 }
 
