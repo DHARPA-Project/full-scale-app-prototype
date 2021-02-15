@@ -12,6 +12,8 @@ import {ioTypes, availableModules} from '../constants/const'
 import ModuleCard from './ModuleCard'
 import WorkflowOutputCard from './WorkflowOutputCard'
 import WorkflowInputCard from './WorkflowInputCard'
+import LoadingIndicator from './common/LoadingIndicator'
+import {FcCancel} from 'react-icons/fc'
 
 const operationMap = {
     square: x => x * x,
@@ -32,6 +34,7 @@ const ModuleBoard = () => {
     const [inputValue, setInputValue] = useState(null)
     const [inputType, setInputType] = useState(ioTypes.number)
     const [workflowOutput, setWorkflowOutput] = useState(null)
+    const [workflowExecutionInProgress, setWorkflowExecutionInProgress] = useState(false)
 
     const addModule = newModule => {
         setWorkflowOutput(null)
@@ -98,6 +101,9 @@ const ModuleBoard = () => {
                 5000 // setting duration to 0 will make it never expire
             )
 
+        // clear the status of already selected modules
+        setSelectedModules(prevList => [...prevList.map(module => ({...module, status: null}))])
+        setWorkflowExecutionInProgress(true)
         createNotification(
             `Workflow execution started.`, //message
             'success', // type
@@ -121,8 +127,9 @@ const ModuleBoard = () => {
         }
 
         // simulate minor delay before displaying output
-        await new Promise(resolve => setTimeout(resolve, 500))
+        await new Promise(resolve => setTimeout(resolve, 1000))
         setWorkflowOutput(typeof result === 'string' ? `"${result}"` : result)
+        setWorkflowExecutionInProgress(false)
     }
 
     return (
@@ -181,11 +188,15 @@ const ModuleBoard = () => {
                     />
                     <div className="workflow-controls">
                         <div className="workflow-button-reset" onClick={handleWorkflowReset}>
-                            <GoTrashcan />
+                            {workflowExecutionInProgress ? <FcCancel /> : <GoTrashcan />}
                         </div>
 
                         <div className="workflow-button-execute" onClick={handleWorkflowExecution}>
-                            <GrLaunch />
+                            {workflowExecutionInProgress ? (
+                                <LoadingIndicator size={'40px'} />
+                            ) : (
+                                <GrLaunch />
+                            )}
                         </div>
 
                         <div className="workflow-button-save" onClick={handleWorkflowSave}>

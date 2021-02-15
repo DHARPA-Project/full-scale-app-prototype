@@ -29,8 +29,7 @@ const WorkflowInputCard = ({
 
     const handleInputValueChange = event => {
         const inputFieldString = event.target.value
-        if (isNaN(Number(inputFieldString))) return
-        setInputValue(Number(inputFieldString))
+        setInputValue(inputFieldString)
     }
 
     return (

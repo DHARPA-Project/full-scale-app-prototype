@@ -95,6 +95,7 @@
 }
 
 .workflow-controls {
+    width: 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -103,6 +104,9 @@
     .workflow-button-execute,
     .workflow-button-save {
         margin: 1rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         cursor: pointer;
 
         & svg {
