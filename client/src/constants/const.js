@@ -47,7 +47,8 @@ export const availableModules = [
         category: moduleCategories.number,
         background: 'teal',
         inputType: ioTypes.number,
-        outputType: ioTypes.number
+        outputType: ioTypes.number,
+        additionalInputRequired: false
     },
     {
         name: 'double',
@@ -55,7 +56,8 @@ export const availableModules = [
         category: moduleCategories.number,
         background: 'teal',
         inputType: ioTypes.number,
-        outputType: ioTypes.number
+        outputType: ioTypes.number,
+        additionalInputRequired: false
     },
     {
         name: 'halve',
@@ -63,7 +65,8 @@ export const availableModules = [
         category: moduleCategories.number,
         background: 'teal',
         inputType: ioTypes.number,
-        outputType: ioTypes.number
+        outputType: ioTypes.number,
+        additionalInputRequired: false
     },
     {
         name: 'increase by one',
@@ -71,7 +74,8 @@ export const availableModules = [
         category: moduleCategories.number,
         background: 'teal',
         inputType: ioTypes.number,
-        outputType: ioTypes.number
+        outputType: ioTypes.number,
+        additionalInputRequired: false
     },
     {
         name: 'decrease by one',
@@ -79,7 +83,8 @@ export const availableModules = [
         category: moduleCategories.number,
         background: 'teal',
         inputType: ioTypes.number,
-        outputType: ioTypes.number
+        outputType: ioTypes.number,
+        additionalInputRequired: false
     },
     {
         name: 'uppercase',
@@ -87,7 +92,8 @@ export const availableModules = [
         category: moduleCategories.string,
         background: 'cornflowerblue',
         inputType: ioTypes.string,
-        outputType: ioTypes.string
+        outputType: ioTypes.string,
+        additionalInputRequired: false
     },
     {
         name: 'lowercase',
@@ -95,7 +101,8 @@ export const availableModules = [
         category: moduleCategories.string,
         background: 'cornflowerblue',
         inputType: ioTypes.string,
-        outputType: ioTypes.string
+        outputType: ioTypes.string,
+        additionalInputRequired: false
     },
     {
         name: 'remove digits',
@@ -103,7 +110,8 @@ export const availableModules = [
         category: moduleCategories.string,
         background: 'cornflowerblue',
         inputType: ioTypes.string,
-        outputType: ioTypes.string
+        outputType: ioTypes.string,
+        additionalInputRequired: false
     },
     {
         name: 'remove letters',
@@ -111,7 +119,18 @@ export const availableModules = [
         category: moduleCategories.string,
         background: 'cornflowerblue',
         inputType: ioTypes.string,
-        outputType: ioTypes.string
+        outputType: ioTypes.string,
+        additionalInputRequired: false
+    },
+    {
+        name: 'concatenate with',
+        code: 'concatenateWith',
+        category: moduleCategories.string,
+        background: 'cornflowerblue',
+        inputType: ioTypes.string,
+        outputType: ioTypes.string,
+        additionalInputRequired: true,
+        additionalInput: ''
     },
     {
         name: 'number to string',
@@ -119,7 +138,8 @@ export const availableModules = [
         category: moduleCategories.conversion,
         background: 'linear-gradient(to right, teal 50%, cornflowerblue 0)',
         inputType: ioTypes.number,
-        outputType: ioTypes.string
+        outputType: ioTypes.string,
+        additionalInputRequired: false
     },
     {
         name: 'string to integer',
@@ -127,6 +147,26 @@ export const availableModules = [
         category: moduleCategories.conversion,
         background: 'linear-gradient(to right, cornflowerblue  50%, teal 0)',
         inputType: ioTypes.string,
-        outputType: ioTypes.number
+        outputType: ioTypes.number,
+        additionalInputRequired: false
     }
 ]
+
+export const operationMap = {
+    square: x => x * x,
+    double: x => x * 2,
+    halve: x => x / 2,
+    increase: x => ++x,
+    decrease: x => --x,
+    uppercase: x => x.toUpperCase(),
+    lowercase: x => x.toLowerCase(),
+    removeDigits: x => x.replace(/\d/g, ''),
+    removeLetters: x => x.replace(/[A-Za-z]/g, ''),
+    concatenateWith: (x, y) => x + y,
+    stringifyNumber: x => String(x),
+    stringToInteger: x => {
+        const int = parseInt(x)
+        if (isNaN(int)) throw new Error('The input cannot be converted to a number!')
+        return int
+    }
+}

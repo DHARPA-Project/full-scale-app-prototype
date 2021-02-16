@@ -7,33 +7,16 @@ import {GoTrashcan} from 'react-icons/go'
 import './ModuleBoard.scss'
 import {Context} from '../context'
 import {generateId} from '../utils/helpers'
-import {ioTypes, availableModules, moduleCategories} from '../constants/const'
+import {ioTypes, availableModules, moduleCategories, operationMap} from '../constants/const'
 
+import SwitchCheckbox from './common/SwitchCheckbox'
+import SearchBar from './common/SearchBar'
 import ModuleCard from './ModuleCard'
 import WorkflowOutputCard from './WorkflowOutputCard'
 import WorkflowInputCard from './WorkflowInputCard'
+import WorkflowModuleCard from './WorkflowModuleCard'
 import LoadingIndicator from './common/LoadingIndicator'
 import {FcCancel} from 'react-icons/fc'
-import SwitchCheckbox from './common/SwitchCheckbox'
-import SearchBar from './common/SearchBar'
-
-const operationMap = {
-    square: x => x * x,
-    double: x => x * 2,
-    halve: x => x / 2,
-    increase: x => ++x,
-    decrease: x => --x,
-    uppercase: x => x.toUpperCase(),
-    lowercase: x => x.toLowerCase(),
-    removeDigits: x => x.replace(/\d/g, ''),
-    removeLetters: x => x.replace(/[A-Za-z]/g, ''),
-    stringifyNumber: x => String(x),
-    stringToInteger: x => {
-        const int = parseInt(x)
-        if (isNaN(int)) throw new Error('The input cannot be converted to a number!')
-        return int
-    }
-}
 
 const availableModuleCategories = Object.values(moduleCategories)
 
@@ -46,6 +29,7 @@ const ModuleBoard = () => {
     const [inputValue, setInputValue] = useState(null)
     const [inputType, setInputType] = useState(ioTypes.number)
     const [workflowOutput, setWorkflowOutput] = useState(null)
+    const [allInputProvided, setAllInputProvided] = useState(false)
     const [workflowExecutionInProgress, setWorkflowExecutionInProgress] = useState(false)
     const [workflowExecutionFailed, setWorkflowExecutionFailed] = useState(false)
 
@@ -54,6 +38,15 @@ const ModuleBoard = () => {
             availableModules.filter(module => enabledModuleCategories.includes(module.category))
         )
     }, [enabledModuleCategories])
+
+    useEffect(() => {
+        setAllInputProvided(
+            selectedModules.every(
+                selectedModule =>
+                    !selectedModule.additionalInputRequired || selectedModule.additionalInput
+            )
+        )
+    }, [selectedModules])
 
     const handleModuleCategorySwitch = event => {
         const moduleCategory = event.target.value
@@ -133,6 +126,13 @@ const ModuleBoard = () => {
                 5000 // setting duration to 0 will make it never expire
             )
 
+        if (!allInputProvided)
+            return createNotification(
+                `Please provide all input for all selected modules!`, //message
+                'error', // type
+                5000 // setting duration to 0 will make it never expire
+            )
+
         // clear the status of already selected modules
         setSelectedModules(prevList => [...prevList.map(module => ({...module, status: null}))])
         setWorkflowExecutionFailed(false)
@@ -151,7 +151,13 @@ const ModuleBoard = () => {
                 // simulate longer execution duration for each operation
                 await new Promise(resolve => setTimeout(resolve, 1000))
                 console.log('executing module: ', selectedModules[i])
-                result = operationMap[selectedModules[i].code](i === 0 ? inputValue : result)
+                const functionToExecute = operationMap[selectedModules[i].code]
+                const firstArgument = i === 0 ? inputValue : result
+                if (selectedModules[i].additionalInputRequired) {
+                    result = functionToExecute(firstArgument, selectedModules[i].additionalInput)
+                } else {
+                    result = functionToExecute(firstArgument)
+                }
 
                 console.log(`making module ${i} completed`)
                 setSelectedModules(prevModules =>
@@ -182,7 +188,7 @@ const ModuleBoard = () => {
     return (
         <div className="module-board-container">
             <div className="module-board">
-                <h2 className="module-container-title">MODULE PALETTE / REPOSITORY</h2>
+                <h2 className="module-container-title">MODULE POOL</h2>
 
                 <div className="module-pool-controls">
                     <div className="module-pool-filter">
@@ -223,7 +229,21 @@ const ModuleBoard = () => {
                     </div>
                 </div>
 
-                <h2 className="module-container-title">WORKFLOW ASSEMBLER</h2>
+                <h2 className="module-container-title">WORKFLOW ASSEMBLY</h2>
+
+                <div className="workflow-operations">
+                    {selectedModules.reduce(
+                        (summary, selectedModule, index) =>
+                            summary +
+                            ` --> ${index + 1}. ${selectedModule.code} ${
+                                index === selectedModules.length - 1 && workflowOutput
+                                    ? ' = ' + workflowOutput
+                                    : ''
+                            }`,
+                        `${inputValue ? inputValue : ''}`
+                    )}
+                </div>
+
                 <div className="module-list-wrapper workflow-chain">
                     <WorkflowInputCard
                         inputType={inputType}
@@ -236,32 +256,29 @@ const ModuleBoard = () => {
                     />
                     <div className="module-list">
                         {selectedModules.map((mod, index = generateId()) => (
-                            <ModuleCard
+                            <WorkflowModuleCard
                                 key={index}
-                                background={mod.background}
-                                classes={`right-arrow extensible${
-                                    mod.status === 'completed'
-                                        ? ' completed'
-                                        : mod.status === 'failed'
-                                        ? ' failed'
-                                        : ''
-                                }`}
-                            >
-                                <p>{mod.name}</p>
-                                <button
-                                    className="module-card-button"
-                                    onClick={() => removeModule(index)}
-                                >
-                                    &#8722;
-                                </button>
-                            </ModuleCard>
+                                index={index}
+                                mod={mod}
+                                removeModule={removeModule}
+                                setAdditionalInput={additionalInput =>
+                                    setSelectedModules(modules =>
+                                        modules.map(selectedModule => ({
+                                            ...selectedModule,
+                                            additionalInput
+                                        }))
+                                    )
+                                }
+                            />
                         ))}
                     </div>
+
                     <WorkflowOutputCard
                         workflowOutput={workflowOutput}
                         isReady={!!workflowOutput}
                         isError={workflowExecutionFailed}
                     />
+
                     <div className="workflow-controls">
                         <div className="workflow-button-reset" onClick={handleWorkflowReset}>
                             {workflowExecutionInProgress ? <FcCancel /> : <GoTrashcan />}
@@ -280,19 +297,6 @@ const ModuleBoard = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div className="workflow-operations">
-                {selectedModules.reduce(
-                    (summary, selectedModule, index) =>
-                        summary +
-                        ` --> ${index + 1}. ${selectedModule.code} ${
-                            index === selectedModules.length - 1 && workflowOutput
-                                ? ' = ' + workflowOutput
-                                : ''
-                        }`,
-                    `${inputValue ? inputValue : ''}`
-                )}
             </div>
         </div>
     )
