@@ -1,0 +1,58 @@
+.module-modal.modal-backdrop {
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.65);
+    transition: all 0.3s;
+}
+
+.module-modal {
+    --module-modal-background: var(--background-color-02);
+    --module-modal-color: var(--main-color-01);
+
+    .modal-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        position: fixed;
+        height: 85vh;
+        max-height: 85vh;
+        width: 85vw;
+        max-width: 85vw;
+        padding: 2.5rem;
+        background-color: var(--module-modal-background);
+    }
+
+    .modal-close {
+        position: absolute;
+        top: 0.35rem;
+        right: 1rem;
+        color: var(--module-modal-color);
+        font-size: 2em;
+        cursor: pointer;
+    }
+
+    .modal-content {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: var(--module-modal-color);
+    }
+
+    .modal-title {
+        margin-bottom: 1em;
+        color: #4392c7;
+        font-weight: 400;
+        text-transform: none;
+    }
+}
