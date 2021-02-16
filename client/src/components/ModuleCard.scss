@@ -1,5 +1,6 @@
 .module-card {
     --status-completed-color: var(--accent-color-02);
+    --status-failed-color: var(--accent-color-03);
 
     height: 200px;
     position: relative;
@@ -17,10 +18,6 @@
     font-weight: bold;
     text-align: center;
 
-    &.ready {
-        color: green;
-    }
-
     &::after {
         content: '';
         height: 100%;
@@ -30,18 +27,35 @@
         left: 50%;
         transform: translate(-50%, -50%) scale(0, 0);
         transform-origin: center center;
-        background-color: green;
-        border: 2px solid green;
         border-radius: 5px;
         opacity: 0;
         transition: all 0.2s;
     }
 
-    &.ready::after {
-        transform: translate(-50%, -50%) scale(1, 1);
-        transform-origin: center center;
-        background-color: transparent;
-        opacity: 1;
+    &.ready {
+        color: green;
+
+        &::after {
+            background-color: green;
+            border: 2px solid green;
+            transform: translate(-50%, -50%) scale(1, 1);
+            transform-origin: center center;
+            background-color: transparent;
+            opacity: 1;
+        }
+    }
+
+    &.error {
+        color: var(--accent-color-03);
+
+        &::after {
+            background-color: var(--accent-color-03);
+            border: 2px solid var(--accent-color-03);
+            transform: translate(-50%, -50%) scale(1, 1);
+            transform-origin: center center;
+            background-color: transparent;
+            opacity: 1;
+        }
     }
 
     &-wrapper.extensible {
@@ -108,7 +122,6 @@
         left: 50%;
         transform: translateX(-50%) scale(3);
         border-radius: 50%;
-        background-color: var(--status-completed-color);
         transition: 0.2s;
         pointer-events: none;
         opacity: 0;
@@ -116,11 +129,30 @@
 
     &.completed {
         .module-card-status {
+            background-color: var(--status-completed-color);
             transform: translateX(-50%) scale(1);
             opacity: 1;
 
             &:after {
                 content: '\2713';
+                color: white;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 1.75rem;
+            }
+        }
+    }
+
+    &.failed {
+        .module-card-status {
+            background-color: var(--status-failed-color);
+            transform: translateX(-50%) scale(1);
+            opacity: 1;
+
+            &:after {
+                content: '\0021';
                 color: white;
                 position: absolute;
                 top: 50%;

@@ -106,11 +106,27 @@ export const availableModules = [
         outputType: ioTypes.string
     },
     {
-        name: 'digit to string',
+        name: 'remove letters',
+        code: 'removeLetters',
+        category: moduleCategories.string,
+        background: 'cornflowerblue',
+        inputType: ioTypes.string,
+        outputType: ioTypes.string
+    },
+    {
+        name: 'number to string',
         code: 'stringifyNumber',
         category: moduleCategories.conversion,
         background: 'linear-gradient(to right, teal 50%, cornflowerblue 0)',
         inputType: ioTypes.number,
         outputType: ioTypes.string
+    },
+    {
+        name: 'string to integer',
+        code: 'stringToInteger',
+        category: moduleCategories.conversion,
+        background: 'linear-gradient(to right, cornflowerblue  50%, teal 0)',
+        inputType: ioTypes.string,
+        outputType: ioTypes.number
     }
 ]

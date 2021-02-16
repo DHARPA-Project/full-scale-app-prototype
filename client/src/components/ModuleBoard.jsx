@@ -24,7 +24,13 @@ const operationMap = {
     uppercase: x => x.toUpperCase(),
     lowercase: x => x.toLowerCase(),
     removeDigits: x => x.replace(/\d/g, ''),
-    stringifyNumber: x => String(x)
+    removeLetters: x => x.replace(/[A-Za-z]/g, ''),
+    stringifyNumber: x => String(x),
+    stringToInteger: x => {
+        const int = parseInt(x)
+        if (isNaN(int)) throw new Error('The input cannot be converted to a number!')
+        return int
+    }
 }
 
 const ModuleBoard = () => {
@@ -35,9 +41,11 @@ const ModuleBoard = () => {
     const [inputType, setInputType] = useState(ioTypes.number)
     const [workflowOutput, setWorkflowOutput] = useState(null)
     const [workflowExecutionInProgress, setWorkflowExecutionInProgress] = useState(false)
+    const [workflowExecutionFailed, setWorkflowExecutionFailed] = useState(false)
 
     const addModule = newModule => {
         setWorkflowOutput(null)
+        setWorkflowExecutionFailed(false)
 
         const previousType = selectedModules.length
             ? selectedModules[selectedModules.length - 1].outputType
@@ -59,6 +67,8 @@ const ModuleBoard = () => {
 
     const removeModule = ind => {
         setWorkflowOutput(null)
+        setWorkflowExecutionFailed(false)
+
         setSelectedModules(prevList =>
             prevList.filter((_, index) => index !== ind).map(module => ({...module, status: null}))
         )
@@ -66,6 +76,7 @@ const ModuleBoard = () => {
 
     const handleWorkflowReset = () => {
         setWorkflowOutput(null)
+        setWorkflowExecutionFailed(false)
         setInputValue(null)
         setSelectedModules([])
     }
@@ -103,6 +114,8 @@ const ModuleBoard = () => {
 
         // clear the status of already selected modules
         setSelectedModules(prevList => [...prevList.map(module => ({...module, status: null}))])
+        setWorkflowExecutionFailed(false)
+        setWorkflowOutput(null)
         setWorkflowExecutionInProgress(true)
         createNotification(
             `Workflow execution started.`, //message
@@ -113,17 +126,30 @@ const ModuleBoard = () => {
         let result
 
         for (let i = 0, len = selectedModules.length; i < len; i++) {
-            // simulate longer execution duration for each operation
-            await new Promise(resolve => setTimeout(resolve, 1000))
-            console.log('executing module: ', selectedModules[i])
-            result = operationMap[selectedModules[i].code](i === 0 ? inputValue : result)
+            try {
+                // simulate longer execution duration for each operation
+                await new Promise(resolve => setTimeout(resolve, 1000))
+                console.log('executing module: ', selectedModules[i])
+                result = operationMap[selectedModules[i].code](i === 0 ? inputValue : result)
 
-            console.log(`making module ${i} completed`)
-            setSelectedModules(prevModules =>
-                prevModules.map((module, index) =>
-                    index === i ? {...module, status: 'completed'} : module
+                console.log(`making module ${i} completed`)
+                setSelectedModules(prevModules =>
+                    prevModules.map((module, index) =>
+                        index === i ? {...module, status: 'completed'} : module
+                    )
                 )
-            )
+            } catch (error) {
+                console.error(error)
+                setSelectedModules(prevModules =>
+                    prevModules.map((module, index) =>
+                        index === i ? {...module, status: 'failed'} : module
+                    )
+                )
+                setWorkflowOutput('FAILED!')
+                setWorkflowExecutionFailed(true)
+                setWorkflowExecutionInProgress(false)
+                return
+            }
         }
 
         // simulate minor delay before displaying output
@@ -137,15 +163,20 @@ const ModuleBoard = () => {
             <div className="module-board">
                 <h2 className="module-container-title">MODULE PALETTE / REPOSITORY</h2>
 
-                <div className="module-list-wrapper module-list">
-                    {availableModules.map((mod, index = generateId()) => (
-                        <ModuleCard key={index} background={mod.background}>
-                            <p>{mod.name}</p>
-                            <button className="module-card-button" onClick={() => addModule(mod)}>
-                                +
-                            </button>
-                        </ModuleCard>
-                    ))}
+                <div className="module-list-wrapper">
+                    <div className="module-list">
+                        {availableModules.map((mod, index = generateId()) => (
+                            <ModuleCard key={index} background={mod.background}>
+                                <p>{mod.name}</p>
+                                <button
+                                    className="module-card-button"
+                                    onClick={() => addModule(mod)}
+                                >
+                                    +
+                                </button>
+                            </ModuleCard>
+                        ))}
+                    </div>
                 </div>
 
                 <h2 className="module-container-title">WORKFLOW ASSEMBLER</h2>
@@ -185,6 +216,7 @@ const ModuleBoard = () => {
                     <WorkflowOutputCard
                         workflowOutput={workflowOutput}
                         isReady={!!workflowOutput}
+                        isError={workflowExecutionFailed}
                     />
                     <div className="workflow-controls">
                         <div className="workflow-button-reset" onClick={handleWorkflowReset}>
