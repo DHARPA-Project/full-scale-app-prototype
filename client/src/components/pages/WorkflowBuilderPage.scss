@@ -2,6 +2,8 @@
     &-page {
         height: 100%;
         width: 100%;
+        max-width: calc(100vw - 2 * (var(--navbar-expanded-width) + 1rem));
+        overflow: hidden;
     }
 
     &-title {
@@ -12,7 +14,7 @@
 
     &-content {
         min-height: 60vh;
-        margin: 0 calc(var(--navbar-expanded-width) + 1rem);
+        width: 100%;
         display: flex;
         justify-content: space-evenly;
     }
