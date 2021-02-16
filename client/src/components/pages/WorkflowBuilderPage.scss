@@ -12,6 +12,7 @@
 
     &-content {
         min-height: 60vh;
+        margin: 0 calc(var(--navbar-expanded-width) + 1rem);
         display: flex;
         justify-content: space-evenly;
     }

@@ -90,6 +90,25 @@
     --break-huge: 1800px;
 }
 
+::-webkit-scrollbar-track {
+    background-color: var(--background-color-01);
+}
+
+::-webkit-scrollbar {
+    height: 0.75vh;
+    width: 1vmin;
+    background-color: #f5f5f5;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 1vmin;
+    background-color: var(--background-color-02);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-color-01);
+}
+
 html,
 body {
     width: 100%;
