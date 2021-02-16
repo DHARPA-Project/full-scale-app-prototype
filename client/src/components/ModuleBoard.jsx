@@ -15,6 +15,7 @@ import WorkflowInputCard from './WorkflowInputCard'
 import LoadingIndicator from './common/LoadingIndicator'
 import {FcCancel} from 'react-icons/fc'
 import SwitchCheckbox from './common/SwitchCheckbox'
+import SearchBar from './common/SearchBar'
 
 const operationMap = {
     square: x => x * x,
@@ -183,16 +184,27 @@ const ModuleBoard = () => {
             <div className="module-board">
                 <h2 className="module-container-title">MODULE PALETTE / REPOSITORY</h2>
 
-                <div className="module-pool-filter">
-                    {availableModuleCategories.map(moduleCategory => (
-                        <SwitchCheckbox
-                            key={moduleCategory}
-                            value={moduleCategory}
-                            label={moduleCategory}
-                            enabled={enabledModuleCategories.includes(moduleCategory)}
-                            onToggle={handleModuleCategorySwitch}
+                <div className="module-pool-controls">
+                    <div className="module-pool-filter">
+                        {availableModuleCategories.map(moduleCategory => (
+                            <SwitchCheckbox
+                                key={moduleCategory}
+                                value={moduleCategory}
+                                label={moduleCategory}
+                                enabled={enabledModuleCategories.includes(moduleCategory)}
+                                onToggle={handleModuleCategorySwitch}
+                            />
+                        ))}
+                    </div>
+
+                    <div className="module-pool-search">
+                        <SearchBar
+                            searchDelay={1}
+                            placeholder={'search modules...'}
+                            userQuery={''}
+                            handleUserQuery={() => {}}
                         />
-                    ))}
+                    </div>
                 </div>
 
                 <div className="module-list-wrapper">

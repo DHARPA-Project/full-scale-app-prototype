@@ -16,6 +16,12 @@
     font-weight: 300;
 }
 
+.module-pool-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .module-list-wrapper {
     width: 100%;
     margin-top: 1rem;

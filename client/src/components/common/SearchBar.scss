@@ -1,0 +1,83 @@
+.searchbar-form {
+    --searchbar-primary-color: var(--main-color-02);
+    --searchbar-secondary-color: var(--main-color-02);
+
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-width: 10rem;
+    padding: 0.5rem;
+    background-color: transparent;
+    @media only screen and (min-width: var(--break-medium)) {
+        padding: 1rem;
+    }
+
+    .searchbar-label {
+        height: 1.5rem;
+        position: relative;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        padding: 0;
+        overflow: hidden;
+        opacity: 0.75;
+        @media only screen and (min-width: var(--break-medium)) {
+            height: 2rem;
+        }
+
+        .searchbar-input {
+            height: 1.5rem;
+            border: 1px solid var(--searchbar-primary-color);
+            font-size: 0.9rem;
+            width: 30vw;
+            min-width: 12rem;
+            border-radius: 2rem;
+            padding: 0.2rem 2rem;
+            background-color: transparent;
+            color: white;
+            text-align: center;
+            transition: all 0.3s ease-in-out;
+            @media only screen and (min-width: var(--break-medium)) {
+                height: 2rem;
+                border-width: 2px;
+                font-size: 1rem;
+            }
+
+            &::placeholder {
+                margin: 0 auto;
+                font-size: 0.8rem;
+                color: var(--searchbar-primary-color);
+                @media only screen and (min-width: var(--break-medium)) {
+                    font-size: 1rem;
+                }
+            }
+
+            &:focus {
+                width: 50vw;
+                outline: none;
+                border-color: var(--searchbar-secondary-color);
+                @media only screen and (min-width: var(--break-medium)) {
+                    width: 50vw;
+                }
+            }
+
+            &:focus + .icon {
+                fill: var(--searchbar-secondary-color);
+            }
+        }
+
+        .icon {
+            position: absolute;
+            left: 0.5rem;
+            height: 1.25rem;
+            width: 1.25rem;
+            margin: 0 1rem 0 0;
+            fill: var(--searchbar-primary-color);
+            transform: translateY(5%);
+            @media only screen and (min-width: var(--break-medium)) {
+                height: 1.5rem;
+                width: 1.5rem;
+            }
+        }
+    }
+}
