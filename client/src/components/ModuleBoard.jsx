@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 
 import {GrLaunch} from 'react-icons/gr'
 import {AiOutlineSave} from 'react-icons/ai'
@@ -7,13 +7,14 @@ import {GoTrashcan} from 'react-icons/go'
 import './ModuleBoard.scss'
 import {Context} from '../context'
 import {generateId} from '../utils/helpers'
-import {ioTypes, availableModules} from '../constants/const'
+import {ioTypes, availableModules, moduleCategories} from '../constants/const'
 
 import ModuleCard from './ModuleCard'
 import WorkflowOutputCard from './WorkflowOutputCard'
 import WorkflowInputCard from './WorkflowInputCard'
 import LoadingIndicator from './common/LoadingIndicator'
 import {FcCancel} from 'react-icons/fc'
+import SwitchCheckbox from './common/SwitchCheckbox'
 
 const operationMap = {
     square: x => x * x,
@@ -33,15 +34,34 @@ const operationMap = {
     }
 }
 
+const availableModuleCategories = Object.values(moduleCategories)
+
 const ModuleBoard = () => {
     const {createNotification} = useContext(Context)
 
+    const [enabledModuleCategories, setEnabledModuleCategories] = useState(availableModuleCategories) //prettier-ignore
+    const [visibleModules, setVisibleModules] = useState(availableModules)
     const [selectedModules, setSelectedModules] = useState([])
     const [inputValue, setInputValue] = useState(null)
     const [inputType, setInputType] = useState(ioTypes.number)
     const [workflowOutput, setWorkflowOutput] = useState(null)
     const [workflowExecutionInProgress, setWorkflowExecutionInProgress] = useState(false)
     const [workflowExecutionFailed, setWorkflowExecutionFailed] = useState(false)
+
+    useEffect(() => {
+        setVisibleModules(
+            availableModules.filter(module => enabledModuleCategories.includes(module.category))
+        )
+    }, [enabledModuleCategories])
+
+    const handleModuleCategorySwitch = event => {
+        const moduleCategory = event.target.value
+        enabledModuleCategories.includes(moduleCategory)
+            ? setEnabledModuleCategories(prevCategories =>
+                  prevCategories.filter(category => category !== moduleCategory)
+              )
+            : setEnabledModuleCategories(prevCategories => [...prevCategories, moduleCategory])
+    }
 
     const addModule = newModule => {
         setWorkflowOutput(null)
@@ -163,9 +183,21 @@ const ModuleBoard = () => {
             <div className="module-board">
                 <h2 className="module-container-title">MODULE PALETTE / REPOSITORY</h2>
 
+                <div className="module-pool-filter">
+                    {availableModuleCategories.map(moduleCategory => (
+                        <SwitchCheckbox
+                            key={moduleCategory}
+                            value={moduleCategory}
+                            label={moduleCategory}
+                            enabled={enabledModuleCategories.includes(moduleCategory)}
+                            onToggle={handleModuleCategorySwitch}
+                        />
+                    ))}
+                </div>
+
                 <div className="module-list-wrapper">
                     <div className="module-list">
-                        {availableModules.map((mod, index = generateId()) => (
+                        {visibleModules.map((mod, index = generateId()) => (
                             <ModuleCard key={index} background={mod.background}>
                                 <p>{mod.name}</p>
                                 <button
