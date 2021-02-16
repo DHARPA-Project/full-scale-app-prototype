@@ -3,16 +3,20 @@ import PropTypes from 'prop-types'
 
 import './SwitchCheckbox.scss'
 
-const SwitchCheckbox = ({enabled, classes, onToggle}) => {
+const SwitchCheckbox = ({enabled, classes, onToggle, label, value}) => {
     return (
-        <label className={`switch ${classes}`}>
-            <input
-                type="checkbox"
-                className="switch-checkbox"
-                checked={enabled}
-                onChange={onToggle}
-            />
-            <span className="switch-slider"></span>
+        <label className={`switch-label ${classes}`}>
+            <div className={`switch-container`}>
+                <input
+                    type="checkbox"
+                    className="switch-checkbox"
+                    checked={enabled}
+                    value={value}
+                    onChange={onToggle}
+                />
+                <span className="switch-slider"></span>
+            </div>
+            <span className="switch-label">{label}</span>
         </label>
     )
 }
@@ -20,6 +24,7 @@ const SwitchCheckbox = ({enabled, classes, onToggle}) => {
 SwitchCheckbox.propTypes = {
     enabled: PropTypes.bool,
     classes: PropTypes.string,
+    value: PropTypes.string,
     onToggle: PropTypes.func.isRequired
 }
 

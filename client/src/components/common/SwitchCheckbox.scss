@@ -1,9 +1,17 @@
 .switch {
-    position: relative;
-    display: inline-block;
-    width: 3rem;
-    height: 1.4rem;
-    margin: 0.5rem;
+    &-label {
+        display: inline-flex;
+        align-items: center;
+        margin: 0.5rem;
+    }
+
+    &-container {
+        position: relative;
+        display: inline-block;
+        width: 3rem;
+        height: 1.4rem;
+        margin: 0.5rem;
+    }
 
     &-checkbox {
         display: none;
