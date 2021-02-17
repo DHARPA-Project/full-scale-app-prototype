@@ -1,6 +1,7 @@
 .module-card {
     --status-completed-color: var(--accent-color-02);
     --status-failed-color: var(--accent-color-03);
+    --status-io-color: var(--background-color-02);
 
     height: 200px;
     position: relative;
@@ -111,6 +112,25 @@
                     color: rgba(255, 255, 255, 0.5);
                 }
             }
+        }
+    }
+
+    &-input {
+        display: none;
+        position: relative;
+        top: -1.5rem;
+        overflow: visible;
+
+        & svg {
+            height: 3rem;
+            width: 3rem;
+            fill: var(--status-io-color);
+        }
+    }
+
+    &.additional-input {
+        .module-card-input {
+            display: block;
         }
     }
 

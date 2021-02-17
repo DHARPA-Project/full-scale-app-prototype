@@ -75,16 +75,18 @@ const ModuleBoard = () => {
         // clear the status of already selected modules and add new module
         setSelectedModules(prevList => [
             ...prevList.map(module => ({...module, status: null})),
-            newModule
+            {...newModule, assemblyID: generateId()}
         ])
     }
 
-    const removeModule = ind => {
+    const removeModule = idToDelete => {
         setWorkflowOutput(null)
         setWorkflowExecutionFailed(false)
 
         setSelectedModules(prevList =>
-            prevList.filter((_, index) => index !== ind).map(module => ({...module, status: null}))
+            prevList
+                .filter(selectedModule => selectedModule.assemblyID !== idToDelete)
+                .map(module => ({...module, status: null}))
         )
     }
 
@@ -255,20 +257,27 @@ const ModuleBoard = () => {
                         }
                     />
                     <div className="module-list">
-                        {selectedModules.map((mod, index = generateId()) => (
+                        {selectedModules.map(mod => (
                             <WorkflowModuleCard
-                                key={index}
-                                index={index}
+                                key={mod.assemblyID}
                                 mod={mod}
                                 removeModule={removeModule}
-                                setAdditionalInput={additionalInput =>
+                                setAdditionalInput={additionalInput => {
+                                    setWorkflowOutput(null)
+                                    setWorkflowExecutionFailed(false)
+
                                     setSelectedModules(modules =>
-                                        modules.map(selectedModule => ({
-                                            ...selectedModule,
-                                            additionalInput
-                                        }))
+                                        modules.map(selectedModule =>
+                                            selectedModule.assemblyID === mod.assemblyID
+                                                ? {
+                                                      ...selectedModule,
+                                                      status: '',
+                                                      additionalInput
+                                                  }
+                                                : {...selectedModule, status: ''}
+                                        )
                                     )
-                                }
+                                }}
                             />
                         ))}
                     </div>

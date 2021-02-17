@@ -123,7 +123,7 @@ export const availableModules = [
         additionalInputRequired: false
     },
     {
-        name: 'concatenate with',
+        name: 'concatenate with ...',
         code: 'concatenateWith',
         category: moduleCategories.string,
         background: 'cornflowerblue',

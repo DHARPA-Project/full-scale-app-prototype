@@ -1,5 +1,7 @@
 import React from 'react'
 
+import {VscTriangleDown} from 'react-icons/vsc'
+
 import './ModuleCard.scss'
 
 const ModuleCard = ({classes, background, children}) => {
@@ -13,6 +15,9 @@ const ModuleCard = ({classes, background, children}) => {
                 className={`module-card${classes ? ` ${classes}` : ''}`}
                 style={{background: background}}
             >
+                <div className="module-card-input">
+                    <VscTriangleDown />
+                </div>
                 <div className="module-card-status" />
                 {children}
             </div>

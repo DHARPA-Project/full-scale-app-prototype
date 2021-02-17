@@ -1,24 +1,36 @@
 import React, {useState} from 'react'
 
 import {GoTrashcan} from 'react-icons/go'
+import {AiOutlineSave} from 'react-icons/ai'
 import {FaExclamationTriangle} from 'react-icons/fa'
 
 import './WorkflowModuleCard.scss'
 
 import ModuleCard from './ModuleCard'
+import CustomButton from './common/CustomButton'
 import MagnifyingGlassIcon from './common/icons/MagnifyingGlassIcon'
 import ModuleDetailsModal from './ModuleDetailsModal'
 
-const WorkflowModuleCard = ({index, mod, removeModule, setAdditionalInput}) => {
+const WorkflowModuleCard = ({mod, removeModule, setAdditionalInput}) => {
     const [detailsModalOpen, setDetailsModalOpen] = useState(false)
+    const [inputValue, setInputValue] = useState('')
+
+    const getModuleClasses = () => {
+        let classes = 'right-arrow extensible'
+        if (mod.status === 'completed') classes += ' completed'
+        if (mod.status === 'failed') classes += ' failed'
+        if (mod.additionalInput) classes += ' additional-input'
+        return classes
+    }
+
+    const handleModuleSettingsSave = () => {
+        console.log('saving module details')
+        setAdditionalInput(inputValue)
+        setDetailsModalOpen(false)
+    }
 
     return (
-        <ModuleCard
-            background={mod.background}
-            classes={`right-arrow extensible${
-                mod.status === 'completed' ? ' completed' : mod.status === 'failed' ? ' failed' : ''
-            }`}
-        >
+        <ModuleCard background={mod.background} classes={getModuleClasses()}>
             <div className="workflow-module-card-content">
                 <div className="workflow-module-card-top">
                     {mod.additionalInputRequired && !mod.additionalInput && (
@@ -40,7 +52,7 @@ const WorkflowModuleCard = ({index, mod, removeModule, setAdditionalInput}) => {
                 <div className="workflow-module-card-bottom">
                     <div
                         className="workflow-module-card-remove"
-                        onClick={() => removeModule(index)}
+                        onClick={() => removeModule(mod.assemblyID)}
                     >
                         <GoTrashcan />
                     </div>
@@ -50,9 +62,11 @@ const WorkflowModuleCard = ({index, mod, removeModule, setAdditionalInput}) => {
             <ModuleDetailsModal
                 isVisible={detailsModalOpen}
                 setIsVisible={setDetailsModalOpen}
-                showCross={true}
+                showCross={false}
             >
                 <div className="module-details-modal-content">
+                    <a href="#">Link to module description / tutorial</a>
+
                     <ul>
                         <li>name: {mod.name}</li>
                         <li>category: {mod.category}</li>
@@ -65,11 +79,16 @@ const WorkflowModuleCard = ({index, mod, removeModule, setAdditionalInput}) => {
                             input:
                             <input
                                 type="text"
-                                value={mod.additionalInput}
-                                onChange={event => setAdditionalInput(event.target.value)}
+                                value={inputValue}
+                                onChange={event => setInputValue(event.target.value)}
                             />
                         </label>
                     )}
+
+                    <CustomButton onClick={handleModuleSettingsSave}>
+                        <AiOutlineSave />
+                        &nbsp;&nbsp;Save
+                    </CustomButton>
                 </div>
             </ModuleDetailsModal>
         </ModuleCard>

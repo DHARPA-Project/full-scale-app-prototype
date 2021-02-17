@@ -16,6 +16,10 @@
     --module-modal-background: var(--background-color-02);
     --module-modal-color: var(--main-color-01);
 
+    a {
+        color: var(--module-modal-color);
+    }
+
     .modal-container {
         display: flex;
         flex-direction: column;
