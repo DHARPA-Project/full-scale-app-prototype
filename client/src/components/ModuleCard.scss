@@ -59,57 +59,45 @@
         }
     }
 
-    &-wrapper.extensible {
+    &-wrapper {
         .module-card-mirror {
-            height: 0;
             display: none;
             position: absolute;
             min-width: 200px;
             width: 200px;
             margin: 0 1rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             border: none;
             border-radius: 5px;
             background-color: #282c34;
             color: white;
             font-weight: bold;
             text-align: center;
+            overflow: hidden;
             transition: 0.3s height;
-
-            &::after {
-                content: none;
-            }
         }
+    }
 
-        &:hover {
-            .module-card::before {
-                content: '\27A7';
-                position: absolute;
-                bottom: -4.5rem;
-                color: rgba(255, 255, 255, 0.5);
-                font-size: 5rem;
-                transform: rotate(90deg);
-                z-index: 2;
+    &-wrapper.extensible {
+        &.output-visible {
+            .module-card-output {
+                opacity: 1;
+                bottom: -1.75rem;
+                cursor: pointer;
             }
 
             .module-card-mirror {
                 height: 200px;
                 margin: 2.5rem 1rem 1rem;
                 border: 2px solid white;
-                display: block;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
 
-                &::after {
-                    content: '\002B';
-                    width: 100%;
-                    height: 100%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
+                &-button {
                     font-size: 3rem;
-                    color: rgba(255, 255, 255, 0.5);
+                    font-weight: 700;
+                    cursor: pointer;
                 }
             }
         }
@@ -131,6 +119,37 @@
     &.additional-input {
         .module-card-input {
             display: block;
+        }
+    }
+
+    &-output {
+        opacity: 0;
+        position: absolute;
+        bottom: -0.5rem;
+        transition: 0.3s all;
+
+        & svg {
+            height: 3rem;
+            width: 3rem;
+            fill: var(--status-io-color);
+        }
+    }
+
+    &:not(.workflow-module-card) {
+        .module-card-output {
+            display: none;
+        }
+
+        .module-card-mirror {
+            display: none;
+        }
+    }
+
+    &:hover {
+        .module-card-output {
+            opacity: 1;
+            bottom: -1.75rem;
+            cursor: pointer;
         }
     }
 

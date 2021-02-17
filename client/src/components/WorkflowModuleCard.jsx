@@ -10,13 +10,17 @@ import ModuleCard from './ModuleCard'
 import CustomButton from './common/CustomButton'
 import MagnifyingGlassIcon from './common/icons/MagnifyingGlassIcon'
 import ModuleDetailsModal from './ModuleDetailsModal'
+import SwitchCheckbox from './common/SwitchCheckbox'
 
-const WorkflowModuleCard = ({mod, removeModule, setAdditionalInput}) => {
+const WorkflowModuleCard = ({mod, removeModule, updateModuleData}) => {
     const [detailsModalOpen, setDetailsModalOpen] = useState(false)
     const [inputValue, setInputValue] = useState('')
+    const [notes, setNotes] = useState('')
+    const [tags, setTags] = useState('')
+    const [selectedOutputOptions, setSelectedOutputOptions] = useState([])
 
     const getModuleClasses = () => {
-        let classes = 'right-arrow extensible'
+        let classes = 'right-arrow extensible workflow-module-card'
         if (mod.status === 'completed') classes += ' completed'
         if (mod.status === 'failed') classes += ' failed'
         if (mod.additionalInput) classes += ' additional-input'
@@ -25,8 +29,28 @@ const WorkflowModuleCard = ({mod, removeModule, setAdditionalInput}) => {
 
     const handleModuleSettingsSave = () => {
         console.log('saving module details')
-        setAdditionalInput(inputValue)
+        updateModuleData({
+            ...mod,
+            status: '',
+            additionalInput: inputValue,
+            expectedOutput: selectedOutputOptions,
+            notes,
+            tags
+        })
+        // setAdditionalInput(inputValue)
         setDetailsModalOpen(false)
+    }
+
+    const handleSelectOutputOptions = event => {
+        const outputOption = event.target.value
+        console.log('toggle selected output option: ', outputOption)
+        if (selectedOutputOptions.includes(outputOption)) {
+            setSelectedOutputOptions(prevOptions =>
+                prevOptions.filter(option => option !== outputOption)
+            )
+        } else {
+            setSelectedOutputOptions(prevOptions => [...prevOptions, outputOption])
+        }
     }
 
     return (
@@ -62,10 +86,12 @@ const WorkflowModuleCard = ({mod, removeModule, setAdditionalInput}) => {
             <ModuleDetailsModal
                 isVisible={detailsModalOpen}
                 setIsVisible={setDetailsModalOpen}
-                showCross={false}
+                showCross={true}
             >
                 <div className="module-details-modal-content">
-                    <a href="#">Link to module description / tutorial</a>
+                    <h2>
+                        <a href="#">Link to module description / tutorial</a>
+                    </h2>
 
                     <ul>
                         <li>name: {mod.name}</li>
@@ -75,7 +101,7 @@ const WorkflowModuleCard = ({mod, removeModule, setAdditionalInput}) => {
                     </ul>
 
                     {mod.additionalInputRequired && (
-                        <label>
+                        <label className="user-input">
                             input:
                             <input
                                 type="text"
@@ -84,6 +110,38 @@ const WorkflowModuleCard = ({mod, removeModule, setAdditionalInput}) => {
                             />
                         </label>
                     )}
+                    <br />
+
+                    <label className="user-input">
+                        notes:
+                        <input
+                            type="text"
+                            value={notes}
+                            onChange={event => setNotes(event.target.value)}
+                        />
+                    </label>
+                    <br />
+
+                    <label className="user-input">
+                        tags:
+                        <input
+                            type="text"
+                            value={tags}
+                            onChange={event => setTags(event.target.value)}
+                        />
+                    </label>
+
+                    <div className="module-details-modal-output">
+                        {['save data', 'download file'].map(outputOption => (
+                            <SwitchCheckbox
+                                key={outputOption}
+                                value={outputOption}
+                                label={outputOption}
+                                enabled={selectedOutputOptions.includes(outputOption)}
+                                onToggle={handleSelectOutputOptions}
+                            />
+                        ))}
+                    </div>
 
                     <CustomButton onClick={handleModuleSettingsSave}>
                         <AiOutlineSave />

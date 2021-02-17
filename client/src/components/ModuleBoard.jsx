@@ -90,6 +90,19 @@ const ModuleBoard = () => {
         )
     }
 
+    const updateModuleData = updatedModule => {
+        setWorkflowOutput(null)
+        setWorkflowExecutionFailed(false)
+
+        setSelectedModules(modules =>
+            modules.map(selectedModule =>
+                selectedModule.assemblyID === updatedModule.assemblyID
+                    ? updatedModule
+                    : selectedModule
+            )
+        )
+    }
+
     const handleWorkflowReset = () => {
         setWorkflowOutput(null)
         setWorkflowExecutionFailed(false)
@@ -262,22 +275,7 @@ const ModuleBoard = () => {
                                 key={mod.assemblyID}
                                 mod={mod}
                                 removeModule={removeModule}
-                                setAdditionalInput={additionalInput => {
-                                    setWorkflowOutput(null)
-                                    setWorkflowExecutionFailed(false)
-
-                                    setSelectedModules(modules =>
-                                        modules.map(selectedModule =>
-                                            selectedModule.assemblyID === mod.assemblyID
-                                                ? {
-                                                      ...selectedModule,
-                                                      status: '',
-                                                      additionalInput
-                                                  }
-                                                : {...selectedModule, status: ''}
-                                        )
-                                    )
-                                }}
+                                updateModuleData={updateModuleData}
                             />
                         ))}
                     </div>
