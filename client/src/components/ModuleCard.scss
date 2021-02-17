@@ -79,12 +79,6 @@
 
     &-wrapper.extensible {
         &.output-visible {
-            .module-card-output {
-                opacity: 1;
-                bottom: -1.75rem;
-                cursor: pointer;
-            }
-
             .module-card-mirror {
                 height: 200px;
                 margin: 2.5rem 1rem 1rem;
@@ -118,7 +112,16 @@
 
     &.additional-input {
         .module-card-input {
+            position: absolute;
             display: block;
+        }
+    }
+
+    &.output-required {
+        .module-card-output {
+            opacity: 1;
+            bottom: -1.75rem;
+            cursor: pointer;
         }
     }
 

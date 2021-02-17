@@ -18,7 +18,7 @@ const ModuleCard = ({classes, background, children}) => {
     }, [outputVisible])
 
     const getModuleCardClasses = () => {
-        let classList = 'module-card-wrapper'
+        let classList = 'module-card-wrapper ' + classes
 
         if (outputVisible) classList += ' output-visible'
         if (classes && classes.includes('extensible')) classList += ' extensible'

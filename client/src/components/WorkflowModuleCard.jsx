@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import {GoTrashcan} from 'react-icons/go'
 import {AiOutlineSave} from 'react-icons/ai'
@@ -13,17 +13,24 @@ import ModuleDetailsModal from './ModuleDetailsModal'
 import SwitchCheckbox from './common/SwitchCheckbox'
 
 const WorkflowModuleCard = ({mod, removeModule, updateModuleData}) => {
+    const [classList, setClassList] = useState('')
     const [detailsModalOpen, setDetailsModalOpen] = useState(false)
     const [inputValue, setInputValue] = useState('')
     const [notes, setNotes] = useState('')
     const [tags, setTags] = useState('')
     const [selectedOutputOptions, setSelectedOutputOptions] = useState([])
 
+    useEffect(() => {
+        setClassList(getModuleClasses())
+        //eslint-disable-next-line
+    }, [mod.expectedOutput])
+
     const getModuleClasses = () => {
         let classes = 'right-arrow extensible workflow-module-card'
         if (mod.status === 'completed') classes += ' completed'
         if (mod.status === 'failed') classes += ' failed'
         if (mod.additionalInput) classes += ' additional-input'
+        if (mod?.expectedOutput?.length) classes += ' output-required'
         return classes
     }
 
@@ -54,7 +61,7 @@ const WorkflowModuleCard = ({mod, removeModule, updateModuleData}) => {
     }
 
     return (
-        <ModuleCard background={mod.background} classes={getModuleClasses()}>
+        <ModuleCard background={mod.background} classes={classList}>
             <div className="workflow-module-card-content">
                 <div className="workflow-module-card-top">
                     {mod.additionalInputRequired && !mod.additionalInput && (
