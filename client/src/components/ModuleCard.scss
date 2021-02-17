@@ -119,8 +119,8 @@
         width: 2rem;
         position: absolute;
         top: -1rem;
-        left: 50%;
-        transform: translateX(-50%) scale(3);
+        right: -2rem;
+        transform: scale(3);
         border-radius: 50%;
         transition: 0.2s;
         pointer-events: none;
