@@ -42,8 +42,18 @@ export const moduleCategories = {
 
 export const availableModules = [
     {
-        name: 'square',
-        code: 'square',
+        name: 'increase by one',
+        code: 'increase',
+        category: moduleCategories.number,
+        background: 'teal',
+        inputType: ioTypes.number,
+        outputType: ioTypes.number,
+        additionalInputRequired: false,
+        expectedOutput: []
+    },
+    {
+        name: 'decrease by one',
+        code: 'decrease',
         category: moduleCategories.number,
         background: 'teal',
         inputType: ioTypes.number,
@@ -72,8 +82,8 @@ export const availableModules = [
         expectedOutput: []
     },
     {
-        name: 'increase by one',
-        code: 'increase',
+        name: 'square',
+        code: 'square',
         category: moduleCategories.number,
         background: 'teal',
         inputType: ioTypes.number,
@@ -82,13 +92,14 @@ export const availableModules = [
         expectedOutput: []
     },
     {
-        name: 'decrease by one',
-        code: 'decrease',
+        name: 'to power of ...',
+        code: 'power',
         category: moduleCategories.number,
         background: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number,
-        additionalInputRequired: false,
+        additionalInputRequired: true,
+        additionalInput: '',
         expectedOutput: []
     },
     {
@@ -166,6 +177,11 @@ export const availableModules = [
 
 export const operationMap = {
     square: x => x * x,
+    power: (x, y) => {
+        const int = parseInt(y)
+        if (isNaN(int)) throw new Error('The provided power input is not a valid number!')
+        return Math.pow(x, int)
+    },
     double: x => x * 2,
     halve: x => x / 2,
     increase: x => ++x,
