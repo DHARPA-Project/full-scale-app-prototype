@@ -97,8 +97,8 @@ const ModuleBoard = () => {
         setSelectedModules(modules =>
             modules.map(selectedModule =>
                 selectedModule.assemblyID === updatedModule.assemblyID
-                    ? updatedModule
-                    : selectedModule
+                    ? {...updatedModule, status: ''}
+                    : {...selectedModule, status: ''}
             )
         )
     }
@@ -181,7 +181,6 @@ const ModuleBoard = () => {
                     )
                 )
             } catch (error) {
-                console.error(error)
                 setSelectedModules(prevModules =>
                     prevModules.map((module, index) =>
                         index === i ? {...module, status: 'failed'} : module
