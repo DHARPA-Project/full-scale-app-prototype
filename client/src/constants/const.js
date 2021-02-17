@@ -48,7 +48,8 @@ export const availableModules = [
         background: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number,
-        additionalInputRequired: false
+        additionalInputRequired: false,
+        expectedOutput: []
     },
     {
         name: 'double',
@@ -57,7 +58,8 @@ export const availableModules = [
         background: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number,
-        additionalInputRequired: false
+        additionalInputRequired: false,
+        expectedOutput: []
     },
     {
         name: 'halve',
@@ -66,7 +68,8 @@ export const availableModules = [
         background: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number,
-        additionalInputRequired: false
+        additionalInputRequired: false,
+        expectedOutput: []
     },
     {
         name: 'increase by one',
@@ -75,7 +78,8 @@ export const availableModules = [
         background: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number,
-        additionalInputRequired: false
+        additionalInputRequired: false,
+        expectedOutput: []
     },
     {
         name: 'decrease by one',
@@ -84,7 +88,8 @@ export const availableModules = [
         background: 'teal',
         inputType: ioTypes.number,
         outputType: ioTypes.number,
-        additionalInputRequired: false
+        additionalInputRequired: false,
+        expectedOutput: []
     },
     {
         name: 'uppercase',
@@ -93,7 +98,8 @@ export const availableModules = [
         background: 'cornflowerblue',
         inputType: ioTypes.string,
         outputType: ioTypes.string,
-        additionalInputRequired: false
+        additionalInputRequired: false,
+        expectedOutput: []
     },
     {
         name: 'lowercase',
@@ -102,7 +108,8 @@ export const availableModules = [
         background: 'cornflowerblue',
         inputType: ioTypes.string,
         outputType: ioTypes.string,
-        additionalInputRequired: false
+        additionalInputRequired: false,
+        expectedOutput: []
     },
     {
         name: 'remove digits',
@@ -111,7 +118,8 @@ export const availableModules = [
         background: 'cornflowerblue',
         inputType: ioTypes.string,
         outputType: ioTypes.string,
-        additionalInputRequired: false
+        additionalInputRequired: false,
+        expectedOutput: []
     },
     {
         name: 'remove letters',
@@ -120,7 +128,8 @@ export const availableModules = [
         background: 'cornflowerblue',
         inputType: ioTypes.string,
         outputType: ioTypes.string,
-        additionalInputRequired: false
+        additionalInputRequired: false,
+        expectedOutput: []
     },
     {
         name: 'concatenate with ...',
@@ -130,7 +139,8 @@ export const availableModules = [
         inputType: ioTypes.string,
         outputType: ioTypes.string,
         additionalInputRequired: true,
-        additionalInput: ''
+        additionalInput: '',
+        expectedOutput: []
     },
     {
         name: 'number to string',
@@ -139,7 +149,8 @@ export const availableModules = [
         background: 'linear-gradient(to right, teal 50%, cornflowerblue 0)',
         inputType: ioTypes.number,
         outputType: ioTypes.string,
-        additionalInputRequired: false
+        additionalInputRequired: false,
+        expectedOutput: []
     },
     {
         name: 'string to integer',
@@ -148,7 +159,8 @@ export const availableModules = [
         background: 'linear-gradient(to right, cornflowerblue  50%, teal 0)',
         inputType: ioTypes.string,
         outputType: ioTypes.number,
-        additionalInputRequired: false
+        additionalInputRequired: false,
+        expectedOutput: []
     }
 ]
 
