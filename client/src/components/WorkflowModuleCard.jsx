@@ -23,7 +23,7 @@ const WorkflowModuleCard = ({mod, removeModule, updateModuleData}) => {
     useEffect(() => {
         setClassList(getModuleClasses())
         //eslint-disable-next-line
-    }, [mod.expectedOutput])
+    }, [mod.expectedOutput, mod.status])
 
     const getModuleClasses = () => {
         let classes = 'right-arrow extensible workflow-module-card'
