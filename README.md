@@ -42,12 +42,67 @@ You can also run the client-side or the server-side apps independently with the 
 
 ## To Do:
 
+color ideas:
+rgb(75, 108, 183)upload
+rgb(24, 40, 72)
+
+check for requiredPrecursor
+
+REPL module
+another workflow as input
+
+Click on input and other module cards to open settings and details in a modal
+
+handle exception when input type changes and no longer matches next workflow operation
+handle exception when removing module and remaining adjacent modules not compatible
+
+communicate estimated processing time
+
+Ring the notification bell to inform the user about the completion
+Transform the workflow bar into a small progress bar and move it to the top bar, where it will remain as an updating progress bar
+
+Make help icon pulse on Upload page; add "got it" button to modal that will disable pulse animation
+Replace old notofication colors with new accent colors
+Scrollable table for uploaded files
+
+Make data processing page notify the user if no file batches available for processing and prompt the user to go to the upload page first
+
+Add NLP text pre-processing functionality
+Retrieve preview & output if available on batch details page; use POST or PUT to update file batch info
+Visualize file content (e.g. text, csv)
+Make file batch or individual files as well as processing output downloadable
+Add filter by type (text, csv, img) on file management page
+Add search box on file management page to enable searching by batch title, file name, or tag
+Add sorting to file batch table
+
+Create Intro page with info cards about various workflows
+
+Prompt for confirmation (modal) when deleting file batch
+Prevent modal from closing on body click; keep closing functionality only on overlay click
+Add artificial delay in server response when submitting processing options, and show spinner on submit button
+
+convert notification container to portal
+animate file list items when entering and exiting
+
+Improve form styling & validation
+Proper form validation (sign up, sign in)
+Custom input element
+Custom select element
+
 When loading app, check if token in local storage is valid
+
+add search bar
+
+remove Semantic UI imports
+remove outdated Topic Modelling components based on Semantic UI
+remove HelpIcon.jsx & HelpIcon.css
+
+Pause notification timeout while notification hovered
+Make component style reusable by giving each one its own independent variables
 
 Change main color
 Create header
 Make entire toastie clickable
-Create custom Container component to replace the SemanticUI one
 Animate toastie on exit with framer motion
 
 Add notifications for all possible server errors
@@ -56,22 +111,14 @@ Add confirmation pop-ups, e.g. for file removal
 
 Show warning sign next to "HTML tag removal" option if tags found in text but option disabled
 
-Collapse (with animation) file upload area when files are uploaded / conditionally collapse when more than X (e.g. 5 or 10) files have been uploaded
-
 Display filtered list of uploaded files and use select field in table header: all / valid / invalid
 
 Make the table displaying the uploaded file list scrollable
-
-Change color of file-removal buttons on hover to red
 
 When hovering over operations, wrap in a dark overlay and show a "more info" button
 
 Extract time stamps from file names
 
 File upload progress bar
-
-Change the active step title color to the main index.scss color
-
-Proper form validation (sign up, sign in)
 
 Improve text processing operations (e.g. remove numbers/digits, remove punctuation)
