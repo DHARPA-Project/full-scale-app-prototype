@@ -8,7 +8,7 @@ import Spinner from './common/Spinner'
 const TextPoolSelect = ({textPools, selectedTextPool, handleTextPoolSelect}) => {
     const selectRef = useRef(null)
 
-    if (!textPools.length) return <Spinner />
+    if (!textPools?.length) return <Spinner />
 
     return (
         <div className="text-pool-choice">
@@ -24,7 +24,7 @@ const TextPoolSelect = ({textPools, selectedTextPool, handleTextPoolSelect}) => 
                 }}
                 defaultValue={selectedTextPool}
             >
-                <option value=""> -- select a previously uploaded text pool -- </option>
+                <option value=""> -- select -- </option>
                 {textPools.map(pool => (
                     <option key={pool.id} value={pool.id}>
                         {pool.title ? pool.title : pool.id}
