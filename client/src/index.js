@@ -5,7 +5,7 @@ import {BrowserRouter as Router} from 'react-router-dom'
 import ContextProvider from './context'
 import App from './components/App'
 
-import 'semantic-ui-css/semantic.min.css'
+// import 'semantic-ui-css/semantic.min.css'
 import './index.scss'
 
 ReactDOM.render(

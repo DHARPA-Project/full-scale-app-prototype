@@ -12,16 +12,17 @@ router.route('/options').get(async (req, res) => {
     try {
         const userId = req.user._id
         const batches = await FileBatchModel.find({user: userId})
-        console.log('batches found: ', batches)
 
         const textPools = batches.map(({_id, title}) => ({id: _id, title}))
         const availableOperations = topicModellingOperations
+
+        // use timeout to simulate server response latency
         setTimeout(
             () =>
                 res
                     .status(200)
                     .json({success: true, pools: textPools, operations: availableOperations}),
-            1000
+            1500
         )
         return
     } catch (error) {
