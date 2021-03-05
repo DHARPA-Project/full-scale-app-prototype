@@ -8,6 +8,7 @@ import './WorkflowModuleCard.scss'
 
 import ModuleCard from './ModuleCard'
 import CustomButton from './common/CustomButton'
+import TextPoolSelect from './TextPoolSelect'
 import MagnifyingGlassIcon from './common/icons/MagnifyingGlassIcon'
 import ModuleDetailsModal from './ModuleDetailsModal'
 import SwitchCheckbox from './common/SwitchCheckbox'
@@ -106,6 +107,12 @@ const WorkflowModuleCard = ({mod, removeModule, updateModuleData}) => {
                         <li>input: {mod.inputType}</li>
                         <li>output: {mod.outputType}</li>
                     </ul>
+
+                    <TextPoolSelect
+                        textPools={[{id: 'output-12345'}, {id: 'output-67890'}]}
+                        selectedTextPool={'output-12345'}
+                        // handleTextPoolSelect={handleTextPoolSelect}
+                    />
 
                     {mod.additionalInputRequired && (
                         <label className="user-input">
